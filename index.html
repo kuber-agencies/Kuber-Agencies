@@ -2389,25 +2389,25 @@ footer {
 <img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775852937/Kuber_Agencies_zfijme.jpg" alt="Kuber Agencies Store – Construction Materials Supplier Madambakkam Chennai" class="hero-shop-img" loading="eager" fetchpriority="high" width="600" height="340"/>
 </div>
 <div class="hero-cat-grid">
-<!-- [UPDATED] TASK 1: Product category images replaced with new Cloudinary URLs -->
+<!-- [UPDATED] TASK 1: Product category images replaced with new Cloudinary URLs | TASK 2: Broken Steel TMT image fixed -->
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775858112/all_construction_materials_dr9hvk.jpg" alt="All Construction Materials" class="hero-cat-img" loading="lazy"/></span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775859541/all_construction_materials_wpqymf.jpg" alt="All Construction Materials" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">All Construction Materials</div>
 </div>
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775856079/cement_concrete_rpkvph.jpg" alt="Cement &amp; Concrete" class="hero-cat-img" loading="lazy"/></span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775859541/cement_concrete_woc6s7.jpg" alt="Cement &amp; Concrete" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">Cement &amp; Concrete</div>
 </div>
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775858111/IMG_20260411_032347_l77su8.jpg" alt="Steel &amp; TMT Bars" class="hero-cat-img" loading="lazy"/></span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775859554/Steel%20TMT.png" alt="Steel &amp; TMT Bars" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">Steel &amp; TMT Bars</div>
 </div>
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775856080/paints_coatings_oepcb6.jpg" alt="Paints &amp; Coatings" class="hero-cat-img" loading="lazy"/></span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775859541/paint_and_coatings_us1vv4.jpg" alt="Paints &amp; Coatings" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">Paints &amp; Coatings</div>
 </div>
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto/f_auto/v1775858112/pipes_and_fittings_u2hhmz.png" alt="Pipes &amp; Fittings" class="hero-cat-img" loading="lazy"/></span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775859541/pipes_and_fittings_rrkehq.png" alt="Pipes &amp; Fittings" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">Pipes &amp; Fittings</div>
 </div>
 </div>
@@ -2825,19 +2825,31 @@ footer {
   50%  { box-shadow: 0 6px 28px rgba(240,109,30,0.38), 0 0 0 3px rgba(240,109,30,0.12); }
   100% { box-shadow: 0 4px 16px rgba(0,0,0,0.30); }
 }
+/* [ADDED] TASK 3: Subtle pulse — very gentle opacity + scale breathe on the card border glow */
+@keyframes clientSubtlePulse {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.88; }
+}
+/* [ADDED] TASK 3: Soft edge shimmer on the card — thin orange border pulses in opacity */
+@keyframes clientBorderPulse {
+  0%,100% { border-color: rgba(240,109,30,0.12); }
+  50%      { border-color: rgba(240,109,30,0.32); }
+}
 
 /* Apply continuous float+glow after the entrance animation finishes.
    Each card gets a staggered delay so they don't all move in sync — more organic. */
 .clients-grid-premium .client-card-premium.clients-animated {
   animation:
     clientFadeUp 0.72s cubic-bezier(0.22,1,0.36,1) forwards,
-    clientGlowFloat 5s ease-in-out 1.2s infinite;
+    clientGlowFloat 5s ease-in-out 1.2s infinite,
+    clientSubtlePulse 6s ease-in-out 1.5s infinite,
+    clientBorderPulse 4s ease-in-out 1.8s infinite;
 }
-.clients-grid-premium .client-card-premium.clients-animated:nth-child(1) { animation-delay: 0.00s, 1.20s; }
-.clients-grid-premium .client-card-premium.clients-animated:nth-child(2) { animation-delay: 0.13s, 1.70s; }
-.clients-grid-premium .client-card-premium.clients-animated:nth-child(3) { animation-delay: 0.26s, 2.20s; }
-.clients-grid-premium .client-card-premium.clients-animated:nth-child(4) { animation-delay: 0.39s, 2.70s; }
-.clients-grid-premium .client-card-premium.clients-animated:nth-child(5) { animation-delay: 0.52s, 3.20s; }
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(1) { animation-delay: 0.00s, 1.20s, 1.50s, 1.80s; }
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(2) { animation-delay: 0.13s, 1.70s, 2.10s, 2.40s; }
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(3) { animation-delay: 0.26s, 2.20s, 2.70s, 3.00s; }
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(4) { animation-delay: 0.39s, 2.70s, 3.30s, 3.60s; }
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(5) { animation-delay: 0.52s, 3.20s, 3.90s, 4.20s; }
 
 /* Monogram soft glow pulse — independent cycle */
 .clients-grid-premium .client-card-premium.clients-animated .client-monogram {
@@ -2850,7 +2862,7 @@ footer {
 
 /* Hover: pause float, amplify glow for a polished interactive feel */
 .clients-grid-premium .client-card-premium.clients-animated:hover {
-  animation-play-state: paused, paused;
+  animation-play-state: paused, paused, paused, paused;
   box-shadow: 0 14px 48px rgba(240,109,30,0.22), 0 6px 20px rgba(7,17,31,0.14) !important;
   transform: translateY(-9px) !important;
   border-color: rgba(240,109,30,0.45) !important;
