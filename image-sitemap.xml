@@ -3,15 +3,23 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
   <!-- ============================================================
-       KUBER AGENCIES — Image Sitemap
-       Upload this file to: https://kuberagencies.in/image-sitemap.xml
-       Submit via Google Search Console → Sitemaps
+       KUBER AGENCIES — Image Sitemap (Fixed)
+       Upload to: https://kuberagencies.in/image-sitemap.xml
+       Fixed: removed duplicate <url> entries with same <loc>
+       All images consolidated under single homepage URL entry
        ============================================================ -->
 
-  <!-- Homepage — Category & Brand Images -->
   <url>
     <loc>https://kuberagencies.in/</loc>
 
+    <!-- Hero / OG image -->
+    <image:image>
+      <image:loc>https://kuberagencies.in/og-image.jpg</image:loc>
+      <image:title>Kuber Agencies – Premium Construction Materials Supplier Chennai</image:title>
+      <image:caption>Kuber Agencies, Madambakkam – authorized dealer for 50+ brands including Ultratech, Dalmia, Asian Paints, Finolex. Est. 2000.</image:caption>
+    </image:image>
+
+    <!-- Category hero images (used in Product structured data) -->
     <image:image>
       <image:loc>https://kuberagencies.in/images/cement.jpg</image:loc>
       <image:title>Cement bags – Ultratech, Dalmia, Ramco supplier Chennai</image:title>
@@ -38,28 +46,11 @@
 
     <image:image>
       <image:loc>https://kuberagencies.in/images/electrical.jpg</image:loc>
-      <image:title>Electrical cables and wires – Havells Polycab dealer Chennai</image:title>
-      <image:caption>Havells and Polycab electrical cables, wires, switches and MCBs – authorized dealer at Kuber Agencies, Madambakkam Chennai.</image:caption>
+      <image:title>Electrical cables and wires – Finolex Polycab dealer Chennai</image:title>
+      <image:caption>Finolex and Polycab electrical cables, wires, conduits and MCBs – authorized dealer at Kuber Agencies, Madambakkam Chennai.</image:caption>
     </image:image>
 
-    <image:image>
-      <image:loc>https://kuberagencies.in/images/tiles.jpg</image:loc>
-      <image:title>Ceramic and vitrified floor tiles supplier Chennai</image:title>
-      <image:caption>Ceramic, vitrified and granite floor tiles in all sizes and finishes. Floor tile supplier in Madambakkam, Chennai.</image:caption>
-    </image:image>
-
-    <image:image>
-      <image:loc>https://kuberagencies.in/og-image.jpg</image:loc>
-      <image:title>Kuber Agencies – Premium Construction Materials Supplier Chennai</image:title>
-      <image:caption>Kuber Agencies, Madambakkam – authorized dealer for 50+ brands including Ultratech, Dalmia, Asian Paints, Finolex. Est. 2000.</image:caption>
-    </image:image>
-
-  </url>
-
-  <!-- Products Page — Cement -->
-  <url>
-    <loc>https://kuberagencies.in/</loc>
-
+    <!-- Cement brand product images -->
     <image:image>
       <image:loc>https://kuberagencies.in/images/cement/dalmia.jpg</image:loc>
       <image:title>Dalmia OPC 53 Grade cement – supplier Chennai</image:title>
@@ -90,7 +81,7 @@
       <image:caption>Ramco Super Grade high-early-strength cement for precast elements and rapid formwork removal.</image:caption>
     </image:image>
 
-    <!-- Steel -->
+    <!-- Steel brand product images -->
     <image:image>
       <image:loc>https://kuberagencies.in/images/steel/ars-steel.jpg</image:loc>
       <image:title>ARS TMT Fe500D bars – steel supplier Chennai</image:title>
@@ -109,17 +100,31 @@
       <image:caption>Arun TMT Fe500 ultra-high-yield-strength steel bars for multi-storey buildings and industrial structures.</image:caption>
     </image:image>
 
-    <!-- Sand -->
+    <!-- Paints product images -->
+    <image:image>
+      <image:loc>https://kuberagencies.in/images/paints/paints.jpg</image:loc>
+      <image:title>Asian Paints interior exterior emulsion – dealer Chennai</image:title>
+      <image:caption>Asian Paints Royale, Apex, primers and SmartCare waterproofing range. Authorized dealer – Kuber Agencies Chennai.</image:caption>
+    </image:image>
+
+    <!-- Pipes & Plumbing product images -->
+    <image:image>
+      <image:loc>https://kuberagencies.in/images/pipes/indian-pipes.jpg</image:loc>
+      <image:title>CPVC UPVC GI pipes – plumbing supplier Chennai</image:title>
+      <image:caption>Star CPVC, Ashirvad UPVC, Finolex conduit and GI pipes for plumbing and construction. Kuber Agencies Chennai.</image:caption>
+    </image:image>
+
+    <!-- Sand product images -->
     <image:image>
       <image:loc>https://kuberagencies.in/images/sand/m-sand.jpg</image:loc>
       <image:title>Manufactured Sand (M Sand) – construction sand supplier Chennai</image:title>
-      <image:caption>IS:383 compliant M Sand (Manufactured Sand) – eco-friendly river sand alternative. Bulk supply in Chennai.</image:caption>
+      <image:caption>IS:383 compliant M Sand – eco-friendly river sand alternative. Bulk supply in Chennai.</image:caption>
     </image:image>
 
     <image:image>
       <image:loc>https://kuberagencies.in/images/sand/p-sand.jpg</image:loc>
       <image:title>Plaster Sand (P Sand) – wall plastering sand supplier Chennai</image:title>
-      <image:caption>P Sand (Plaster Sand) Zone III – finely graded for plastering and wall finishes. Superior workability.</image:caption>
+      <image:caption>P Sand Zone III – finely graded for plastering and wall finishes. Superior workability.</image:caption>
     </image:image>
 
     <image:image>
@@ -128,21 +133,7 @@
       <image:caption>Natural river sand for concrete and masonry work. Delivered to construction sites across Chennai.</image:caption>
     </image:image>
 
-    <!-- Paints -->
-    <image:image>
-      <image:loc>https://kuberagencies.in/images/paints/paints.jpg</image:loc>
-      <image:title>Asian Paints interior exterior emulsion – dealer Chennai</image:title>
-      <image:caption>Asian Paints Royale, Apex, primers and SmartCare waterproofing range. Authorized dealer – Kuber Agencies Chennai.</image:caption>
-    </image:image>
-
-    <!-- Pipes & Plumbing -->
-    <image:image>
-      <image:loc>https://kuberagencies.in/images/pipes/indian-pipes.jpg</image:loc>
-      <image:title>CPVC UPVC GI pipes – plumbing supplier Chennai</image:title>
-      <image:caption>Star CPVC, Ashirvad UPVC, Finolex conduit and GI pipes for plumbing and construction. Kuber Agencies Chennai.</image:caption>
-    </image:image>
-
-    <!-- Bricks -->
+    <!-- Bricks product images -->
     <image:image>
       <image:loc>https://kuberagencies.in/images/bricks/wirecut-bricks.jpg</image:loc>
       <image:title>Wirecut clay bricks – brick supplier Chennai</image:title>
@@ -161,7 +152,7 @@
       <image:caption>Traditional Sadha clay bricks for masonry and wall construction in Chennai.</image:caption>
     </image:image>
 
-    <!-- Electrical -->
+    <!-- Electrical product images -->
     <image:image>
       <image:loc>https://kuberagencies.in/images/electrical/wires.jpg</image:loc>
       <image:title>Finolex FR house wire electrical cables – Chennai dealer</image:title>
