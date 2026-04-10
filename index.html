@@ -2289,6 +2289,285 @@ footer {
   .hero-cat-img  { height: 40px; }
 }
 
+/* ============================================================
+   MOBILE RESPONSIVENESS FIXES — Kuber Agencies
+   Target: 320px–768px | Desktop layout fully preserved
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   FIX 1: Container padding — prevents content touching edges
+   on very narrow screens (320px–480px)
+   ---------------------------------------------------------- */
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 2: Contractor bar height offset for hero
+   The orange contractor bar (mobile-only, ~36px) sits ABOVE
+   the hero content and is not accounted for in hero padding-top.
+   We add its height to the hero top padding on mobile so the
+   hero content is never hidden under two fixed bars.
+   ---------------------------------------------------------- */
+@media (max-width: 900px) {
+  :root { --contractor-bar-h: 36px; }
+  .hero {
+    padding-top: calc(var(--nav-h) + var(--contractor-bar-h));
+  }
+}
+
+/* ----------------------------------------------------------
+   FIX 3: Hero section vertical padding — 80px is desktop-sized;
+   reduce proportionally on mobile so content breathes but
+   doesn't waste screen height.
+   ---------------------------------------------------------- */
+@media (max-width: 900px) {
+  .hero-inner { padding: 48px 28px 56px; }
+}
+@media (max-width: 480px) {
+  .hero-inner { padding: 36px 16px 48px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 4: Hero title font size — clamp(52px, 6.5vw, 88px) hits
+   its 52px MINIMUM at all mobile sizes, making it too large on
+   320px–480px screens. Clamp it lower on small screens.
+   ---------------------------------------------------------- */
+@media (max-width: 600px) {
+  .hero-title { font-size: clamp(36px, 10vw, 52px); letter-spacing: -0.5px; }
+}
+@media (max-width: 380px) {
+  .hero-title { font-size: clamp(30px, 9vw, 38px); }
+}
+
+/* ----------------------------------------------------------
+   FIX 5: Hero subtitle text — 17px is fine on desktop but
+   should scale down slightly on narrow screens to preserve
+   the line-length comfort zone.
+   ---------------------------------------------------------- */
+@media (max-width: 480px) {
+  .hero-sub { font-size: 15px; margin-bottom: 28px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 6: Hero CTA buttons — three buttons on one row overflow
+   on narrow screens. Stack them at ≤380px; allow wrap at all
+   mobile sizes by removing white-space:nowrap on the wrapper.
+   ---------------------------------------------------------- */
+@media (max-width: 600px) {
+  .hero-btns { gap: 10px; }
+  .hero-btns .btn { padding: 12px 20px; font-size: 13.5px; }
+}
+@media (max-width: 400px) {
+  .hero-btns { flex-direction: column; align-items: stretch; }
+  .hero-btns .btn, .hero-btns .btn-wa-wrap { width: 100%; justify-content: center; }
+  .hero-btns .btn-wa-wrap .btn { width: 100%; }
+}
+
+/* ----------------------------------------------------------
+   FIX 7: Hero stats row — stat numbers (44px) are oversized
+   on mobile. Reduce them to stay proportional.
+   ---------------------------------------------------------- */
+@media (max-width: 600px) {
+  .hero-stat-num { font-size: 34px; }
+  .hero-stat-label { font-size: 11px; }
+  .hero-stats-row { padding-top: 24px; }
+}
+@media (max-width: 380px) {
+  .hero-stat-num { font-size: 28px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 8: Section padding — 88px top/bottom on all sections is
+   too generous on mobile. Reduce proportionally using clamp
+   so sections remain spacious but not wasteful.
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  section { padding: 56px 0; }
+  .services-strip, .clients-section, .contact-section { padding: 56px 0; }
+}
+@media (max-width: 480px) {
+  section { padding: 44px 0; }
+  .services-strip, .clients-section, .contact-section { padding: 44px 0; }
+}
+
+/* ----------------------------------------------------------
+   FIX 9: Section title — clamp starts at 32px which is good;
+   just tighten letter-spacing on very small screens.
+   ---------------------------------------------------------- */
+@media (max-width: 380px) {
+  .section-title { font-size: clamp(26px, 8vw, 32px); letter-spacing: -0.5px; }
+  .section-sub { font-size: 15px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 10: Trust bar — items too cramped on mobile with the
+   default flex layout. Improve gap and icon sizing.
+   ---------------------------------------------------------- */
+@media (max-width: 600px) {
+  .trust-bar { padding: 20px 0; }
+  .trust-bar-inner { gap: 14px; }
+  .trust-item { gap: 10px; }
+  .trust-icon { width: 36px; height: 36px; font-size: 17px; }
+  .trust-text strong { font-size: 13px; }
+  .trust-text span { font-size: 11px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 11: Categories grid — auto-fit minmax(200px) creates
+   awkward 1.5-column layouts at ~440px. Force 2-column on
+   tablet, 1-column on small phones cleanly.
+   ---------------------------------------------------------- */
+@media (max-width: 600px) and (min-width: 420px) {
+  .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+}
+@media (max-width: 419px) {
+  .categories-grid { grid-template-columns: 1fr; gap: 14px; }
+}
+@media (max-width: 600px) {
+  .cat-card { padding: 0 0 20px; }
+  .cat-name { font-size: 17px; }
+  .cat-icon { font-size: 36px; }
+  /* Re-apply horizontal padding after the image */
+  .cat-card .cat-name,
+  .cat-card .cat-desc,
+  .cat-card .cat-arrow { padding: 0 16px; }
+  .cat-image { margin: -0px -0px 14px; width: 100%; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+}
+
+/* ----------------------------------------------------------
+   FIX 12: Brand logo showcase grid — min 130px tiles can still
+   create odd layouts; ensure clean 3–4 column grid on mobile.
+   ---------------------------------------------------------- */
+@media (max-width: 600px) {
+  .brand-logo-showcase { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .brand-logo-tile { min-height: 76px; padding: 12px 8px; }
+}
+@media (max-width: 360px) {
+  .brand-logo-showcase { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ----------------------------------------------------------
+   FIX 13: Brands grid (brand category cards) — 280px min
+   creates a single-column layout at ≤600px anyway; make it
+   explicit and reduce inner padding for mobile.
+   ---------------------------------------------------------- */
+@media (max-width: 600px) {
+  .brands-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 36px; }
+  .brand-logos { padding: 14px 16px 18px; gap: 8px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 14: Services grid — 260px min can create 1.x column
+   oddities at 520–600px range. Force 2-col tablet, 1-col phone.
+   ---------------------------------------------------------- */
+@media (max-width: 600px) and (min-width: 420px) {
+  .services-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 36px; }
+  .service-card { padding: 24px 20px; }
+}
+@media (max-width: 419px) {
+  .services-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 32px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 15: Testimonials grid — 300px min can be awkward on
+   phones. Single-column below 600px.
+   ---------------------------------------------------------- */
+@media (max-width: 600px) {
+  .testimonials-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 36px; }
+  .testi-card { padding: 24px 20px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 16: Contact grid — already collapses at 900px. Add
+   padding adjustments for mobile.
+   ---------------------------------------------------------- */
+@media (max-width: 600px) {
+  .contact-grid { gap: 32px; margin-top: 32px; }
+  .contact-map-placeholder { padding: 28px 20px; min-height: 200px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 17: Footer — balance on mobile.
+   ---------------------------------------------------------- */
+@media (max-width: 480px) {
+  footer { padding: 24px 0; }
+  .footer-copy { font-size: 12px; }
+  .footer-phones { gap: 12px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 18: Mobile menu font-size — 32px menu links look huge
+   on very small screens (320px). Scale down proportionally.
+   ---------------------------------------------------------- */
+@media (max-width: 380px) {
+  .mobile-menu a { font-size: 24px; padding: 12px 24px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 19: Quote cart button position — at ≤639px it sits at
+   bottom:80px to clear sticky bar. But on very small screens
+   it may overlap the WhatsApp FAB. Fine-tune left spacing.
+   ---------------------------------------------------------- */
+@media (max-width: 380px) {
+  #quoteCartBtn { left: 8px; font-size: 12px; padding: 10px 14px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 20: Clients grid premium — already has a 600px breakpoint;
+   add 420px breakpoint for very small phones.
+   ---------------------------------------------------------- */
+@media (max-width: 420px) {
+  .clients-grid-premium { gap: 14px; }
+  .client-monogram { width: 56px; height: 56px; }
+  .client-mono-letters { font-size: 18px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 21: Sticky bar bottom clearance — quote cart badge
+   must not overlap the sticky bottom action bar (~64px tall).
+   The existing rule handles this but we reinforce for safety.
+   ---------------------------------------------------------- */
+@media (max-width: 639px) {
+  #quoteToast { bottom: 140px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 22: Images — ensure no image ever causes horizontal
+   overflow on mobile. Belt-and-suspenders rule.
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  img { max-width: 100%; }
+  .hero-brand-logos { gap: 6px; }
+  .hero-brand-logo-img { height: 20px !important; max-width: 60px !important; }
+}
+
+/* ----------------------------------------------------------
+   FIX 23: Nav logo tagline — hides on very small screens so
+   logo doesn't overflow into hamburger button.
+   ---------------------------------------------------------- */
+@media (max-width: 360px) {
+  .logo-tagline { display: none; }
+  .logo-name { font-size: 18px; }
+  .logo-mark { width: 38px; height: 38px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 24: Trust badge strip (hero bottom bar) — items overflow
+   with fixed gap:32px on mobile.
+   ---------------------------------------------------------- */
+@media (max-width: 600px) {
+  .trust-badge-inner { gap: 16px; padding: 0 16px; }
+  .trust-badge-item { font-size: 11.5px; gap: 6px; }
+}
+
+/* ----------------------------------------------------------
+   FIX 25: Section breadcrumb — wrapping content on mobile.
+   ---------------------------------------------------------- */
+@media (max-width: 480px) {
+  .breadcrumb-inner { font-size: 11.5px; gap: 5px; }
+}
+
 </style>
 <!-- Google Analytics (replace G-XXXXXXXXXX with your Measurement ID) -->
 <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -2300,6 +2579,16 @@ footer {
 </script> -->
 </head>
 <body>
+<!-- Shop image: full-width, above all content -->
+<div style="width:100%;line-height:0;overflow:hidden;">
+  <img
+    src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775852937/Kuber_Agencies_zfijme.jpg"
+    alt="Kuber Agencies – Construction Materials Supplier, Madambakkam Chennai"
+    style="width:100%;height:auto;display:block;"
+    loading="eager"
+    fetchpriority="high"
+  />
+</div>
 <!-- Contractor urgency bar (mobile only) -->
 <div class="contractor-bar" id="contractorBar">
   🏗️ Contractors: Call <a href="tel:+919840928767">98409 28767</a> for bulk pricing &amp; same-day delivery — <a href="https://wa.me/919840928767?text=Hi%20I%20am%20a%20contractor%20and%20need%20bulk%20pricing" target="_blank">WhatsApp Now →</a>
