@@ -2116,77 +2116,177 @@ footer {
 }
 
 /* ============================================================
-   [ADDED] TASK 5+6: Brand Marquee Animation
+   [UPGRADED T3] Premium Brand Marquee Animation
    ============================================================ */
+
+/* Keyframe: main horizontal scroll */
 @keyframes brand-scroll {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+
+/* Keyframe: staggered fade-up on page load */
+@keyframes tile-fadein {
+  from { opacity: 0; transform: translateY(16px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Keyframe: subtle shimmer/glow pulse on tiles */
+@keyframes tile-glow {
+  0%, 100% { box-shadow: 0 2px 10px rgba(240,109,30,0); }
+  50%       { box-shadow: 0 4px 18px rgba(240,109,30,0.13); }
+}
+
 .brand-marquee-outer {
   width: 100%;
   overflow: hidden;
   margin-top: 40px;
-  padding: 12px 0;
-  /* Soft fade edges */
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  padding: 16px 0 20px;
+  /* Premium fade edges */
+  -webkit-mask-image: linear-gradient(to right,
+    transparent 0%, rgba(0,0,0,0.2) 3%, black 8%,
+    black 92%, rgba(0,0,0,0.2) 97%, transparent 100%);
+  mask-image: linear-gradient(to right,
+    transparent 0%, rgba(0,0,0,0.2) 3%, black 8%,
+    black 92%, rgba(0,0,0,0.2) 97%, transparent 100%);
 }
+
 .brand-marquee-track {
   display: flex;
-  align-items: center;
-  gap: 20px;
+  align-items: stretch;
+  gap: 18px;
   width: max-content;
-  animation: brand-scroll 48s linear infinite;
+  animation: brand-scroll 52s linear infinite;
   will-change: transform;
 }
-.brand-marquee-track:hover {
+
+/* Pause on hover — gives user control */
+.brand-marquee-outer:hover .brand-marquee-track {
   animation-play-state: paused;
 }
+
+/* Stagger fade-in for first 18 tiles on load */
 .brand-marq-tile {
   background: var(--white);
   border: 1.5px solid var(--gray-light);
   border-radius: var(--radius-lg);
-  padding: 16px 20px;
+  padding: 14px 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-width: 120px;
-  min-height: 90px;
+  gap: 10px;
+  min-width: 118px;
+  min-height: 96px;
   flex-shrink: 0;
-  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
   cursor: default;
+  /* Base transition */
+  transition:
+    border-color 0.35s ease,
+    box-shadow   0.35s ease,
+    transform    0.35s cubic-bezier(0.34,1.56,0.64,1);
+  /* Stagger load animation */
+  animation: tile-fadein 0.5s ease both,
+             tile-glow   4s ease-in-out 1.5s infinite;
 }
+
+/* Stagger delays for first set of tiles */
+.brand-marq-tile:nth-child(1)  { animation-delay: 0.05s, 1.5s; }
+.brand-marq-tile:nth-child(2)  { animation-delay: 0.10s, 1.9s; }
+.brand-marq-tile:nth-child(3)  { animation-delay: 0.15s, 2.3s; }
+.brand-marq-tile:nth-child(4)  { animation-delay: 0.20s, 2.7s; }
+.brand-marq-tile:nth-child(5)  { animation-delay: 0.25s, 3.1s; }
+.brand-marq-tile:nth-child(6)  { animation-delay: 0.30s, 3.5s; }
+.brand-marq-tile:nth-child(7)  { animation-delay: 0.35s, 3.9s; }
+.brand-marq-tile:nth-child(8)  { animation-delay: 0.40s, 4.3s; }
+.brand-marq-tile:nth-child(9)  { animation-delay: 0.45s, 4.7s; }
+.brand-marq-tile:nth-child(10) { animation-delay: 0.50s, 5.1s; }
+.brand-marq-tile:nth-child(11) { animation-delay: 0.55s, 5.5s; }
+.brand-marq-tile:nth-child(12) { animation-delay: 0.60s, 5.9s; }
+.brand-marq-tile:nth-child(n+13) { animation-delay: 0s, 1.5s; }
+
+/* Hover: lift + glow + border flash */
 .brand-marq-tile:hover {
   border-color: var(--orange);
-  box-shadow: 0 6px 24px rgba(240,109,30,0.14);
-  transform: translateY(-4px);
+  box-shadow:
+    0 8px 28px rgba(240,109,30,0.18),
+    0 2px 8px rgba(240,109,30,0.10);
+  transform: translateY(-6px) scale(1.03);
+  animation-play-state: paused, paused;
 }
+
+/* Image sizing + smooth scale */
 .brand-marq-tile img {
-  height: 44px;
+  height: 46px;
   width: auto;
-  max-width: 100px;
+  max-width: 108px;
   object-fit: contain;
   display: block;
-  transition: transform 0.3s;
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), filter 0.3s ease;
+  filter: saturate(0.85) brightness(0.97);
 }
+
 .brand-marq-tile:hover img {
-  transform: scale(1.06);
+  transform: scale(1.1);
+  filter: saturate(1.1) brightness(1.02);
 }
+
+/* Brand name label */
 .brand-marq-name {
   font-size: 10px;
   font-weight: 700;
   color: var(--gray);
   text-align: center;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
   white-space: nowrap;
+  transition: color 0.25s ease;
 }
+
+.brand-marq-tile:hover .brand-marq-name {
+  color: var(--orange);
+}
+
+/* Mobile responsive */
 @media (max-width: 600px) {
-  .brand-marq-tile { min-width: 96px; padding: 12px 14px; }
-  .brand-marq-tile img { height: 34px; }
-  .brand-marquee-track { gap: 12px; animation-duration: 36s; }
+  .brand-marq-tile {
+    min-width: 94px;
+    min-height: 78px;
+    padding: 10px 12px;
+    gap: 7px;
+  }
+  .brand-marq-tile img { height: 32px; max-width: 80px; }
+  .brand-marquee-track { gap: 12px; animation-duration: 38s; }
+  .brand-marq-name { font-size: 9px; }
+}
+
+/* ============================================================
+   [ADDED T2] Hero Category Card Images
+   ============================================================ */
+.hero-cat-icon {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  height: 52px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.hero-cat-img {
+  width: 100%;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
+  pointer-events: none;
+}
+.hero-cat:hover .hero-cat-img {
+  transform: scale(1.07);
+}
+@media (max-width: 480px) {
+  .hero-cat-icon { height: 40px; }
+  .hero-cat-img  { height: 40px; }
 }
 
 </style>
@@ -2290,23 +2390,23 @@ footer {
 </div>
 <div class="hero-cat-grid">
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon">🏗️</span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846577/Dalmia_vk14ks.jpg" alt="All Construction Materials" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">All Construction Materials</div>
 </div>
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon">🧱</span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846580/chettinad-dealers-in-tirupur_yiaxik.jpg" alt="Cement &amp; Concrete" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">Cement &amp; Concrete</div>
 </div>
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon">🔩</span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846574/SteelTMT_product_dmljma.png" alt="Steel &amp; TMT Bars" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">Steel &amp; TMT Bars</div>
 </div>
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon">🎨</span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Asian_paint_wyylv7.jpg" alt="Paints &amp; Coatings" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">Paints &amp; Coatings</div>
 </div>
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon">🔧</span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Finolex_ieybwf.jpg" alt="Pipes &amp; Fittings" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">Pipes &amp; Fittings</div>
 </div>
 </div>
@@ -2315,9 +2415,9 @@ footer {
 <div class="hero-brand-strip-text">Authorized Dealer — 50+ Brands</div>
 <div class="hero-brand-logos">
 <img width="400" height="180" alt="Ultratech Cement Logo" class="hero-brand-logo-img" loading="eager" fetchpriority="high" onerror="this.style.display='none'" src="https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/UltraTech_Cement_Logo.svg/200px-UltraTech_Cement_Logo.svg.png"/>
-<img width="400" height="180" alt="Dalmia Cement Logo" class="hero-brand-logo-img" loading="lazy" onerror="this.style.display='none'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Dalmia_Bharat_logo.svg/200px-Dalmia_Bharat_logo.svg.png"/>
-<img width="400" height="180" alt="Asian Paints Logo" class="hero-brand-logo-img" loading="lazy" onerror="this.style.display='none'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Asian_Paints_Logo.svg/200px-Asian_Paints_Logo.svg.png"/>
-<img width="400" height="180" alt="Finolex Logo" class="hero-brand-logo-img" loading="lazy" onerror="this.style.display='none'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Finolex_Logo.svg/200px-Finolex_Logo.svg.png"/>
+<img width="400" height="180" alt="Dalmia Cement Logo" class="hero-brand-logo-img" loading="lazy" onerror="this.style.display='none'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846577/Dalmia_vk14ks.jpg"/>
+<img width="400" height="180" alt="Asian Paints Logo" class="hero-brand-logo-img" loading="lazy" onerror="this.style.display='none'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Asian_paint_wyylv7.jpg"/>
+<img width="400" height="180" alt="Finolex Logo" class="hero-brand-logo-img" loading="lazy" onerror="this.style.display='none'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Finolex_ieybwf.jpg"/>
 </div>
 </div>
 </div>
@@ -3556,7 +3656,7 @@ footer {
 <div class="product-badge badge-bestseller">Best Seller</div>
 <div class="product-card-img"><img width="400" height="180" alt="Dalmia OPC 53 Grade – Cement supplier Chennai" loading="lazy" onerror="this.onerror=null;this.style.objectFit='contain';this.style.padding='20px';this.style.background='#1a3350';" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846577/Dalmia_vk14ks.jpg"/><div class="product-card-img-overlay"></div><div class="product-card-cat-tag">Cement</div></div>
 <div class="product-card-body">
-<div class="product-card-brand-strip"><img width="400" height="180" alt="Dalmia" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Dalmia_Bharat_logo.svg/200px-Dalmia_Bharat_logo.svg.png"/><span class="brand-logo-badge brand-dalmia" style="display:none">Dalmia</span></div><div class="product-card-name">Dalmia OPC 53 Grade</div>
+<div class="product-card-brand-strip"><img width="400" height="180" alt="Dalmia" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846577/Dalmia_vk14ks.jpg"/><span class="brand-logo-badge brand-dalmia" style="display:none">Dalmia</span></div><div class="product-card-name">Dalmia OPC 53 Grade</div>
 <div class="product-card-desc">High-strength Ordinary Portland Cement for RCC, foundations &amp; structural work. 28-day strength ≥53 MPa. IS:12269 certified.</div>
 <div class="product-card-footer">
 <div class="product-card-price">₹380<small>/bag</small></div>
@@ -3649,7 +3749,7 @@ footer {
 <div class="product-card-bar"></div>
 <div class="product-card-img"><img width="400" height="180" alt="Ramco Super Grade Cement – Cement supplier Chennai" loading="lazy" onerror="this.onerror=null;this.style.objectFit='contain';this.style.padding='20px';this.style.background='#1a3350';" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846587/Ramco_qbgc8y.png"/><div class="product-card-img-overlay"></div><div class="product-card-cat-tag">Cement</div></div>
 <div class="product-card-body">
-<div class="product-card-brand-strip"><img width="400" height="180" alt="Ramco" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Ramco_Cements_Logo.svg/200px-Ramco_Cements_Logo.svg.png"/><span class="brand-logo-badge brand-ramco" style="display:none">Ramco</span></div><div class="product-card-name">Ramco Super Grade</div>
+<div class="product-card-brand-strip"><img width="400" height="180" alt="Ramco" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846587/Ramco_qbgc8y.png"/><span class="brand-logo-badge brand-ramco" style="display:none">Ramco</span></div><div class="product-card-name">Ramco Super Grade</div>
 <div class="product-card-desc">High early strength — ideal for rapid formwork removal, precast elements &amp; cold weather concreting.</div>
 <div class="product-card-footer">
 <div class="product-card-price">₹420<small>/bag</small></div>
@@ -3977,7 +4077,7 @@ footer {
 <div class="product-badge badge-bestseller">Best Seller</div>
 <div class="product-card-img"><img width="400" height="180" alt="Royale Luxury Emulsion – Paints supplier Chennai" loading="lazy" onerror="this.onerror=null;this.style.objectFit='contain';this.style.padding='20px';this.style.background='#1a3350';" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845905/Royale_paint_yj5hsp.png"/><div class="product-card-img-overlay"></div><div class="product-card-cat-tag">Paints</div></div>
 <div class="product-card-body">
-<div class="product-card-brand-strip"><img width="400" height="180" alt="Asian Paints" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Asian_Paints_Logo.svg/200px-Asian_Paints_Logo.svg.png"/><span class="brand-logo-badge brand-asian" style="display:none">Asian Paints</span></div><div class="product-card-name">Royale Luxury Emulsion</div>
+<div class="product-card-brand-strip"><img width="400" height="180" alt="Asian Paints" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Asian_paint_wyylv7.jpg"/><span class="brand-logo-badge brand-asian" style="display:none">Asian Paints</span></div><div class="product-card-name">Royale Luxury Emulsion</div>
 <div class="product-card-desc">Premium interior wall paint with Teflon surface protector. Washable, stain-resistant, silk finish. 1500+ shades.</div>
 <div class="product-card-footer">
 <div class="product-card-price">₹920<small>/4L</small></div>
@@ -4001,7 +4101,7 @@ footer {
 <div class="product-badge badge-popular">Popular</div>
 <div class="product-card-img"><img width="400" height="180" alt="Apex Exterior Emulsion – Paints supplier Chennai" loading="lazy" onerror="this.onerror=null;this.style.objectFit='contain';this.style.padding='20px';this.style.background='#1a3350';" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845888/Asian_paint_product_bihug3.jpg"/><div class="product-card-img-overlay"></div><div class="product-card-cat-tag">Paints</div></div>
 <div class="product-card-body">
-<div class="product-card-brand-strip"><img width="400" height="180" alt="Asian Paints" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Asian_Paints_Logo.svg/200px-Asian_Paints_Logo.svg.png"/><span class="brand-logo-badge brand-asian" style="display:none">Asian Paints</span></div><div class="product-card-name">Apex Exterior Emulsion</div>
+<div class="product-card-brand-strip"><img width="400" height="180" alt="Asian Paints" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Asian_paint_wyylv7.jpg"/><span class="brand-logo-badge brand-asian" style="display:none">Asian Paints</span></div><div class="product-card-name">Apex Exterior Emulsion</div>
 <div class="product-card-desc">7-year protection exterior paint. Waterproof, anti-algal, UV-resistant. Ideal for Chennai's hot &amp; humid climate.</div>
 <div class="product-card-footer">
 <div class="product-card-price">₹840<small>/4L</small></div>
@@ -4024,7 +4124,7 @@ footer {
 <div class="product-card-bar"></div>
 <div class="product-card-img"><img width="400" height="180" alt="Asian Paints Wall Primer – Paints supplier Chennai" loading="lazy" onerror="this.onerror=null;this.style.objectFit='contain';this.style.padding='20px';this.style.background='#1a3350';" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845898/royal_paint_h4tk3m.jpg"/><div class="product-card-img-overlay"></div><div class="product-card-cat-tag">Paints</div></div>
 <div class="product-card-body">
-<div class="product-card-brand-strip"><img width="400" height="180" alt="Asian Paints" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Asian_Paints_Logo.svg/200px-Asian_Paints_Logo.svg.png"/><span class="brand-logo-badge brand-asian" style="display:none">Asian Paints</span></div><div class="product-card-name">Acrylic Wall Primer</div>
+<div class="product-card-brand-strip"><img width="400" height="180" alt="Asian Paints" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Asian_paint_wyylv7.jpg"/><span class="brand-logo-badge brand-asian" style="display:none">Asian Paints</span></div><div class="product-card-name">Acrylic Wall Primer</div>
 <div class="product-card-desc">Water-based primer for new plaster &amp; repainting. Excellent adhesion &amp; alkali resistance. Reduces topcoat consumption.</div>
 <div class="product-card-footer">
 <div class="product-card-price">₹480<small>/20L</small></div>
@@ -4047,7 +4147,7 @@ footer {
 <div class="product-card-bar"></div>
 <div class="product-card-img"><img width="400" height="180" alt="Asian Paints SmartCare Dampshield – Paints supplier Chennai" loading="lazy" onerror="this.onerror=null;this.style.objectFit='contain';this.style.padding='20px';this.style.background='#1a3350';" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845976/Asian_faltpb.jpg"/><div class="product-card-img-overlay"></div><div class="product-card-cat-tag">Paints</div></div>
 <div class="product-card-body">
-<div class="product-card-brand-strip"><img width="400" height="180" alt="Asian Paints" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Asian_Paints_Logo.svg/200px-Asian_Paints_Logo.svg.png"/><span class="brand-logo-badge brand-asian" style="display:none">Asian Paints</span></div><div class="product-card-name">SmartCare Dampshield</div>
+<div class="product-card-brand-strip"><img width="400" height="180" alt="Asian Paints" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Asian_paint_wyylv7.jpg"/><span class="brand-logo-badge brand-asian" style="display:none">Asian Paints</span></div><div class="product-card-name">SmartCare Dampshield</div>
 <div class="product-card-desc">Elastomeric waterproof coating for terraces &amp; external walls. Bridges micro-cracks, 10-year moisture protection.</div>
 <div class="product-card-footer">
 <div class="product-card-price">₹1,100<small>/4L</small></div>
@@ -4853,11 +4953,11 @@ footer {
 <div class="brand-cat-count">5 brands</div>
 </div>
 <div class="brand-logos">
-<img width="400" height="180" alt="Dalmia Cement" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Dalmia_Bharat_logo.svg/200px-Dalmia_Bharat_logo.svg.png"/><span class="brand-pill" style="display:none">Dalmia</span>
+<img width="400" height="180" alt="Dalmia Cement" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846577/Dalmia_vk14ks.jpg"/><span class="brand-pill" style="display:none">Dalmia</span>
 <img width="400" height="180" alt="Ultratech Cement" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/UltraTech_Cement_Logo.svg/200px-UltraTech_Cement_Logo.svg.png"/><span class="brand-pill" style="display:none">Ultratech</span>
 <img width="400" height="180" alt="Zuari Cement" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846457/Zuari_bcanrp.jpg"/><span class="brand-pill" style="display:none">Zuari</span>
 <img width="400" height="180" alt="Chettinad Cement" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846580/chettinad-dealers-in-tirupur_yiaxik.jpg"/><span class="brand-pill" style="display:none">Chettinad</span>
-<img width="400" height="180" alt="Ramco Cement" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Ramco_Cements_Logo.svg/200px-Ramco_Cements_Logo.svg.png"/><span class="brand-pill" style="display:none">Ramco</span>
+<img width="400" height="180" alt="Ramco Cement" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846587/Ramco_qbgc8y.png"/><span class="brand-pill" style="display:none">Ramco</span>
 </div>
 </div>
 <!-- Steel -->
@@ -4908,7 +5008,7 @@ footer {
 <div class="brand-cat-count">1 brand</div>
 </div>
 <div class="brand-logos">
-<img width="400" height="180" alt="Asian Paints" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Asian_Paints_Logo.svg/200px-Asian_Paints_Logo.svg.png"/><span class="brand-pill" style="display:none">Asian Paints</span>
+<img width="400" height="180" alt="Asian Paints" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Asian_paint_wyylv7.jpg"/><span class="brand-pill" style="display:none">Asian Paints</span>
 </div>
 </div>
 <!-- Plumbing -->
@@ -4935,7 +5035,7 @@ footer {
 <div class="brand-logos">
 <img width="400" height="180" alt="Dr Fixit" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845980/DR_Fixit_rlxv8u.jpg"/><span class="brand-pill" style="display:none">Dr Fixit</span>
 <img width="400" height="180" alt="Fosguard" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845994/Fosguard_nlagum.jpg"/><span class="brand-pill" style="display:none">Fosguard</span>
-<img width="400" height="180" alt="Asian Paints" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Asian_Paints_Logo.svg/200px-Asian_Paints_Logo.svg.png"/><span class="brand-pill" style="display:none">Asian</span>
+<img width="400" height="180" alt="Asian Paints" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Asian_paint_wyylv7.jpg"/><span class="brand-pill" style="display:none">Asian</span>
 </div>
 </div>
 <!-- Bricks -->
@@ -4999,7 +5099,7 @@ footer {
 <div class="brand-logos">
 <img width="400" height="180" alt="Anchor Roma" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845945/Anchor1_mjwcte.jpg"/><span class="brand-pill" style="display:none">Anchor Roma</span>
 <img width="400" height="180" alt="GM Modular" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845948/GMproduct_ebbgnv.png"/><span class="brand-pill" style="display:none">GM Modular</span>
-<img width="400" height="180" alt="Legrand" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Legrand_logo.svg/200px-Legrand_logo.svg.png"/><span class="brand-pill" style="display:none">Legrand</span>
+<img width="400" height="180" alt="Legrand" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845945/Legrand_jaepv1.jpg"/><span class="brand-pill" style="display:none">Legrand</span>
 <img width="400" height="180" alt="Orbit Switches" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845872/Switches_and_sockets_p2lqqm.jpg"/><span class="brand-pill" style="display:none">Orbit Switches</span>
 </div>
 </div>
