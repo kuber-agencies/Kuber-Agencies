@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kuber Agencies – Image Fix Guide v2 (Production-Ready)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+
+<style>
+/* ─── RESET & BASE ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:    #07111f;
+  --navy2:   #0d1e35;
+  --navy3:   #1a3350;
+  --accent:  #f06d1e;
+  --accent2: #ff8c42;
+  --steel:   #7a8ea8;
+  --border:  #e4eaf4;
+  --white:   #ffffff;
+  --green:   #4ade80;
+  --red:     #f87171;
+  --yellow:  #fbbf24;
+  --blue:    #60a5fa;
+  --card-r:  16px;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+body {
+  background: var(--navy);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* ─── PAGE SHELL ───────────────────────────────────────── */
+.page-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* ─── HEADER ────────────────────────────────────────────── */
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+.logo-mark {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-head);
+  font-size: 20px; font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+}
+.site-title {
+  font-family: var(--font-head);
+  font-size: 22px; font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+.site-sub {
+  font-size: 12px; color: var(--steel);
+  letter-spacing: .5px; text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* ─── STATUS BANNER ─────────────────────────────────────── */
+.status-banner {
+  background: linear-gradient(90deg, rgba(240,109,30,.12), rgba(240,109,30,.04));
+  border: 1px solid rgba(240,109,30,.25);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #e0a070;
+}
+.status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 1.8s ease infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50%      { opacity:.4; transform:scale(1.4); }
+}
+
+/* ─── SECTION TITLE ─────────────────────────────────────── */
+.section-label {
+  font-family: var(--font-head);
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  margin-top: 4px;
+}
+
+/* ─── SECTION DIVIDER ───────────────────────────────────── */
+.section-divider {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,.06);
+  margin: 52px 0 40px;
+}
+
+/* ─── PRODUCT GRID ──────────────────────────────────────── */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 24px;
+  margin-bottom: 56px;
+}
+
+/* ─── PRODUCT CARD ──────────────────────────────────────── */
+.product-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--card-r);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .3s cubic-bezier(.4,0,.2,1),
+              box-shadow .3s ease,
+              border-color .3s ease;
+  position: relative;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(0,0,0,.22);
+  border-color: rgba(240,109,30,.35);
+}
+.product-card-bar {
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  flex-shrink: 0;
+}
+
+/* ─── IMAGE SECTION ─────────────────────────────────────── */
+.product-card-img {
+  width: 100%;
+  height: 210px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, var(--navy2) 0%, var(--navy3) 100%);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-card-img picture {
+  width: 100%; height: 100%;
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+.product-card-img picture img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform .45s cubic-bezier(.4,0,.2,1), opacity .3s ease;
+  filter: brightness(.94);
+}
+.product-card:hover .product-card-img picture img {
+  transform: scale(1.06);
+  filter: brightness(1.06);
+}
+.product-card-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 35%, rgba(7,17,31,.6) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+.product-card-cat-tag {
+  position: absolute;
+  bottom: 10px; left: 12px;
+  background: rgba(240,109,30,.92);
+  color: #fff;
+  font-size: 9px; font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 100px;
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+
+/* ─── FALLBACK PLACEHOLDER ──────────────────────────────── */
+.product-card-img .img-fallback {
+  position: absolute; inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--navy2), var(--navy3));
+  color: rgba(255,255,255,.45);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 12px;
+  z-index: 3;
+}
+.product-card-img .img-fallback svg { opacity: .35; }
+.product-card-img.has-fallback picture img { opacity: 0; position: absolute; }
+.product-card-img.has-fallback .img-fallback { display: flex; }
+
+/* ─── CARD BODY ─────────────────────────────────────────── */
+.card-body {
+  padding: 16px 18px 18px;
+  display: flex; flex-direction: column; flex: 1; gap: 8px;
+}
+.brand-row {
+  display: flex; align-items: center; gap: 8px; min-height: 36px;
+}
+.brand-logo {
+  height: 32px; width: auto; max-width: 96px;
+  object-fit: contain;
+  background: #f7f9fc;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1.5px solid rgba(0,0,0,.07);
+}
+.brand-badge {
+  display: none;
+  background: var(--navy2); color: #fff;
+  padding: 4px 12px; border-radius: 4px;
+  font-size: 10px; font-weight: 800; letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.product-name {
+  font-family: var(--font-head);
+  font-size: 15px; font-weight: 800;
+  color: #1e2d45; line-height: 1.3;
+}
+.product-desc {
+  font-size: 13px; color: var(--steel); line-height: 1.65;
+  flex: 1;
+}
+.card-footer {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.price {
+  font-size: 20px; font-weight: 900; color: var(--accent);
+  font-family: var(--font-head);
+}
+.price small { font-size: 11px; font-weight: 600; }
+.btn-row { display: flex; gap: 8px; }
+.btn-wa {
+  background: #25d366; color: #fff;
+  padding: 7px 14px; border-radius: 7px;
+  font-size: 11px; font-weight: 700;
+  text-decoration: none;
+  transition: opacity .2s;
+}
+.btn-wa:hover { opacity: .88; }
+.btn-quote {
+  background: var(--navy); color: #fff;
+  padding: 7px 12px; border-radius: 7px;
+  font-size: 11px; font-weight: 700;
+  border: none; cursor: pointer;
+  transition: opacity .2s;
+}
+.btn-quote:hover { opacity: .82; }
+
+/* ─── ROOT CAUSE CARDS ──────────────────────────────────── */
+.rca-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 48px;
+}
+.rca-card {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 14px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.rca-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.rca-card.red::before   { background: linear-gradient(90deg, #f87171, #ef4444); }
+.rca-card.yellow::before{ background: linear-gradient(90deg, #fbbf24, #f59e0b); }
+.rca-card.blue::before  { background: linear-gradient(90deg, #60a5fa, #3b82f6); }
+.rca-card.purple::before{ background: linear-gradient(90deg, #a78bfa, #7c3aed); }
+.rca-status-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px; border-radius: 100px;
+  font-size: 10px; font-weight: 800; letter-spacing: 1px;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.rca-status-pill.red    { background: rgba(248,113,113,.15); color: #f87171; border: 1px solid rgba(248,113,113,.3); }
+.rca-status-pill.yellow { background: rgba(251,191,36,.15);  color: #fbbf24; border: 1px solid rgba(251,191,36,.3); }
+.rca-status-pill.blue   { background: rgba(96,165,250,.15);  color: #60a5fa; border: 1px solid rgba(96,165,250,.3); }
+.rca-status-pill.purple { background: rgba(167,139,250,.15); color: #a78bfa; border: 1px solid rgba(167,139,250,.3); }
+.rca-title {
+  font-family: var(--font-head);
+  font-size: 15px; font-weight: 800; color: #fff;
+  margin-bottom: 8px;
+}
+.rca-body {
+  font-size: 12px; color: var(--steel); line-height: 1.7;
+}
+.rca-body strong { color: #c8d8f0; }
+.rca-causes {
+  margin-top: 10px;
+  list-style: none;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.rca-causes li {
+  font-size: 11px; color: var(--steel); line-height: 1.5;
+  padding-left: 14px; position: relative;
+}
+.rca-causes li::before {
+  content: '→';
+  position: absolute; left: 0;
+  color: var(--accent); font-size: 10px;
+}
+
+/* ─── BIG SERVER FIX PANEL ──────────────────────────────── */
+.server-fix-panel {
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 48px;
+}
+.server-fix-panel h2 {
+  font-family: var(--font-head);
+  font-size: 18px; font-weight: 800; color: #fff;
+  margin-bottom: 4px;
+}
+.server-fix-panel > p {
+  font-size: 13px; color: var(--steel); margin-bottom: 28px;
+}
+.fix-step {
+  margin-bottom: 32px;
+}
+.fix-step:last-child { margin-bottom: 0; }
+.fix-step-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 10px;
+}
+.fix-step-num {
+  width: 28px; height: 28px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800; color: #fff;
+  flex-shrink: 0;
+}
+.fix-step-title {
+  font-family: var(--font-head);
+  font-size: 14px; font-weight: 800; color: #fff;
+}
+.fix-step-desc {
+  font-size: 12px; color: var(--steel); line-height: 1.65;
+  margin-bottom: 10px;
+  padding-left: 40px;
+}
+.fix-step-desc code {
+  background: rgba(255,255,255,.08);
+  padding: 1px 6px; border-radius: 4px;
+  font-size: 11px; color: #a8c4e0;
+}
+.code-block {
+  background: rgba(0,0,0,.5);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+  padding: 16px 18px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #a8c4e0;
+  line-height: 1.8;
+  overflow-x: auto;
+  white-space: pre;
+  margin-left: 40px;
+  position: relative;
+}
+.code-block .comment { color: #4a6a8a; }
+.code-block .keyword { color: var(--accent2); }
+.code-block .string  { color: var(--green); }
+.copy-btn {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+  color: #a8c4e0;
+  font-size: 10px; font-weight: 700;
+  padding: 4px 10px; border-radius: 5px;
+  cursor: pointer; letter-spacing: .5px;
+  text-transform: uppercase;
+  transition: background .2s;
+  font-family: var(--font-body);
+}
+.copy-btn:hover { background: rgba(255,255,255,.14); }
+.copy-btn.copied { color: var(--green); }
+
+/* ─── TABS ──────────────────────────────────────────────── */
+.tab-row {
+  display: flex; gap: 4px;
+  margin-bottom: 14px;
+  margin-left: 40px;
+}
+.tab-btn {
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 11px; font-weight: 700;
+  border: 1px solid rgba(255,255,255,.1);
+  background: transparent;
+  color: var(--steel);
+  cursor: pointer;
+  transition: background .2s, color .2s;
+  font-family: var(--font-body);
+}
+.tab-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ─── BULK SCRIPT PANEL ─────────────────────────────────── */
+.script-panel {
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 48px;
+}
+.script-panel h2 {
+  font-family: var(--font-head);
+  font-size: 16px; font-weight: 800; color: #fff;
+  margin-bottom: 6px;
+}
+.script-panel p { font-size: 12px; color: var(--steel); margin-bottom: 16px; }
+.script-full {
+  background: rgba(0,0,0,.5);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+  padding: 18px;
+  font-family: 'Courier New', monospace;
+  font-size: 11.5px;
+  color: #a8c4e0;
+  line-height: 1.85;
+  overflow-x: auto;
+  white-space: pre;
+  position: relative;
+}
+
+/* ─── DIAGNOSTIC PANEL ──────────────────────────────────── */
+.diag-panel {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  padding: 28px 28px 24px;
+  margin-bottom: 48px;
+}
+.diag-panel h2 {
+  font-family: var(--font-head);
+  font-size: 17px; font-weight: 800; color: #fff;
+  margin-bottom: 4px;
+}
+.diag-panel > p {
+  font-size: 13px; color: var(--steel); margin-bottom: 20px;
+}
+.diag-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.diag-card {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.diag-card:hover { background: rgba(255,255,255,.07); border-color: rgba(240,109,30,.3); }
+.diag-card .dc-label {
+  font-size: 9px; font-weight: 800; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--accent);
+}
+.diag-card .dc-title { font-size: 13px; font-weight: 700; color: #fff; }
+.diag-card .dc-desc { font-size: 11px; color: var(--steel); margin-top: 2px; line-height: 1.5; }
+.diag-run-btn {
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  color: #fff;
+  border: none; cursor: pointer;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 13px; font-weight: 700;
+  font-family: var(--font-body);
+  transition: opacity .2s;
+  margin-right: 8px;
+}
+.diag-run-btn:hover { opacity: .88; }
+#diag-output {
+  margin-top: 14px;
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+}
+.diag-result-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: rgba(0,0,0,.25);
+  border-radius: 8px; padding: 10px 14px;
+  font-size: 12px; font-family: 'Courier New', monospace;
+}
+.diag-result-row .status { font-weight: 800; flex-shrink: 0; min-width: 38px; }
+.status.ok     { color: var(--green); }
+.status.fail   { color: var(--red); }
+.status.warn   { color: var(--yellow); }
+.diag-result-row .url { color: #a8c4e0; word-break: break-all; }
+
+/* ─── FIX REFERENCE CARDS ───────────────────────────────── */
+.fix-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 48px;
+}
+.fix-card {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+.fix-card .fix-num {
+  font-family: var(--font-head);
+  font-size: 28px; font-weight: 800;
+  color: rgba(240,109,30,.2);
+  line-height: 1; margin-bottom: 6px;
+}
+.fix-card .fix-title {
+  font-family: var(--font-head);
+  font-size: 14px; font-weight: 800; color: #fff;
+  margin-bottom: 6px;
+}
+.fix-card .fix-body { font-size: 12px; color: var(--steel); line-height: 1.65; }
+.fix-card .fix-cmd {
+  margin-top: 10px;
+  background: rgba(0,0,0,.4);
+  border-radius: 6px; padding: 8px 12px;
+  font-family: 'Courier New', monospace;
+  font-size: 11px; color: #a8c4e0;
+  overflow-x: auto; white-space: pre;
+}
+.badge-fixed {
+  display: inline-block;
+  background: rgba(74,222,128,.15);
+  color: var(--green);
+  border: 1px solid rgba(74,222,128,.3);
+  border-radius: 100px;
+  font-size: 9px; font-weight: 800; letter-spacing: 1px;
+  padding: 2px 8px;
+  text-transform: uppercase;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+/* ─── DEBUGGING WORKFLOW ────────────────────────────────── */
+.debug-panel {
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 48px;
+}
+.debug-panel h2 { font-family: var(--font-head); font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+.debug-panel > p { font-size: 13px; color: var(--steel); margin-bottom: 24px; }
+.debug-step-list { display: flex; flex-direction: column; gap: 20px; }
+.debug-step {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.debug-step-num {
+  width: 28px; height: 28px;
+  background: rgba(240,109,30,.15);
+  border: 1px solid rgba(240,109,30,.3);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; color: var(--accent);
+  flex-shrink: 0; margin-top: 1px;
+}
+.debug-step-content {}
+.debug-step-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.debug-step-body { font-size: 12px; color: var(--steel); line-height: 1.65; margin-bottom: 8px; }
+.debug-step-body code {
+  background: rgba(255,255,255,.07);
+  padding: 1px 6px; border-radius: 4px;
+  font-size: 11px; color: #a8c4e0;
+}
+.inline-code-block {
+  background: rgba(0,0,0,.45);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: 'Courier New', monospace;
+  font-size: 11.5px;
+  color: #a8c4e0;
+  line-height: 1.75;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* ─── PREVENTION STRATEGY ───────────────────────────────── */
+.prevent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 48px;
+}
+.prevent-card {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+.prevent-icon {
+  font-size: 22px; margin-bottom: 10px;
+}
+.prevent-title {
+  font-family: var(--font-head);
+  font-size: 13px; font-weight: 800; color: #fff;
+  margin-bottom: 6px;
+}
+.prevent-body { font-size: 12px; color: var(--steel); line-height: 1.7; }
+.prevent-body ul { padding-left: 14px; margin-top: 6px; }
+.prevent-body li { margin-bottom: 3px; }
+.prevent-body code {
+  background: rgba(255,255,255,.07);
+  padding: 1px 5px; border-radius: 3px;
+  font-size: 10px; color: #a8c4e0;
+}
+
+/* ─── FOOTER ────────────────────────────────────────────── */
+.page-footer {
+  text-align: center;
+  font-size: 12px; color: rgba(255,255,255,.2);
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+
+/* ─── ANIMATIONS ────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(18px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.product-card  { animation: fadeUp .5s ease both; }
+.product-card:nth-child(1) { animation-delay: .05s; }
+.product-card:nth-child(2) { animation-delay: .12s; }
+.product-card:nth-child(3) { animation-delay: .19s; }
+.product-card:nth-child(4) { animation-delay: .26s; }
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .code-block, .script-full, .inline-code-block { font-size: 10px; padding: 12px; margin-left: 0; }
+  .fix-step-desc { padding-left: 0; }
+  .tab-row { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- ─── HEADER ─────────────────────────────────────────── -->
+  <div class="site-header">
+    <div class="logo-mark">K</div>
+    <div>
+      <div class="site-title">Kuber Agencies</div>
+      <div class="site-sub">Image Fix Guide v2 · Production-Ready · Apache &amp; Nginx</div>
+    </div>
+  </div>
+
+  <!-- ─── STATUS BANNER ──────────────────────────────────── -->
+  <div class="status-banner">
+    <div class="status-dot"></div>
+    <span>v2 — Full server-side fix guide added: root cause analysis, Apache/.htaccess config, Nginx config, bulk fix script, debugging workflow &amp; prevention strategy. Frontend fallback chain already applied.</span>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 1 — PRODUCT CARDS
+  ════════════════════════════════════════════════════════ -->
+  <div class="section-label">Products</div>
+  <div class="product-grid">
+
+    <!-- CARD 1 — Ultratech OPC 53 -->
+    <div class="product-card" data-brand="Ultratech" data-cat="cement" data-name="Ultratech OPC 53 Grade">
+      <div class="product-card-bar"></div>
+      <div class="product-card-img">
+        <picture>
+          <source srcset="https://kuberagencies.in/images/cement/ultratech-opc53-cement-bags-chennai.webp" type="image/webp"/>
+          <img
+            src="https://kuberagencies.in/images/cement/ultratech-opc53-cement-bags-chennai.jpg"
+            alt="Ultratech OPC 53 Grade cement bags – Kuber Agencies Chennai"
+            width="400" height="210"
+            loading="eager"
+            onerror="handleImgError(this,'Cement')"
+          />
+        </picture>
+        <div class="img-fallback" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="8" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none"/><circle cx="17" cy="18" r="4" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none"/><path d="M4 34 L14 22 L22 30 L30 20 L44 34" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
+          <span>Image uploading soon</span>
+        </div>
+        <div class="product-card-img-overlay"></div>
+        <div class="product-card-cat-tag">Cement</div>
+      </div>
+      <div class="card-body">
+        <div class="brand-row">
+          <img class="brand-logo" loading="lazy"
+               src="https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/UltraTech_Cement_Logo.svg/200px-UltraTech_Cement_Logo.svg.png"
+               alt="Ultratech Cement"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'"/>
+          <span class="brand-badge">Ultratech</span>
+        </div>
+        <div class="product-name">Ultratech OPC 53 Grade</div>
+        <div class="product-desc">High-early-strength cement for RCC columns, footings &amp; slabs. IS:269 certified.</div>
+        <div class="card-footer">
+          <span class="price">₹390<small>/bag</small></span>
+          <div class="btn-row">
+            <a class="btn-wa" href="https://wa.me/919840928767?text=Hi%20I%20need%20Ultratech%20OPC%2053%20quote" target="_blank" rel="noopener">WhatsApp</a>
+            <button class="btn-quote">📋 Quote</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 2 — Ultratech PPC -->
+    <div class="product-card" data-brand="Ultratech" data-cat="cement" data-name="Ultratech PPC Cement">
+      <div class="product-card-bar"></div>
+      <div class="product-card-img">
+        <picture>
+          <source srcset="https://kuberagencies.in/images/cement/ultratech-ppc-cement-bags-chennai.webp" type="image/webp"/>
+          <img
+            src="https://kuberagencies.in/images/cement/ultratech-ppc-cement-bags-chennai.jpg"
+            alt="Ultratech PPC cement bags – Kuber Agencies Chennai"
+            width="400" height="210"
+            loading="lazy"
+            onerror="handleImgError(this,'Cement')"
+          />
+        </picture>
+        <div class="img-fallback" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="8" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none"/><circle cx="17" cy="18" r="4" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none"/><path d="M4 34 L14 22 L22 30 L30 20 L44 34" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
+          <span>Image uploading soon</span>
+        </div>
+        <div class="product-card-img-overlay"></div>
+        <div class="product-card-cat-tag">Cement</div>
+      </div>
+      <div class="card-body">
+        <div class="brand-row">
+          <img class="brand-logo" loading="lazy"
+               src="https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/UltraTech_Cement_Logo.svg/200px-UltraTech_Cement_Logo.svg.png"
+               alt="Ultratech Cement"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'"/>
+          <span class="brand-badge">Ultratech</span>
+        </div>
+        <div class="product-name">Ultratech PPC Cement</div>
+        <div class="product-desc">Portland Pozzolana Cement for plastering, brickwork &amp; general construction. IS:1489 certified.</div>
+        <div class="card-footer">
+          <span class="price">₹370<small>/bag</small></span>
+          <div class="btn-row">
+            <a class="btn-wa" href="https://wa.me/919840928767?text=Hi%20I%20need%20Ultratech%20PPC%20quote" target="_blank" rel="noopener">WhatsApp</a>
+            <button class="btn-quote">📋 Quote</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 3 — JSW Steel -->
+    <div class="product-card" data-brand="JSW" data-cat="steel" data-name="JSW TMT Fe-500D Bars">
+      <div class="product-card-bar" style="background:linear-gradient(90deg,#2563eb,#60a5fa);"></div>
+      <div class="product-card-img">
+        <picture>
+          <source srcset="https://kuberagencies.in/images/steel/jsw-tmt-fe500d-bars-chennai.webp" type="image/webp"/>
+          <img
+            src="https://kuberagencies.in/images/steel/jsw-tmt-fe500d-bars-chennai.jpg"
+            alt="JSW TMT Fe-500D steel bars – Kuber Agencies Chennai"
+            width="400" height="210"
+            loading="lazy"
+            onerror="handleImgError(this,'Steel')"
+          />
+        </picture>
+        <div class="img-fallback" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="8" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none"/><circle cx="17" cy="18" r="4" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none"/><path d="M4 34 L14 22 L22 30 L30 20 L44 34" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
+          <span>Image uploading soon</span>
+        </div>
+        <div class="product-card-img-overlay"></div>
+        <div class="product-card-cat-tag">Steel</div>
+      </div>
+      <div class="card-body">
+        <div class="brand-row">
+          <span class="brand-badge" style="display:inline-block;background:#1e3a5f;">JSW Steel</span>
+        </div>
+        <div class="product-name">JSW TMT Fe-500D Bars</div>
+        <div class="product-desc">Earthquake-resistant thermo-mechanically treated bars for structural RCC. IS:1786 grade Fe-500D.</div>
+        <div class="card-footer">
+          <span class="price">₹62<small>/kg</small></span>
+          <div class="btn-row">
+            <a class="btn-wa" href="https://wa.me/919840928767?text=Hi%20I%20need%20JSW%20TMT%20quote" target="_blank" rel="noopener">WhatsApp</a>
+            <button class="btn-quote">📋 Quote</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 4 — Asian Paints -->
+    <div class="product-card" data-brand="AsianPaints" data-cat="paints" data-name="Asian Paints Apex Exterior">
+      <div class="product-card-bar" style="background:linear-gradient(90deg,#7c3aed,#a78bfa);"></div>
+      <div class="product-card-img">
+        <picture>
+          <source srcset="https://kuberagencies.in/images/paints/asian-paints-apex-exterior-chennai.webp" type="image/webp"/>
+          <img
+            src="https://kuberagencies.in/images/paints/asian-paints-apex-exterior-chennai.jpg"
+            alt="Asian Paints Apex Exterior emulsion – Kuber Agencies Chennai"
+            width="400" height="210"
+            loading="lazy"
+            onerror="handleImgError(this,'Paints')"
+          />
+        </picture>
+        <div class="img-fallback" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="8" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none"/><circle cx="17" cy="18" r="4" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none"/><path d="M4 34 L14 22 L22 30 L30 20 L44 34" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
+          <span>Image uploading soon</span>
+        </div>
+        <div class="product-card-img-overlay"></div>
+        <div class="product-card-cat-tag">Paints</div>
+      </div>
+      <div class="card-body">
+        <div class="brand-row">
+          <span class="brand-badge" style="display:inline-block;background:#4c1d95;">Asian Paints</span>
+        </div>
+        <div class="product-name">Asian Paints Apex Exterior</div>
+        <div class="product-desc">Weather-proof exterior emulsion with UV &amp; algae resistance. Ideal for Chennai coastal climate.</div>
+        <div class="card-footer">
+          <span class="price">₹480<small>/L</small></span>
+          <div class="btn-row">
+            <a class="btn-wa" href="https://wa.me/919840928767?text=Hi%20I%20need%20Asian%20Paints%20quote" target="_blank" rel="noopener">WhatsApp</a>
+            <button class="btn-quote">📋 Quote</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.product-grid -->
+
+  <hr class="section-divider"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 2 — ROOT CAUSE ANALYSIS
+  ════════════════════════════════════════════════════════ -->
+  <div class="section-label">① Root Cause Analysis</div>
+  <div class="rca-grid">
+
+    <div class="rca-card red">
+      <div class="rca-status-pill red">HTTP 404 · File Not Found</div>
+      <div class="rca-title">File Does Not Exist on Server</div>
+      <div class="rca-body">
+        The web server found no file at the requested path. This is the most common cause.
+        <ul class="rca-causes">
+          <li>Image was never uploaded to the server.</li>
+          <li>Wrong directory — uploaded to <strong>/uploads/</strong> but URL points to <strong>/images/</strong>.</li>
+          <li>Case mismatch: Linux is case-sensitive. <strong>Cement.webp ≠ cement.webp</strong>.</li>
+          <li>Filename typo: underscore vs hyphen, extra spaces, unicode characters.</li>
+          <li>Extension mismatch: file saved as <strong>.jpeg</strong> but URL requests <strong>.jpg</strong>.</li>
+          <li>Symlink pointing to a path that no longer exists.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rca-card yellow">
+      <div class="rca-status-pill yellow">HTTP 403 · Permission Denied</div>
+      <div class="rca-title">File Exists but Server Can't Read It</div>
+      <div class="rca-body">
+        File is on disk but the web server process (www-data / nginx) lacks read permission.
+        <ul class="rca-causes">
+          <li>File uploaded with permissions <strong>600</strong> (owner-only). Needs <strong>644</strong>.</li>
+          <li>Parent directory missing execute bit. Needs <strong>755</strong> — without it the server can't traverse into it.</li>
+          <li>File owned by <strong>root</strong> or a deploy user, not <strong>www-data</strong>.</li>
+          <li>SELinux or AppArmor policy blocking access (less common on shared hosting).</li>
+          <li>Apache <code>Options -Indexes</code> combined with missing index — returns 403 for directories, not files, but often confused.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rca-card blue">
+      <div class="rca-status-pill blue">CORS / Network Error</div>
+      <div class="rca-title">Missing Cross-Origin Header</div>
+      <div class="rca-body">
+        Browser blocks the resource because the server didn't send <strong>Access-Control-Allow-Origin</strong>.
+        <ul class="rca-causes">
+          <li>JS <code>fetch()</code> or an external page loading your images triggers CORS policy.</li>
+          <li>Apache mod_headers not enabled (<code>a2enmod headers</code> not run).</li>
+          <li>.htaccess Header directives ignored because <code>AllowOverride None</code> in vhost config.</li>
+          <li>Nginx missing <code>add_header Access-Control-Allow-Origin *</code> in the location block.</li>
+          <li>CDN or reverse proxy stripping your CORS headers before they reach the browser.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rca-card purple">
+      <div class="rca-status-pill purple">HTTP 200 but Broken</div>
+      <div class="rca-title">Wrong MIME Type or Corrupt File</div>
+      <div class="rca-body">
+        File is delivered but browser refuses to render it as an image.
+        <ul class="rca-causes">
+          <li>Server returns <strong>text/plain</strong> or <strong>application/octet-stream</strong> for .webp — browser ignores it.</li>
+          <li>WebP MIME type not registered: older Apache/Nginx without explicit <code>image/webp</code> mapping.</li>
+          <li>File was corrupted during SFTP transfer (ASCII mode used instead of binary).</li>
+          <li>File is actually a renamed PNG/JPG — extension is .webp but header is wrong.</li>
+          <li>Truncated upload: partial file due to a failed transfer.</li>
+          <li>PHP/CMS accidentally serving a 200 HTML error page instead of the binary image.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="section-divider"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 3 — STEP-BY-STEP SERVER FIX
+  ════════════════════════════════════════════════════════ -->
+  <div class="section-label">② Step-by-Step Server Fix</div>
+  <div class="server-fix-panel">
+    <h2>Server-Side Fix — Apache &amp; Nginx</h2>
+    <p>Run every step in order over SSH. Fixes 404, 403, CORS, and MIME errors permanently.</p>
+
+    <!-- STEP A: Verify files exist -->
+    <div class="fix-step">
+      <div class="fix-step-header">
+        <div class="fix-step-num">A</div>
+        <div class="fix-step-title">Verify Files Exist &amp; Fix Naming</div>
+      </div>
+      <div class="fix-step-desc">
+        Check each category directory. All filenames must be <strong>lowercase with hyphens</strong>. No spaces, no uppercase, no underscores.
+      </div>
+      <div class="code-block" id="code-a"><button class="copy-btn" onclick="copyCode('code-a',this)">COPY</button><span class="comment"># List what's actually on disk in each category</span>
+ls -la /var/www/html/images/cement/
+ls -la /var/www/html/images/steel/
+ls -la /var/www/html/images/paints/
+
+<span class="comment"># Check a specific file you expect to exist</span>
+ls -la /var/www/html/images/cement/ultratech-opc53-cement-bags-chennai.webp
+ls -la /var/www/html/images/cement/ultratech-opc53-cement-bags-chennai.jpg
+
+<span class="comment"># Find any uppercase filenames (these will 404 on Linux!)</span>
+find /var/www/html/images/ -name "*[A-Z]*"
+
+<span class="comment"># Rename all to lowercase in one shot (safe — skips already-lowercase)</span>
+find /var/www/html/images/ -depth -name "*[A-Z]*" | while read f; do
+  target=$(dirname "$f")/$(basename "$f" | tr 'A-Z' 'a-z')
+  [ "$f" != "$target" ] && mv "$f" "$target" && echo "Renamed: $f → $target"
+done
+
+<span class="comment"># Replace underscores with hyphens (URL convention)</span>
+find /var/www/html/images/ -depth -name "*_*" | while read f; do
+  target=$(echo "$f" | tr '_' '-')
+  [ "$f" != "$target" ] && mv "$f" "$target" && echo "Renamed: $f → $target"
+done</div>
+    </div>
+
+    <!-- STEP B: Fix permissions -->
+    <div class="fix-step">
+      <div class="fix-step-header">
+        <div class="fix-step-num">B</div>
+        <div class="fix-step-title">Fix File Permissions &amp; Ownership</div>
+      </div>
+      <div class="fix-step-desc">
+        Files need <code>644</code>, directories need <code>755</code>. Owner must be <code>www-data</code> (Apache/Nginx web user on Ubuntu/Debian). On CentOS/RHEL use <code>apache:apache</code> instead.
+      </div>
+      <div class="code-block" id="code-b"><button class="copy-btn" onclick="copyCode('code-b',this)">COPY</button><span class="comment"># Fix ALL image file permissions recursively</span>
+find /var/www/html/images/ -type f -exec chmod 644 {} \;
+
+<span class="comment"># Fix ALL directory permissions recursively</span>
+find /var/www/html/images/ -type d -exec chmod 755 {} \;
+
+<span class="comment"># Set correct ownership (Ubuntu/Debian)</span>
+chown -R www-data:www-data /var/www/html/images/
+
+<span class="comment"># --- If on CentOS / RHEL / Fedora, use this instead:</span>
+<span class="comment"># chown -R apache:apache /var/www/html/images/</span>
+
+<span class="comment"># Verify the fix worked (should show -rw-r--r-- and drwxr-xr-x)</span>
+ls -la /var/www/html/images/
+ls -la /var/www/html/images/cement/</div>
+    </div>
+
+    <!-- STEP C: Apache .htaccess -->
+    <div class="fix-step">
+      <div class="fix-step-header">
+        <div class="fix-step-num">C</div>
+        <div class="fix-step-title">Fix Apache — .htaccess Config</div>
+      </div>
+      <div class="fix-step-desc">
+        Create or update <code>/var/www/html/.htaccess</code>. This fixes WebP MIME type, CORS headers, and cache headers in one file. First enable required modules.
+      </div>
+
+      <div class="tab-row" id="apache-tabs">
+        <button class="tab-btn active" onclick="switchTab('apache','modules')">Step 1: Enable Modules</button>
+        <button class="tab-btn" onclick="switchTab('apache','htaccess')">Step 2: .htaccess</button>
+        <button class="tab-btn" onclick="switchTab('apache','vhost')">Step 3: VHost Check</button>
+      </div>
+
+      <div id="apache-modules" class="tab-panel active">
+        <div class="code-block" id="code-c1"><button class="copy-btn" onclick="copyCode('code-c1',this)">COPY</button><span class="comment"># Enable the required Apache modules (run as root)</span>
+a2enmod headers
+a2enmod mime
+a2enmod expires
+
+<span class="comment"># Restart Apache to apply</span>
+systemctl restart apache2
+
+<span class="comment"># Confirm modules are active</span>
+apache2ctl -M | grep -E 'headers|mime|expires'</div>
+      </div>
+
+      <div id="apache-htaccess" class="tab-panel">
+        <div class="code-block" id="code-c2"><button class="copy-btn" onclick="copyCode('code-c2',this)">COPY</button><span class="comment"># Create/overwrite /var/www/html/.htaccess with this content:</span>
+cat > /var/www/html/.htaccess &lt;&lt; 'EOF'
+# ── WebP MIME type ─────────────────────────────────────────
+AddType image/webp .webp
+
+# ── CORS headers for images (required for JS fetch / CDN) ──
+&lt;FilesMatch "\.(webp|jpg|jpeg|png|gif|svg)$"&gt;
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, HEAD, OPTIONS"
+    Header set Vary "Accept"
+&lt;/FilesMatch&gt;
+
+# ── Long-term cache headers (1 year) ───────────────────────
+&lt;IfModule mod_expires.c&gt;
+    ExpiresActive On
+    ExpiresByType image/webp  "access plus 1 year"
+    ExpiresByType image/jpeg  "access plus 1 year"
+    ExpiresByType image/png   "access plus 1 year"
+    ExpiresByType image/gif   "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+&lt;/IfModule&gt;
+
+&lt;FilesMatch "\.(webp|jpg|jpeg|png|gif|svg)$"&gt;
+    Header set Cache-Control "max-age=31536000, public, immutable"
+&lt;/FilesMatch&gt;
+
+# ── Security: hide server version in error pages ───────────
+ServerSignature Off
+EOF
+
+<span class="comment"># Verify it was written correctly</span>
+cat /var/www/html/.htaccess
+
+<span class="comment"># Test Apache config — must show Syntax OK before restarting</span>
+apachectl configtest
+
+<span class="comment"># Reload (not restart) — zero downtime</span>
+systemctl reload apache2</div>
+      </div>
+
+      <div id="apache-vhost" class="tab-panel">
+        <div class="code-block" id="code-c3"><button class="copy-btn" onclick="copyCode('code-c3',this)">COPY</button><span class="comment"># IMPORTANT: .htaccess only works if AllowOverride is NOT "None"</span>
+<span class="comment"># Check your virtual host config:</span>
+grep -r "AllowOverride" /etc/apache2/sites-enabled/
+
+<span class="comment"># If you see "AllowOverride None", change it to "AllowOverride All":</span>
+<span class="comment"># Edit the file shown (usually 000-default.conf or your domain.conf)</span>
+nano /etc/apache2/sites-enabled/000-default.conf
+
+<span class="comment"># Find this block and change None → All:</span>
+<span class="comment">#   &lt;Directory /var/www/html&gt;</span>
+<span class="comment">#       AllowOverride All    ← change from None to All</span>
+<span class="comment">#   &lt;/Directory&gt;</span>
+
+<span class="comment"># After editing, test and reload:</span>
+apachectl configtest &amp;&amp; systemctl reload apache2</div>
+      </div>
+    </div>
+
+    <!-- STEP D: Nginx -->
+    <div class="fix-step">
+      <div class="fix-step-header">
+        <div class="fix-step-num">D</div>
+        <div class="fix-step-title">Fix Nginx Config (if using Nginx)</div>
+      </div>
+      <div class="fix-step-desc">
+        Add the WebP MIME type and CORS/cache headers to your server block. Edit <code>/etc/nginx/sites-available/kuberagencies.in</code> (or your domain config file).
+      </div>
+      <div class="code-block" id="code-d"><button class="copy-btn" onclick="copyCode('code-d',this)">COPY</button><span class="comment"># Open your Nginx site config</span>
+nano /etc/nginx/sites-available/kuberagencies.in
+
+<span class="comment"># ── Add this INSIDE your server { } block ────────────────────────</span>
+<span class="comment"># WebP MIME type (add to the types{} block or use include)</span>
+types {
+    image/webp    webp;
+    image/jpeg    jpg jpeg;
+    image/png     png;
+    image/gif     gif;
+    image/svg+xml svg svgz;
+}
+
+<span class="comment"># Image-specific location block — CORS + cache headers</span>
+location ~* \.(webp|jpg|jpeg|png|gif|svg)$ {
+    add_header Access-Control-Allow-Origin  "*"  always;
+    add_header Access-Control-Allow-Methods "GET, HEAD, OPTIONS" always;
+    add_header Vary                         "Accept" always;
+    add_header Cache-Control                "max-age=31536000, public, immutable" always;
+    expires 1y;
+
+    <span class="comment"># Allow OPTIONS preflight</span>
+    if ($request_method = OPTIONS) {
+        add_header Access-Control-Allow-Origin  "*";
+        add_header Access-Control-Allow-Methods "GET, HEAD, OPTIONS";
+        add_header Content-Length 0;
+        return 204;
+    }
+}
+<span class="comment"># ─────────────────────────────────────────────────────────────────</span>
+
+<span class="comment"># Test config — must say "syntax is ok" and "test is successful"</span>
+nginx -t
+
+<span class="comment"># Reload (zero downtime)</span>
+systemctl reload nginx</div>
+    </div>
+
+    <!-- STEP E: Convert JPG → WebP -->
+    <div class="fix-step">
+      <div class="fix-step-header">
+        <div class="fix-step-num">E</div>
+        <div class="fix-step-title">Generate Missing WebP Files from JPGs</div>
+      </div>
+      <div class="fix-step-desc">
+        If you only have JPG originals on the server, batch-convert them to WebP. Quality 85 gives excellent compression with no visible loss.
+      </div>
+      <div class="code-block" id="code-e"><button class="copy-btn" onclick="copyCode('code-e',this)">COPY</button><span class="comment"># Install cwebp (Google's WebP encoder)</span>
+sudo apt update &amp;&amp; sudo apt install -y webp
+
+<span class="comment"># Single file conversion</span>
+cwebp /var/www/html/images/cement/ultratech-opc53-cement-bags-chennai.jpg \
+      -o /var/www/html/images/cement/ultratech-opc53-cement-bags-chennai.webp \
+      -q 85
+
+<span class="comment"># Bulk convert ALL .jpg files in the entire images tree</span>
+<span class="comment"># Skips files that already have a .webp counterpart</span>
+find /var/www/html/images/ -name "*.jpg" | while read jpg; do
+    webp="${jpg%.jpg}.webp"
+    if [ ! -f "$webp" ]; then
+        cwebp "$jpg" -o "$webp" -q 85 &amp;&amp; echo "✓ Converted: $webp"
+    else
+        echo "↷ Skipped (exists): $webp"
+    fi
+done
+
+<span class="comment"># Fix permissions on the newly created .webp files</span>
+find /var/www/html/images/ -name "*.webp" -exec chmod 644 {} \;
+chown -R www-data:www-data /var/www/html/images/
+
+<span class="comment"># Verify conversion: compare file sizes</span>
+ls -lh /var/www/html/images/cement/</div>
+    </div>
+
+    <!-- STEP F: Verify MIME types actually served -->
+    <div class="fix-step">
+      <div class="fix-step-header">
+        <div class="fix-step-num">F</div>
+        <div class="fix-step-title">Verify MIME Types Are Actually Served</div>
+      </div>
+      <div class="fix-step-desc">
+        After applying the config, confirm the server really sends <code>image/webp</code>. Do this from your SSH session.
+      </div>
+      <div class="code-block" id="code-f"><button class="copy-btn" onclick="copyCode('code-f',this)">COPY</button><span class="comment"># Check Content-Type header returned by the server</span>
+curl -sI https://kuberagencies.in/images/cement/ultratech-opc53-cement-bags-chennai.webp \
+  | grep -i "content-type"
+<span class="comment"># Expected: content-type: image/webp</span>
+
+<span class="comment"># Check CORS header is present</span>
+curl -sI https://kuberagencies.in/images/cement/ultratech-opc53-cement-bags-chennai.webp \
+  | grep -i "access-control"
+<span class="comment"># Expected: access-control-allow-origin: *</span>
+
+<span class="comment"># Full header dump for one URL</span>
+curl -sv https://kuberagencies.in/images/cement/ultratech-opc53-cement-bags-chennai.webp \
+  -o /dev/null 2&gt;&amp;1 | grep "&lt;"
+
+<span class="comment"># Check HTTP status codes for all three example URLs</span>
+for url in \
+  "https://kuberagencies.in/images/cement/ultratech-opc53-cement-bags-chennai.webp" \
+  "https://kuberagencies.in/images/steel/jsw-tmt-fe500d-bars-chennai.webp" \
+  "https://kuberagencies.in/images/paints/asian-paints-apex-exterior-chennai.webp"; do
+  code=$(curl -o /dev/null -s -w "%{http_code}" "$url")
+  echo "$code  $url"
+done</div>
+    </div>
+
+  </div><!-- /.server-fix-panel -->
+
+  <hr class="section-divider"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 4 — BULK FIX SCRIPT
+  ════════════════════════════════════════════════════════ -->
+  <div class="section-label">③ Bulk Fix &amp; Audit Script</div>
+  <div class="script-panel">
+    <h2>image-fix.sh — Save &amp; Run on Your Server</h2>
+    <p>This script does everything in one shot: detects missing files, fixes permissions/ownership, converts JPGs to WebP, and produces a full audit report. Save as <code style="color:#a8c4e0;">image-fix.sh</code>, make executable, run as root via SSH.</p>
+    <div class="script-full" id="bulk-script"><button class="copy-btn" onclick="copyCode('bulk-script',this)">COPY</button>#!/bin/bash
+# ═══════════════════════════════════════════════════════════════
+#  image-fix.sh — Kuber Agencies Production Image Fix Script
+#  Run as root: sudo bash image-fix.sh
+#  Version: 2.0
+# ═══════════════════════════════════════════════════════════════
+
+set -euo pipefail
+
+IMAGES_DIR="/var/www/html/images"
+BASE_URL="https://kuberagencies.in"
+WEB_USER="www-data"          # Change to "apache" on CentOS/RHEL
+WEBP_QUALITY=85
+LOG_FILE="/tmp/kuber-image-fix-$(date +%Y%m%d-%H%M%S).log"
+MISSING=0
+FIXED_PERMS=0
+CONVERTED=0
+BROKEN_URLS=0
+
+GREEN='\033[0;32m'; RED='\033[0;31m'; YELLOW='\033[1;33m'
+CYAN='\033[0;36m'; RESET='\033[0m'; BOLD='\033[1m'
+
+log() { echo -e "$1" | tee -a "$LOG_FILE"; }
+
+log "${BOLD}${CYAN}═══════════════════════════════════════════${RESET}"
+log "${BOLD}  Kuber Agencies — Image Fix Script v2.0${RESET}"
+log "${CYAN}═══════════════════════════════════════════${RESET}"
+log "Started: $(date)"
+log "Log file: $LOG_FILE\n"
+
+# ── STEP 1: Check images directory exists ───────────────────
+log "${BOLD}[1/6] Checking images directory...${RESET}"
+if [ ! -d "$IMAGES_DIR" ]; then
+    log "${RED}✗ ERROR: $IMAGES_DIR does not exist!${RESET}"
+    log "  Run: mkdir -p $IMAGES_DIR/cement $IMAGES_DIR/steel $IMAGES_DIR/paints"
+    exit 1
+fi
+log "${GREEN}✓ Images directory found: $IMAGES_DIR${RESET}"
+
+# ── STEP 2: Rename uppercase/underscore filenames ───────────
+log "\n${BOLD}[2/6] Normalizing filenames (lowercase + hyphens)...${RESET}"
+find "$IMAGES_DIR" -depth -name "*[A-Z]*" | while read f; do
+    target=$(dirname "$f")/$(basename "$f" | tr 'A-Z' 'a-z')
+    if [ "$f" != "$target" ]; then
+        mv "$f" "$target"
+        log "  ${YELLOW}Renamed:${RESET} $(basename $f) → $(basename $target)"
+    fi
+done
+find "$IMAGES_DIR" -depth -name "*_*" | while read f; do
+    target=$(echo "$f" | tr '_' '-')
+    if [ "$f" != "$target" ]; then
+        mv "$f" "$target"
+        log "  ${YELLOW}Renamed:${RESET} $(basename $f) → $(basename $target)"
+    fi
+done
+log "${GREEN}✓ Filename normalization complete${RESET}"
+
+# ── STEP 3: Fix permissions &amp; ownership ───────────────────
+log "\n${BOLD}[3/6] Fixing permissions and ownership...${RESET}"
+find "$IMAGES_DIR" -type f | while read f; do
+    perms=$(stat -c "%a" "$f")
+    if [ "$perms" != "644" ]; then
+        chmod 644 "$f"
+        FIXED_PERMS=$((FIXED_PERMS + 1))
+        log "  ${YELLOW}Fixed perms:${RESET} $f ($perms → 644)"
+    fi
+done
+find "$IMAGES_DIR" -type d | while read d; do
+    perms=$(stat -c "%a" "$d")
+    if [ "$perms" != "755" ]; then
+        chmod 755 "$d"
+        log "  ${YELLOW}Fixed dir perms:${RESET} $d ($perms → 755)"
+    fi
+done
+chown -R "$WEB_USER:$WEB_USER" "$IMAGES_DIR"
+log "${GREEN}✓ Ownership set to $WEB_USER:$WEB_USER${RESET}"
+
+# ── STEP 4: Convert JPGs to WebP where WebP is missing ──────
+log "\n${BOLD}[4/6] Converting JPG → WebP (missing only)...${RESET}"
+if command -v cwebp &amp;> /dev/null; then
+    find "$IMAGES_DIR" -name "*.jpg" -o -name "*.jpeg" | while read jpg; do
+        webp="${jpg%.*}.webp"
+        if [ ! -f "$webp" ]; then
+            if cwebp "$jpg" -o "$webp" -q "$WEBP_QUALITY" -quiet; then
+                chmod 644 "$webp"
+                chown "$WEB_USER:$WEB_USER" "$webp"
+                CONVERTED=$((CONVERTED + 1))
+                log "  ${GREEN}Converted:${RESET} $(basename $webp)"
+            else
+                log "  ${RED}✗ Failed to convert:${RESET} $jpg"
+            fi
+        fi
+    done
+else
+    log "  ${YELLOW}⚠ cwebp not found. Install: sudo apt install webp${RESET}"
+fi
+log "${GREEN}✓ WebP conversion done${RESET}"
+
+# ── STEP 5: Detect missing/orphaned images ──────────────────
+log "\n${BOLD}[5/6] Scanning for missing .webp AND .jpg pairs...${RESET}"
+find "$IMAGES_DIR" -name "*.jpg" | while read jpg; do
+    webp="${jpg%.jpg}.webp"
+    [ ! -f "$webp" ] &amp;&amp; log "  ${YELLOW}⚠ No WebP pair:${RESET} $jpg" &amp;&amp; MISSING=$((MISSING+1))
+done
+find "$IMAGES_DIR" -name "*.webp" | while read webp; do
+    jpg="${webp%.webp}.jpg"
+    [ ! -f "$jpg" ] &amp;&amp; log "  ${YELLOW}⚠ No JPG pair:${RESET} $webp" &amp;&amp; MISSING=$((MISSING+1))
+done
+
+# ── STEP 6: HTTP status audit ───────────────────────────────
+log "\n${BOLD}[6/6] HTTP audit (checking each URL returns 200)...${RESET}"
+if command -v curl &amp;> /dev/null; then
+    find "$IMAGES_DIR" -type f \( -name "*.webp" -o -name "*.jpg" \) | while read f; do
+        url="$BASE_URL${f#/var/www/html}"
+        code=$(curl -o /dev/null -s -w "%{http_code}" --max-time 5 "$url")
+        if [ "$code" = "200" ]; then
+            log "  ${GREEN}✓ 200${RESET}  $url"
+        else
+            log "  ${RED}✗ $code${RESET}  $url"
+            BROKEN_URLS=$((BROKEN_URLS + 1))
+        fi
+    done
+else
+    log "  ${YELLOW}⚠ curl not found — skipping HTTP audit${RESET}"
+fi
+
+# ── SUMMARY ─────────────────────────────────────────────────
+log "\n${CYAN}═══════════════════════════════════════════${RESET}"
+log "${BOLD}  SUMMARY${RESET}"
+log "${CYAN}═══════════════════════════════════════════${RESET}"
+log "  Finished: $(date)"
+log "  Full log: $LOG_FILE"
+log ""
+log "  Next: Apply Apache (.htaccess) or Nginx config"
+log "        to fix CORS headers and WebP MIME type."
+log "${CYAN}═══════════════════════════════════════════${RESET}"
+
+# ── HOW TO RUN ───────────────────────────────────────────────
+# Save this file as image-fix.sh, then:
+#   chmod +x image-fix.sh
+#   sudo bash image-fix.sh</div>
+  </div>
+
+  <hr class="section-divider"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 5 — LIVE DIAGNOSTIC TOOL
+  ════════════════════════════════════════════════════════ -->
+  <div class="section-label">④ Live Image Diagnostic Tool</div>
+  <div class="diag-panel">
+    <h2>Live Image URL Checker</h2>
+    <p>Sends a HEAD request to every product image URL on this page and reports the result. Run after uploading images to confirm HTTP 200.</p>
+
+    <div class="diag-grid">
+      <div class="diag-card">
+        <div class="dc-label">Status 404</div>
+        <div class="dc-title">File Not Found</div>
+        <div class="dc-desc">File missing on server. Upload via SFTP to exact path. Check case sensitivity.</div>
+      </div>
+      <div class="diag-card">
+        <div class="dc-label">Status 403</div>
+        <div class="dc-title">Permission Denied</div>
+        <div class="dc-desc">Run <code style="font-size:10px;">chmod 644</code> on files and <code style="font-size:10px;">chmod 755</code> on folders. Set owner to www-data.</div>
+      </div>
+      <div class="diag-card">
+        <div class="dc-label">CORS / Network</div>
+        <div class="dc-title">Header Missing</div>
+        <div class="dc-desc">Add <code style="font-size:10px;">Access-Control-Allow-Origin: *</code> via .htaccess or Nginx location block.</div>
+      </div>
+      <div class="diag-card">
+        <div class="dc-label">200 but Broken</div>
+        <div class="dc-title">Wrong MIME Type</div>
+        <div class="dc-desc">Add <code style="font-size:10px;">AddType image/webp .webp</code> in .htaccess. Nginx: add to types block.</div>
+      </div>
+    </div>
+
+    <div style="font-size:11px;color:var(--steel);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">DevTools Console Snippet — paste in any tab on your site for exact HTTP codes</div>
+    <div class="code-block" id="devtools-snippet" style="margin-left:0;margin-bottom:14px;"><button class="copy-btn" onclick="copyCode('devtools-snippet',this)">COPY</button>(async () => {
+  const imgs = document.querySelectorAll('.product-card-img img');
+  for (const img of imgs) {
+    try {
+      const r = await fetch(img.src, { method: 'HEAD' });
+      console.log(r.status, img.src);
+    } catch(e) { console.error('NETWORK/CORS ERROR', img.src); }
+  }
+})();</div>
+
+    <button class="diag-run-btn" onclick="runDiagnostic()">▶ Run Image Check Now</button>
+    <div id="diag-output"></div>
+  </div>
+
+  <hr class="section-divider"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 6 — DEBUGGING WORKFLOW
+  ════════════════════════════════════════════════════════ -->
+  <div class="section-label">⑤ Debugging Workflow</div>
+  <div class="debug-panel">
+    <h2>How to Test Each Fix</h2>
+    <p>Use these steps in order to isolate exactly which layer is failing — DNS, server, permissions, MIME, or CORS.</p>
+
+    <div class="debug-step-list">
+
+      <div class="debug-step">
+        <div class="debug-step-num">1</div>
+        <div class="debug-step-content">
+          <div class="debug-step-title">Direct URL Access in Browser</div>
+          <div class="debug-step-body">Open the image URL directly in a new browser tab. If it shows a broken icon or blank → 404/403. If it renders → CORS (a script is blocked, not direct access). If it prompts download → MIME type issue.</div>
+          <div class="inline-code-block">https://kuberagencies.in/images/cement/ultratech-opc53-cement-bags-chennai.webp</div>
+        </div>
+      </div>
+
+      <div class="debug-step">
+        <div class="debug-step-num">2</div>
+        <div class="debug-step-content">
+          <div class="debug-step-title">curl — Exact HTTP Status &amp; Headers</div>
+          <div class="debug-step-body">Run from your SSH session or local machine. This gives you the raw HTTP status code and all response headers with zero ambiguity.</div>
+          <div class="inline-code-block"><span style="color:#4a6a8a;"># Get HTTP status code only</span>
+curl -o /dev/null -s -w "HTTP %{http_code}\n" \
+  https://kuberagencies.in/images/cement/ultratech-opc53-cement-bags-chennai.webp
+
+<span style="color:#4a6a8a;"># Full response headers (look for Content-Type and Access-Control-Allow-Origin)</span>
+curl -sI https://kuberagencies.in/images/cement/ultratech-opc53-cement-bags-chennai.webp
+
+<span style="color:#4a6a8a;"># Test with an explicit Origin header to simulate CORS preflight</span>
+curl -sI -H "Origin: https://kuberagencies.in" \
+  https://kuberagencies.in/images/cement/ultratech-opc53-cement-bags-chennai.webp \
+  | grep -i "access-control"
+
+<span style="color:#4a6a8a;"># Batch status check for all three failing URLs</span>
+for url in \
+  "https://kuberagencies.in/images/cement/ultratech-opc53-cement-bags-chennai.webp" \
+  "https://kuberagencies.in/images/steel/jsw-tmt-fe500d-bars-chennai.webp" \
+  "https://kuberagencies.in/images/paints/asian-paints-apex-exterior-chennai.webp"; do
+  echo "$(curl -o /dev/null -s -w '%{http_code}' $url)  $url"
+done</div>
+        </div>
+      </div>
+
+      <div class="debug-step">
+        <div class="debug-step-num">3</div>
+        <div class="debug-step-content">
+          <div class="debug-step-title">Browser DevTools — Network Tab</div>
+          <div class="debug-step-body">Open DevTools (<code>F12</code>), go to the <strong>Network</strong> tab, filter by <strong>Img</strong>. Reload the page. Click any red/failed request to see exact status, headers, and error type. Look for <code>content-type</code> in the Response Headers column.</div>
+          <div class="inline-code-block"><span style="color:#4a6a8a;"># What to look for in Network tab:</span>
+Status 404  → File missing on disk
+Status 403  → Permission error (chmod/chown needed)
+Status 200  → Check Response Headers: Content-Type must be image/webp
+(failed)    → CORS error — check Console tab for exact message
+
+<span style="color:#4a6a8a;"># Console tab CORS error will look like:</span>
+Access to fetch '...' from origin '...' has been blocked by CORS policy:
+No 'Access-Control-Allow-Origin' header is present on the requested resource.</div>
+        </div>
+      </div>
+
+      <div class="debug-step">
+        <div class="debug-step-num">4</div>
+        <div class="debug-step-content">
+          <div class="debug-step-title">Verify File Integrity (Not Corrupt)</div>
+          <div class="debug-step-body">If curl returns 200 but the image still renders broken, the file itself is likely corrupt or was transferred in ASCII mode. Use <code>file</code> to check the real format.</div>
+          <div class="inline-code-block"><span style="color:#4a6a8a;"># Check what the file actually is (regardless of extension)</span>
+file /var/www/html/images/cement/ultratech-opc53-cement-bags-chennai.webp
+<span style="color:#4a6a8a;"># Should say: RIFF...WebP image data</span>
+<span style="color:#4a6a8a;"># If it says "ASCII text" or "HTML document" → corrupted upload</span>
+
+<span style="color:#4a6a8a;"># Check file size (0 bytes = empty/failed upload)</span>
+ls -lh /var/www/html/images/cement/ultratech-opc53-cement-bags-chennai.webp
+
+<span style="color:#4a6a8a;"># Check the first few bytes (WebP magic bytes: RIFF + WEBP)</span>
+xxd /var/www/html/images/cement/ultratech-opc53-cement-bags-chennai.webp | head -2
+<span style="color:#4a6a8a;"># Expected: 52 49 46 46 ... 57 45 42 50  (RIFF....WEBP)</span></div>
+        </div>
+      </div>
+
+      <div class="debug-step">
+        <div class="debug-step-num">5</div>
+        <div class="debug-step-content">
+          <div class="debug-step-title">Check Apache / Nginx Error Logs</div>
+          <div class="debug-step-body">Error logs give the exact server-side reason for every failed request. Always check these when curl doesn't give enough information.</div>
+          <div class="inline-code-block"><span style="color:#4a6a8a;"># Apache error log — last 50 lines, live follow</span>
+tail -f /var/log/apache2/error.log
+
+<span style="color:#4a6a8a;"># Apache access log — see every request with status code</span>
+tail -f /var/log/apache2/access.log | grep "/images/"
+
+<span style="color:#4a6a8a;"># Nginx error log</span>
+tail -f /var/log/nginx/error.log
+
+<span style="color:#4a6a8a;"># Nginx access log filtered to images only</span>
+tail -f /var/log/nginx/access.log | grep "/images/"
+
+<span style="color:#4a6a8a;"># Search for 403 and 404 errors in last 200 lines</span>
+tail -200 /var/log/apache2/access.log | awk '$9 ~ /^(403|404)$/'</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="section-divider"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 7 — FIX REFERENCE QUICK CARDS
+  ════════════════════════════════════════════════════════ -->
+  <div class="section-label">Fix Reference</div>
+  <div class="fix-grid">
+
+    <div class="fix-card">
+      <div class="fix-num">01</div>
+      <div class="fix-title">File Upload Path <span class="badge-fixed">Applied</span></div>
+      <div class="fix-body">Upload WebP + JPG pairs via SFTP to the exact path. Linux filenames are case-sensitive — all lowercase, hyphens only.</div>
+      <div class="fix-cmd">sftp user@kuberagencies.in
+cd /var/www/html/images/cement/
+put ultratech-opc53-cement-bags-chennai.webp
+put ultratech-opc53-cement-bags-chennai.jpg</div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-num">02</div>
+      <div class="fix-title">File Permissions <span class="badge-fixed">Applied</span></div>
+      <div class="fix-body">Files = 644, directories = 755. Owner must be www-data so the web server can read them.</div>
+      <div class="fix-cmd">find /var/www/html/images/ -type f \
+  -exec chmod 644 {} \;
+find /var/www/html/images/ -type d \
+  -exec chmod 755 {} \;
+chown -R www-data:www-data \
+  /var/www/html/images/</div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-num">03</div>
+      <div class="fix-title">Apache WebP MIME <span class="badge-fixed">Applied</span></div>
+      <div class="fix-body">Add to <code style="font-size:10px;">/var/www/html/.htaccess</code>. Enable mod_headers and mod_mime first.</div>
+      <div class="fix-cmd">AddType image/webp .webp
+
+&lt;FilesMatch "\.(jpg|webp|png)$"&gt;
+  Header set Cache-Control \
+    "max-age=31536000, public"
+  Header set \
+    Access-Control-Allow-Origin "*"
+&lt;/FilesMatch&gt;</div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-num">04</div>
+      <div class="fix-title">Nginx WebP MIME <span class="badge-fixed">Applied</span></div>
+      <div class="fix-body">Add to your Nginx server block. Run <code style="font-size:10px;">nginx -t</code> before reload to validate config syntax.</div>
+      <div class="fix-cmd">types { image/webp webp; }
+
+location ~* \.(jpg|webp|png)$ {
+  add_header Cache-Control
+    "max-age=31536000, public";
+  add_header
+    Access-Control-Allow-Origin *;
+}</div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-num">05</div>
+      <div class="fix-title">Convert JPG → WebP <span class="badge-fixed">Applied</span></div>
+      <div class="fix-body">If you only have JPG originals, batch-convert to WebP on the server. Quality 85 is the recommended balance.</div>
+      <div class="fix-cmd">sudo apt install webp
+
+# Bulk convert all JPGs
+find /var/www/html/images/ \
+  -name "*.jpg" | while read f; do
+  cwebp "$f" \
+    -o "${f%.jpg}.webp" -q 85
+done</div>
+    </div>
+
+    <div class="fix-card">
+      <div class="fix-num">06</div>
+      <div class="fix-title">Audit Script <span class="badge-fixed">Applied</span></div>
+      <div class="fix-body">Run this one-liner on your server to check that every image URL returns HTTP 200. See Section ③ for the full script.</div>
+      <div class="fix-cmd">find /var/www/html/images/ \
+  -type f \
+  \( -name "*.webp" -o -name "*.jpg" \)\
+| while read f; do
+  url="https://kuberagencies.in\
+${f#/var/www/html}"
+  code=$(curl -o /dev/null -s \
+    -w "%{http_code}" \
+    --max-time 5 "$url")
+  [ "$code" = "200" ] \
+    &amp;&amp; echo "✓ $url" \
+    || echo "✗ $code $url"
+done</div>
+    </div>
+
+  </div>
+
+  <hr class="section-divider"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 8 — PREVENTION STRATEGY
+  ════════════════════════════════════════════════════════ -->
+  <div class="section-label">⑥ Prevention Strategy</div>
+  <div class="prevent-grid">
+
+    <div class="prevent-card">
+      <div class="prevent-icon">📁</div>
+      <div class="prevent-title">Naming Convention</div>
+      <div class="prevent-body">
+        Enforce a strict naming rule before upload. Any deviation causes a 404 on Linux.
+        <ul>
+          <li>Always <strong>lowercase</strong></li>
+          <li>Hyphens only — no spaces, underscores, or special chars</li>
+          <li>Format: <code>brand-product-variant-city.webp</code></li>
+          <li>Example: <code>ultratech-opc53-cement-bags-chennai.webp</code></li>
+          <li>Always upload both <code>.webp</code> AND <code>.jpg</code> pairs</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="prevent-card">
+      <div class="prevent-icon">🔼</div>
+      <div class="prevent-title">Upload Checklist</div>
+      <div class="prevent-body">
+        Before going live, run this checklist for every image:
+        <ul>
+          <li>File uploaded via SFTP in <strong>binary mode</strong> (not ASCII)</li>
+          <li><code>chmod 644</code> applied immediately after upload</li>
+          <li><code>chown www-data:www-data</code> set on the file</li>
+          <li>Direct URL opens correctly in browser tab</li>
+          <li><code>curl -I &lt;url&gt;</code> returns <code>200</code> + <code>image/webp</code></li>
+          <li>WebP counterpart exists for every JPG</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="prevent-card">
+      <div class="prevent-icon">🔄</div>
+      <div class="prevent-title">Deployment Pipeline</div>
+      <div class="prevent-body">
+        Add automated validation to prevent broken images reaching production:
+        <ul>
+          <li>Add the <code>image-fix.sh</code> audit script to your deploy hook</li>
+          <li>Block deployment if any image URL returns non-200</li>
+          <li>Auto-convert JPGs to WebP as a post-deploy step</li>
+          <li>Auto-set permissions with <code>find ... -exec chmod</code></li>
+          <li>Notify via Slack/email if broken images are detected</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="prevent-card">
+      <div class="prevent-icon">🗜️</div>
+      <div class="prevent-title">Image Optimisation</div>
+      <div class="prevent-body">
+        Reduce file size before upload to improve load speed on mobile:
+        <ul>
+          <li>Target size: <strong>50–150 KB</strong> per product image</li>
+          <li>WebP at quality 80–85 (use <code>cwebp -q 85</code>)</li>
+          <li>Resize to max <strong>800×600px</strong> — cards display at 400×210</li>
+          <li>Strip EXIF metadata: <code>exiftool -all= *.jpg</code></li>
+          <li>Use <code>jpegoptim --max=85 *.jpg</code> for JPG originals</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="prevent-card">
+      <div class="prevent-icon">🌐</div>
+      <div class="prevent-title">CDN Usage (Optional but Recommended)</div>
+      <div class="prevent-body">
+        A CDN eliminates CORS issues, adds global caching, and handles WebP auto-conversion:
+        <ul>
+          <li><strong>Cloudflare (free)</strong> — proxy your domain, enable Polish for auto-WebP</li>
+          <li>Cloudflare automatically adds CORS headers and sets correct MIME types</li>
+          <li>Images cached at edge nodes globally — faster loads in India</li>
+          <li>Enable <strong>Browser Cache TTL: 1 year</strong> in Cloudflare dashboard</li>
+          <li>Use <strong>Cloudflare Images</strong> for managed uploads with auto-resize</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="prevent-card">
+      <div class="prevent-icon">🔍</div>
+      <div class="prevent-title">Ongoing Monitoring</div>
+      <div class="prevent-body">
+        Set up monitoring so broken images alert you before customers see them:
+        <ul>
+          <li>Schedule <code>image-fix.sh</code> as a cron job — run daily at 2 AM</li>
+          <li>Use <strong>UptimeRobot</strong> (free) to monitor key image URLs</li>
+          <li>Add Google Search Console — it flags broken images in GSC reports</li>
+          <li>Set <code>ENABLE_IMG_DIAGNOSTICS = true</code> in dev, <code>false</code> in prod</li>
+          <li>Add a <code>&lt;noscript&gt;</code> fallback img for SEO crawlers</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── FOOTER ───────────────────────────────────────────── -->
+  <div class="page-footer">
+    Kuber Agencies · Madambakkam, Chennai · Image Fix Guide v2 · All fixes production-ready for Apache &amp; Nginx on Linux
+  </div>
+
+</div><!-- /.page-wrap -->
+
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   COPY BUTTON HANDLER
+   ═══════════════════════════════════════════════════════════ */
+function copyCode(blockId, btn) {
+  var el = document.getElementById(blockId);
+  if (!el) return;
+  // Get text, strip HTML tags
+  var text = el.innerText || el.textContent;
+  // Remove "COPY" button text if it was included
+  text = text.replace(/^COPY\n?/, '').trim();
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = 'COPY';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    // Fallback for older browsers
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); btn.textContent = 'COPIED!'; btn.classList.add('copied'); setTimeout(function(){ btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 2000); } catch(e) {}
+    document.body.removeChild(ta);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TAB SWITCHER
+   ═══════════════════════════════════════════════════════════ */
+function switchTab(group, panelId) {
+  var tabRow = document.getElementById(group + '-tabs');
+  if (!tabRow) return;
+  // Deactivate all tabs
+  tabRow.querySelectorAll('.tab-btn').forEach(function(btn) { btn.classList.remove('active'); });
+  // Activate clicked tab
+  event.target.classList.add('active');
+  // Hide all panels that start with group-
+  var allPanels = document.querySelectorAll('[id^="' + group + '-"]');
+  allPanels.forEach(function(p) { if (p.classList.contains('tab-panel')) p.classList.remove('active'); });
+  // Show target panel
+  var panel = document.getElementById(group + '-' + panelId);
+  if (panel) panel.classList.add('active');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   handleImgError — FOUR-TIER FALLBACK CHAIN
+   ═══════════════════════════════════════════════════════════
+   Tier 1: .webp  (browser tries via <source> in <picture>)
+   Tier 2: .jpg   (browser tries via <img src> in <picture>)
+   Tier 3: /images/_fallback/product-placeholder.jpg
+   Tier 4: Inline SVG placeholder (no external dependency)
+   ─────────────────────────────────────────────────────────── */
+var GENERIC_FALLBACK = '/images/_fallback/product-placeholder.jpg';
+var _fallbackAttempted = {};
+
+function handleImgError(imgEl, categoryLabel) {
+  imgEl.onerror = null; // Prevent infinite loop
+
+  var src = imgEl.src;
+  var isGenericFallback = (
+    src === window.location.origin + GENERIC_FALLBACK ||
+    src === GENERIC_FALLBACK ||
+    src.indexOf('product-placeholder') > -1
+  );
+
+  // Try generic JPG fallback once
+  if (!isGenericFallback && !_fallbackAttempted[src]) {
+    _fallbackAttempted[src] = true;
+    imgEl.onerror = function() { handleImgError(this, categoryLabel); };
+    imgEl.src = GENERIC_FALLBACK;
+    return;
+  }
+
+  // Both specific + generic failed → show SVG placeholder
+  var wrapper = imgEl.closest('.product-card-img');
+  if (!wrapper) return;
+  wrapper.classList.add('has-fallback');
+
+  var fallbackEl = wrapper.querySelector('.img-fallback');
+  if (fallbackEl) {
+    fallbackEl.style.display = 'flex';
+    var labelEl = fallbackEl.querySelector('span');
+    if (labelEl) {
+      var card = wrapper.closest('.product-card');
+      var productName = card ? (card.dataset.name || categoryLabel) : categoryLabel;
+      labelEl.textContent = productName;
+    }
+  }
+
+  // Log for debugging (disabled in prod by setting ENABLE_IMG_DIAGNOSTICS = false)
+  if (typeof ENABLE_IMG_DIAGNOSTICS !== 'undefined' && ENABLE_IMG_DIAGNOSTICS) {
+    safeLog('warn', '[Kuber Agencies] Fallback activated for: ' + imgEl.getAttribute('data-original-src') || imgEl.src);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SAFE LOGGER — works on old Android WebViews
+   ═══════════════════════════════════════════════════════════ */
+function safeLog(method) {
+  try {
+    var args = Array.prototype.slice.call(arguments, 1);
+    if (!window.console) return;
+    if (typeof window.console[method] !== 'function') {
+      if (typeof window.console.log === 'function') window.console.log.apply(window.console, args);
+      return;
+    }
+    window.console[method].apply(window.console, args);
+  } catch(e) {}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DIAGNOSTIC: log broken images on DOMContentLoaded
+   Set ENABLE_IMG_DIAGNOSTICS = false before go-live
+   ═══════════════════════════════════════════════════════════ */
+var ENABLE_IMG_DIAGNOSTICS = true;
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (!ENABLE_IMG_DIAGNOSTICS) return;
+  var imgs = Array.prototype.slice.call(document.querySelectorAll('.product-card-img img'));
+  var broken = [];
+  imgs.forEach(function(img) {
+    if (!img.complete || img.naturalWidth === 0) broken.push(img.src);
+    img.addEventListener('error', function() {
+      safeLog('warn', '[Kuber Agencies] Image failed to load: ' + this.src);
+    });
+  });
+  if (broken.length) {
+    safeLog('group', '[Kuber Agencies] ' + broken.length + ' image(s) need uploading:');
+    broken.forEach(function(src) { safeLog('log', '  ✗ ' + src); });
+    safeLog('groupEnd');
+  } else {
+    safeLog('log', '[Kuber Agencies] ✓ All product images loaded.');
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════
+   LIVE DIAGNOSTIC TOOL
+   ═══════════════════════════════════════════════════════════ */
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function runDiagnostic() {
+  var outputEl = document.getElementById('diag-output');
+  outputEl.style.display = 'flex';
+  outputEl.innerHTML = '<div class="diag-result-row"><span class="status warn">...</span><span class="url">Checking image URLs — please wait...</span></div>';
+
+  var urls = [];
+
+  // Collect WebP sources first
+  var sources = Array.prototype.slice.call(document.querySelectorAll('.product-card-img source[type="image/webp"]'));
+  sources.forEach(function(s) {
+    var ss = s.getAttribute('srcset');
+    if (ss && urls.indexOf(ss) === -1) urls.push(ss);
+  });
+
+  // Collect JPG img srcs
+  var imgs = Array.prototype.slice.call(document.querySelectorAll('.product-card-img img'));
+  imgs.forEach(function(img) {
+    var src = img.getAttribute('src');
+    if (src && src.indexOf('placeholder') === -1 && urls.indexOf(src) === -1) urls.push(src);
+  });
+
+  if (!urls.length) {
+    outputEl.innerHTML = '<div class="diag-result-row"><span class="status warn">—</span><span class="url">No product image URLs found on this page.</span></div>';
+    return;
+  }
+
+  outputEl.innerHTML = '';
+
+  for (var i = 0; i < urls.length; i++) {
+    var url = urls[i];
+    var row = document.createElement('div');
+    row.className = 'diag-result-row';
+
+    try {
+      var response = await fetch(url, { method: 'HEAD', mode: 'cors' });
+      var statusClass = response.ok ? 'ok' : 'fail';
+      var statusText = response.status;
+      var hint = response.ok ? '' : '<br><small style="color:#fbbf24;font-size:10px;">' +
+        (response.status === 404 ? '404 — File not found. Upload the image to the server.' :
+         response.status === 403 ? '403 — Permission denied. Run chmod 644 and chown www-data.' :
+         'Check server error logs.') + '</small>';
+      row.innerHTML = '<span class="status ' + statusClass + '">' + statusText + '</span><span class="url">' + escHtml(url) + hint + '</span>';
+    } catch(e) {
+      var isCors = e.message && (e.message.indexOf('CORS') > -1 || e.message.indexOf('fetch') > -1);
+      row.innerHTML = '<span class="status fail">ERR</span><span class="url">' + escHtml(url) +
+        '<br><small style="color:#f87171;font-size:10px;">Network/CORS error — add Access-Control-Allow-Origin: * to .htaccess or Nginx. Try opening URL directly in a new tab.</small></span>';
+    }
+
+    outputEl.appendChild(row);
+  }
+
+  // Add note
+  var note = document.createElement('div');
+  note.style.cssText = 'font-size:11px;color:var(--steel);padding:8px 14px;';
+  note.innerHTML = '💡 For exact HTTP codes, paste the DevTools snippet above into your browser console on kuberagencies.in.';
+  outputEl.appendChild(note);
+}
+</script>
+
+</body>
+</html>
