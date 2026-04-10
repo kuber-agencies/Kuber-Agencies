@@ -2389,8 +2389,9 @@ footer {
 <img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775852937/Kuber_Agencies_zfijme.jpg" alt="Kuber Agencies Store – Construction Materials Supplier Madambakkam Chennai" class="hero-shop-img" loading="eager" fetchpriority="high" width="600" height="340"/>
 </div>
 <div class="hero-cat-grid">
+<!-- [UPDATED] TASK 1: Product category images replaced with new Cloudinary URLs -->
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775856081/all_construction_materials_t3wyqt.jpg" alt="All Construction Materials" class="hero-cat-img" loading="lazy"/></span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775858112/all_construction_materials_dr9hvk.jpg" alt="All Construction Materials" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">All Construction Materials</div>
 </div>
 <div class="hero-cat" onclick="showPage('products')">
@@ -2398,7 +2399,7 @@ footer {
 <div class="hero-cat-label">Cement &amp; Concrete</div>
 </div>
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775856085/steel_TMT_rhlgqi.png" alt="Steel &amp; TMT Bars" class="hero-cat-img" loading="lazy"/></span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775858111/IMG_20260411_032347_l77su8.jpg" alt="Steel &amp; TMT Bars" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">Steel &amp; TMT Bars</div>
 </div>
 <div class="hero-cat" onclick="showPage('products')">
@@ -2406,7 +2407,7 @@ footer {
 <div class="hero-cat-label">Paints &amp; Coatings</div>
 </div>
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775856080/Pipes_fittings_jjhlyw.jpg" alt="Pipes &amp; Fittings" class="hero-cat-img" loading="lazy"/></span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto/f_auto/v1775858112/pipes_and_fittings_u2hhmz.png" alt="Pipes &amp; Fittings" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">Pipes &amp; Fittings</div>
 </div>
 </div>
@@ -2793,7 +2794,7 @@ footer {
 <!-- ================================================================
        CLIENTS SECTION — PREMIUM CORPORATE DESIGN
        ================================================================ -->
-<!-- [ADDED] TASK 3: Premium staggered fade-in + upward animation for clients section -->
+<!-- [EXISTING] TASK 3: Premium staggered fade-in + upward animation for clients section -->
 <style>
 @keyframes clientFadeUp {
   0%   { opacity: 0; transform: translateY(32px); }
@@ -2811,6 +2812,62 @@ footer {
 .clients-grid-premium .client-card-premium.clients-animated:nth-child(3) { animation-delay: 0.26s; }
 .clients-grid-premium .client-card-premium.clients-animated:nth-child(4) { animation-delay: 0.39s; }
 .clients-grid-premium .client-card-premium.clients-animated:nth-child(5) { animation-delay: 0.52s; }
+
+/* ── [ADDED] TASK 3: Glow + gentle float animation (layered after fade-in completes) ── */
+@keyframes clientGlowFloat {
+  0%   { box-shadow: 0 4px 18px rgba(240,109,30,0.00), 0 2px 8px rgba(7,17,31,0.18); transform: translateY(0px); }
+  40%  { box-shadow: 0 8px 32px rgba(240,109,30,0.13), 0 4px 16px rgba(7,17,31,0.12); transform: translateY(-5px); }
+  60%  { box-shadow: 0 10px 38px rgba(240,109,30,0.18), 0 6px 20px rgba(7,17,31,0.10); transform: translateY(-7px); }
+  100% { box-shadow: 0 4px 18px rgba(240,109,30,0.00), 0 2px 8px rgba(7,17,31,0.18); transform: translateY(0px); }
+}
+@keyframes clientMonoGlow {
+  0%   { box-shadow: 0 4px 16px rgba(0,0,0,0.30); }
+  50%  { box-shadow: 0 6px 28px rgba(240,109,30,0.38), 0 0 0 3px rgba(240,109,30,0.12); }
+  100% { box-shadow: 0 4px 16px rgba(0,0,0,0.30); }
+}
+
+/* Apply continuous float+glow after the entrance animation finishes.
+   Each card gets a staggered delay so they don't all move in sync — more organic. */
+.clients-grid-premium .client-card-premium.clients-animated {
+  animation:
+    clientFadeUp 0.72s cubic-bezier(0.22,1,0.36,1) forwards,
+    clientGlowFloat 5s ease-in-out 1.2s infinite;
+}
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(1) { animation-delay: 0.00s, 1.20s; }
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(2) { animation-delay: 0.13s, 1.70s; }
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(3) { animation-delay: 0.26s, 2.20s; }
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(4) { animation-delay: 0.39s, 2.70s; }
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(5) { animation-delay: 0.52s, 3.20s; }
+
+/* Monogram soft glow pulse — independent cycle */
+.clients-grid-premium .client-card-premium.clients-animated .client-monogram {
+  animation: clientMonoGlow 4s ease-in-out 1.5s infinite;
+}
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(2) .client-monogram { animation-delay: 2.0s; }
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(3) .client-monogram { animation-delay: 2.5s; }
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(4) .client-monogram { animation-delay: 3.0s; }
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(5) .client-monogram { animation-delay: 3.5s; }
+
+/* Hover: pause float, amplify glow for a polished interactive feel */
+.clients-grid-premium .client-card-premium.clients-animated:hover {
+  animation-play-state: paused, paused;
+  box-shadow: 0 14px 48px rgba(240,109,30,0.22), 0 6px 20px rgba(7,17,31,0.14) !important;
+  transform: translateY(-9px) !important;
+  border-color: rgba(240,109,30,0.45) !important;
+  transition: box-shadow 0.32s ease, transform 0.32s ease, border-color 0.32s ease;
+}
+.clients-grid-premium .client-card-premium.clients-animated:hover .client-monogram {
+  animation-play-state: paused;
+  box-shadow: 0 6px 32px rgba(240,109,30,0.50), 0 0 0 4px rgba(240,109,30,0.18) !important;
+}
+@media (max-width: 600px) {
+  /* On mobile keep float very subtle to avoid layout shift */
+  @keyframes clientGlowFloat {
+    0%   { box-shadow: 0 2px 10px rgba(240,109,30,0.00); transform: translateY(0px); }
+    50%  { box-shadow: 0 6px 24px rgba(240,109,30,0.14); transform: translateY(-3px); }
+    100% { box-shadow: 0 2px 10px rgba(240,109,30,0.00); transform: translateY(0px); }
+  }
+}
 </style>
 <script>
 (function(){
