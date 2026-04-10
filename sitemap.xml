@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Homepage -->
+  <!--
+    KUBER AGENCIES — Main Sitemap
+    Domain  : https://kuberagencies.in
+    Updated : 2026-04-10
+    
+    NOTE: This is a single-page app. All content lives on the
+    homepage — product sections are JS-rendered, not separate URLs.
+    Submit both this sitemap AND image-sitemap.xml in GSC.
+  -->
+
   <url>
-    <loc>https://kuber-agencies.github.io/Kuber-Agencies/</loc>
-    <lastmod>2026-04-09</lastmod>
-    <priority>1.00</priority>
+    <loc>https://kuberagencies.in/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
   </url>
 
 </urlset>
