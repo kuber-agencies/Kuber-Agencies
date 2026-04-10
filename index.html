@@ -2090,6 +2090,105 @@ footer {
   .product-card-img,
   .product-card-img > img { height: 140px; }
 }
+
+/* ============================================================
+   [ADDED] TASK 2: Hero Shop Image
+   ============================================================ */
+.hero-shop-img-wrap {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  flex-shrink: 0;
+}
+.hero-shop-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+@media (max-width: 900px) {
+  .hero-shop-img-wrap { margin-bottom: 12px; }
+  .hero-shop-img { height: 160px; }
+}
+
+/* ============================================================
+   [ADDED] TASK 5+6: Brand Marquee Animation
+   ============================================================ */
+@keyframes brand-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.brand-marquee-outer {
+  width: 100%;
+  overflow: hidden;
+  margin-top: 40px;
+  padding: 12px 0;
+  /* Soft fade edges */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+}
+.brand-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: max-content;
+  animation: brand-scroll 48s linear infinite;
+  will-change: transform;
+}
+.brand-marquee-track:hover {
+  animation-play-state: paused;
+}
+.brand-marq-tile {
+  background: var(--white);
+  border: 1.5px solid var(--gray-light);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 120px;
+  min-height: 90px;
+  flex-shrink: 0;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  cursor: default;
+}
+.brand-marq-tile:hover {
+  border-color: var(--orange);
+  box-shadow: 0 6px 24px rgba(240,109,30,0.14);
+  transform: translateY(-4px);
+}
+.brand-marq-tile img {
+  height: 44px;
+  width: auto;
+  max-width: 100px;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s;
+}
+.brand-marq-tile:hover img {
+  transform: scale(1.06);
+}
+.brand-marq-name {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gray);
+  text-align: center;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+@media (max-width: 600px) {
+  .brand-marq-tile { min-width: 96px; padding: 12px 14px; }
+  .brand-marq-tile img { height: 34px; }
+  .brand-marquee-track { gap: 12px; animation-duration: 36s; }
+}
+
 </style>
 <!-- Google Analytics (replace G-XXXXXXXXXX with your Measurement ID) -->
 <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -2186,6 +2285,9 @@ footer {
 </div>
 <div class="hero-visual">
 <div class="hero-visual-inner">
+<div class="hero-shop-img-wrap">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775852937/Kuber_Agencies_zfijme.jpg" alt="Kuber Agencies Store – Construction Materials Supplier Madambakkam Chennai" class="hero-shop-img" loading="eager" fetchpriority="high" width="600" height="340"/>
+</div>
 <div class="hero-cat-grid">
 <div class="hero-cat" onclick="showPage('products')">
 <span class="hero-cat-icon">🏗️</span>
@@ -2261,72 +2363,162 @@ footer {
 </div>
 </div>
 </div>
-<!-- BRAND LOGO SHOWCASE -->
-<section style="background:var(--white);padding:56px 0 48px;">
+<!-- [UPDATED] TASK 4+5+6: 50+ Trusted Manufacturers — Cloudinary images + animated marquee -->
+<section style="background:var(--white);padding:56px 0 48px;overflow:hidden;">
 <div class="container">
 <div class="section-label">Authorized Brands</div>
 <h2 class="section-title">50+ Trusted Manufacturers</h2>
 <p class="section-sub">Genuine products, genuine prices. Directly authorized by India's leading brands.</p>
 <div class="divider"></div>
-<div class="brand-logo-showcase">
-<!-- Cement -->
-<div class="brand-logo-tile">
-<img width="400" height="180" alt="Ultratech Cement Logo – Authorized Dealer Chennai" loading="lazy" onerror="this.style.display='none'" src="https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/UltraTech_Cement_Logo.svg/200px-UltraTech_Cement_Logo.svg.png"/>
-<span class="brand-logo-tile-name">Ultratech</span>
 </div>
-<div class="brand-logo-tile">
-<img width="400" height="180" alt="Dalmia Cement Logo – Dealer in Chennai" loading="lazy" onerror="this.style.display='none'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Dalmia_Bharat_logo.svg/200px-Dalmia_Bharat_logo.svg.png"/>
-<span class="brand-logo-tile-name">Dalmia</span>
+<!-- [ADDED] TASK 6: Animated marquee scrolling strip -->
+<div class="brand-marquee-outer">
+<div class="brand-marquee-track">
+<!-- Set 1 -->
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846577/Dalmia_vk14ks.jpg" alt="Dalmia Cement" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Dalmia</span>
 </div>
-<div class="brand-logo-tile">
-<img width="400" height="180" alt="Ramco Cement Logo" loading="lazy" onerror="this.style.display='none'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Ramco_Cements_Logo.svg/200px-Ramco_Cements_Logo.svg.png"/>
-<span class="brand-logo-tile-name">Ramco</span>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846587/Ramco_qbgc8y.png" alt="Ramco Cement" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Ramco</span>
 </div>
-<!-- Paints -->
-<div class="brand-logo-tile">
-<img width="400" height="180" alt="Asian Paints Logo – Authorized Dealer Chennai" loading="lazy" onerror="this.style.display='none'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Asian_Paints_Logo.svg/200px-Asian_Paints_Logo.svg.png"/>
-<span class="brand-logo-tile-name">Asian Paints</span>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846581/Chettinad_bkln3d.png" alt="Chettinad Cement" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Chettinad</span>
 </div>
-<!-- Pipes -->
-<div class="brand-logo-tile">
-<img width="400" height="180" alt="Finolex Pipes Logo" loading="lazy" onerror="this.style.display='none'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Finolex_Logo.svg/200px-Finolex_Logo.svg.png"/>
-<span class="brand-logo-tile-name">Finolex</span>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846457/Zuari_bcanrp.jpg" alt="Zuari Cement" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Zuari</span>
 </div>
-<div class="brand-logo-tile">
-<img width="400" height="180" alt="Ashirvad Pipes Logo" loading="lazy" onerror="this.style.display='none'" src="https://logo.clearbit.com/ashirvad.com"/>
-<span class="brand-logo-tile-name">Ashirvad</span>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Asian_paint_wyylv7.jpg" alt="Asian Paints" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Asian Paints</span>
 </div>
-<!-- Electrical -->
-<div class="brand-logo-tile">
-<img width="400" height="180" alt="Havells Logo – Electrical Products Chennai" loading="lazy" onerror="this.style.display='none'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Havells_Logo.svg/200px-Havells_Logo.svg.png"/>
-<span class="brand-logo-tile-name">Havells</span>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845905/Royale_paint_yj5hsp.png" alt="Royale Paint" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Royale</span>
 </div>
-<div class="brand-logo-tile">
-<img width="400" height="180" alt="Polycab Wires Logo" loading="lazy" onerror="this.style.display='none'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Polycab_Logo.svg/200px-Polycab_Logo.svg.png"/>
-<span class="brand-logo-tile-name">Polycab</span>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Finolex_ieybwf.jpg" alt="Finolex" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Finolex</span>
 </div>
-<div class="brand-logo-tile">
-<img width="400" height="180" alt="Legrand Switches Logo" loading="lazy" onerror="this.style.display='none'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Legrand_logo.svg/200px-Legrand_logo.svg.png"/>
-<span class="brand-logo-tile-name">Legrand</span>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846584/ashirvadtank_sf7gjo.png" alt="Ashirvad" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Ashirvad</span>
 </div>
-<!-- Sanitary / Fittings -->
-<div class="brand-logo-tile">
-<img width="400" height="180" alt="Parryware Logo – Taps and Faucets" loading="lazy" onerror="this.style.display='none'" src="https://logo.clearbit.com/parryware.in"/>
-<span class="brand-logo-tile-name">Parryware</span>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846576/Sintextank_jnovge.webp" alt="Sintex Tanks" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Sintex</span>
 </div>
-<div class="brand-logo-tile">
-<img width="400" height="180" alt="Sintex Water Tanks Logo" loading="lazy" onerror="this.style.display='none'" src="https://logo.clearbit.com/sintex.com"/>
-<span class="brand-logo-tile-name">Sintex</span>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845945/Legrand_jaepv1.jpg" alt="Legrand" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Legrand</span>
 </div>
-<!-- Waterproofing -->
-<div class="brand-logo-tile">
-<img width="400" height="180" alt="Dr Fixit Waterproofing Logo" loading="lazy" onerror="this.style.display='none'" src="https://logo.clearbit.com/drfixit.com"/>
-<span class="brand-logo-tile-name">Dr Fixit</span>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846596/Anchorprod_wplayn.png" alt="Anchor" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Anchor</span>
 </div>
-<!-- More brands indicator -->
-<div class="brand-logo-tile" style="background:var(--navy);border-color:var(--navy);">
-<span style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--orange);">38+</span>
-<span class="brand-logo-tile-name" style="color:rgba(255,255,255,0.6);">More Brands</span>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845948/GMproduct_ebbgnv.png" alt="GM Modular" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">GM Modular</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845961/RRKabel_qkm3z1.jpg" alt="RR Kabel" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">RR Kabel</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845980/DR_Fixit_rlxv8u.jpg" alt="Dr Fixit" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Dr Fixit</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845994/Fosguard_nlagum.jpg" alt="Fosguard" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Fosguard</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846579/MYK_itrjot.jpg" alt="MYK" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">MYK</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846475/ARSprod_m0uyzy.png" alt="ARS Steel" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">ARS Steel</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846574/Durga_fqxjzo.jpg" alt="Durga Steel" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Durga Steel</span>
+</div>
+<!-- Set 2: duplicate for seamless infinite loop -->
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846577/Dalmia_vk14ks.jpg" alt="Dalmia Cement" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Dalmia</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846587/Ramco_qbgc8y.png" alt="Ramco Cement" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Ramco</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846581/Chettinad_bkln3d.png" alt="Chettinad Cement" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Chettinad</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846457/Zuari_bcanrp.jpg" alt="Zuari Cement" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Zuari</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Asian_paint_wyylv7.jpg" alt="Asian Paints" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Asian Paints</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845905/Royale_paint_yj5hsp.png" alt="Royale Paint" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Royale</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Finolex_ieybwf.jpg" alt="Finolex" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Finolex</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846584/ashirvadtank_sf7gjo.png" alt="Ashirvad" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Ashirvad</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846576/Sintextank_jnovge.webp" alt="Sintex Tanks" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Sintex</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845945/Legrand_jaepv1.jpg" alt="Legrand" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Legrand</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846596/Anchorprod_wplayn.png" alt="Anchor" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Anchor</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845948/GMproduct_ebbgnv.png" alt="GM Modular" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">GM Modular</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845961/RRKabel_qkm3z1.jpg" alt="RR Kabel" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">RR Kabel</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845980/DR_Fixit_rlxv8u.jpg" alt="Dr Fixit" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Dr Fixit</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845994/Fosguard_nlagum.jpg" alt="Fosguard" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Fosguard</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846579/MYK_itrjot.jpg" alt="MYK" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">MYK</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846475/ARSprod_m0uyzy.png" alt="ARS Steel" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">ARS Steel</span>
+</div>
+<div class="brand-marq-tile">
+<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846574/Durga_fqxjzo.jpg" alt="Durga Steel" loading="lazy" onerror="this.style.display='none'"/>
+<span class="brand-marq-name">Durga Steel</span>
 </div>
 </div>
 </div>
@@ -3411,7 +3603,7 @@ footer {
 <div class="product-card-bar"></div>
 <div class="product-card-img"><img width="400" height="180" alt="Zuari OPC 43 Grade – Cement supplier Chennai" loading="lazy" onerror="this.onerror=null;this.style.objectFit='contain';this.style.padding='20px';this.style.background='#1a3350';" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846457/Zuari_bcanrp.jpg"/><div class="product-card-img-overlay"></div><div class="product-card-cat-tag">Cement</div></div>
 <div class="product-card-body">
-<div class="product-card-brand-strip"><img width="400" height="180" alt="Zuari" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://logo.clearbit.com/zuaricement.com"/><span class="brand-logo-badge brand-zuari" style="display:none">Zuari</span></div><div class="product-card-name">Zuari OPC 43 Grade</div>
+<div class="product-card-brand-strip"><img width="400" height="180" alt="Zuari" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846457/Zuari_bcanrp.jpg"/><span class="brand-logo-badge brand-zuari" style="display:none">Zuari</span></div><div class="product-card-name">Zuari OPC 43 Grade</div>
 <div class="product-card-desc">Moderate-strength OPC for general construction, floor screeds &amp; non-structural elements. IS:8112 compliant.</div>
 <div class="product-card-footer">
 <div class="product-card-price">₹355<small>/bag</small></div>
@@ -3434,7 +3626,7 @@ footer {
 <div class="product-card-bar"></div>
 <div class="product-card-img"><img width="400" height="180" alt="Chettinad PPC Cement – Cement supplier Chennai" loading="lazy" onerror="this.onerror=null;this.style.objectFit='contain';this.style.padding='20px';this.style.background='#1a3350';" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846581/Chettinad_bkln3d.png"/><div class="product-card-img-overlay"></div><div class="product-card-cat-tag">Cement</div></div>
 <div class="product-card-body">
-<div class="product-card-brand-strip"><img width="400" height="180" alt="Chettinad" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://logo.clearbit.com/chettinadcement.com"/><span class="brand-logo-badge brand-chettinad" style="display:none">Chettinad</span></div><div class="product-card-name">Chettinad PPC Cement</div>
+<div class="product-card-brand-strip"><img width="400" height="180" alt="Chettinad" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846580/chettinad-dealers-in-tirupur_yiaxik.jpg"/><span class="brand-logo-badge brand-chettinad" style="display:none">Chettinad</span></div><div class="product-card-name">Chettinad PPC Cement</div>
 <div class="product-card-desc">Pozzolana cement with superior workability. Excellent for mass concrete &amp; coastal constructions. Low heat emission.</div>
 <div class="product-card-footer">
 <div class="product-card-price">₹365<small>/bag</small></div>
@@ -3920,7 +4112,7 @@ footer {
 <div class="product-badge badge-bestseller">Best Seller</div>
 <div class="product-card-img"><img width="400" height="180" alt="Ashirvad UPVC Column Pipes – Plumbing supplier Chennai" loading="lazy" onerror="this.onerror=null;this.style.objectFit='contain';this.style.padding='20px';this.style.background='#1a3350';" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845930/plumbing_product_gs75e5.png"/><div class="product-card-img-overlay"></div><div class="product-card-cat-tag">Plumbing</div></div>
 <div class="product-card-body">
-<div class="product-card-brand-strip"><img width="400" height="180" alt="Ashirvad" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://logo.clearbit.com/ashirvad.com"/><span class="brand-logo-badge brand-ashirvad" style="display:none">Ashirvad</span></div><div class="product-card-name">Ashirvad UPVC Pipes</div>
+<div class="product-card-brand-strip"><img width="400" height="180" alt="Ashirvad" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845930/plumbing_product_gs75e5.png"/><span class="brand-logo-badge brand-ashirvad" style="display:none">Ashirvad</span></div><div class="product-card-name">Ashirvad UPVC Pipes</div>
 <div class="product-card-desc">High-pressure UPVC for water supply &amp; drainage systems. Rust-proof, lightweight, corrosion-free. 4″ &amp; 6″ sizes.</div>
 <div class="product-card-footer">
 <div class="product-card-price">₹280<small>/6m</small></div>
@@ -4007,7 +4199,7 @@ footer {
 <div class="product-badge badge-bestseller">Best Seller</div>
 <div class="product-card-img"><img width="400" height="180" alt="Dr Fixit Pidifin 2K – Chemicals supplier Chennai" loading="lazy" onerror="this.onerror=null;this.style.objectFit='contain';this.style.padding='20px';this.style.background='#1a3350';" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845980/DR_Fixit_rlxv8u.jpg"/><div class="product-card-img-overlay"></div><div class="product-card-cat-tag">Chemicals</div></div>
 <div class="product-card-body">
-<div class="product-card-brand-strip"><img width="400" height="180" alt="Dr Fixit" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://logo.clearbit.com/drfixit.com"/><span class="brand-logo-badge brand-drfixit" style="display:none">Dr Fixit</span></div><div class="product-card-name">Dr Fixit Pidifin 2K</div>
+<div class="product-card-brand-strip"><img width="400" height="180" alt="Dr Fixit" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845980/DR_Fixit_rlxv8u.jpg"/><span class="brand-logo-badge brand-drfixit" style="display:none">Dr Fixit</span></div><div class="product-card-name">Dr Fixit Pidifin 2K</div>
 <div class="product-card-desc">Two-component flexible waterproofing membrane. Crack-bridging, UV resistant. For terraces, bathrooms, water tanks &amp; basements.</div>
 <div class="product-card-footer">
 <div class="product-card-price">₹1,400<small>/24kg</small></div>
@@ -4183,7 +4375,7 @@ footer {
 <div class="product-badge badge-bestseller">Best Seller</div>
 <div class="product-card-img"><img width="400" height="180" alt="Parryware Basin Mixer – Taps &amp; Faucets supplier Chennai" loading="lazy" onerror="this.onerror=null;this.style.objectFit='contain';this.style.padding='20px';this.style.background='#1a3350';" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845874/Taps_and_Faucets_ymhdhq.jpg"/><div class="product-card-img-overlay"></div><div class="product-card-cat-tag">Taps &amp; Faucets</div></div>
 <div class="product-card-body">
-<div class="product-card-brand-strip"><img width="400" height="180" alt="Parryware" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://logo.clearbit.com/parryware.in"/><span class="brand-logo-badge brand-parryware" style="display:none">Parryware</span></div><div class="product-card-name">Parryware Basin Mixer</div>
+<div class="product-card-brand-strip"><img width="400" height="180" alt="Parryware" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845874/Taps_and_Faucets_ymhdhq.jpg"/><span class="brand-logo-badge brand-parryware" style="display:none">Parryware</span></div><div class="product-card-name">Parryware Basin Mixer</div>
 <div class="product-card-desc">Chrome-plated single-lever basin mixer. Ceramic disc cartridge, drip-free, 360° swivel spout. ISI marked.</div>
 <div class="product-card-footer">
 <div class="product-card-price">₹2,400<small>/pc</small></div>
@@ -4271,7 +4463,7 @@ footer {
 <div class="product-badge badge-bestseller">Best Seller</div>
 <div class="product-card-img"><img width="400" height="180" alt="Sintex Overhead Tank – Water Tanks supplier Chennai" loading="lazy" onerror="this.onerror=null;this.style.objectFit='contain';this.style.padding='20px';this.style.background='#1a3350';" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846576/Sintextank_jnovge.webp"/><div class="product-card-img-overlay"></div><div class="product-card-cat-tag">Water Tanks</div></div>
 <div class="product-card-body">
-<div class="product-card-brand-strip"><img width="400" height="180" alt="Sintex" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://logo.clearbit.com/sintex.in"/><span class="brand-logo-badge brand-sintex" style="display:none">Sintex</span></div><div class="product-card-name">Sintex Overhead Tank</div>
+<div class="product-card-brand-strip"><img width="400" height="180" alt="Sintex" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846576/Sintextank_jnovge.webp"/><span class="brand-logo-badge brand-sintex" style="display:none">Sintex</span></div><div class="product-card-name">Sintex Overhead Tank</div>
 <div class="product-card-desc">Triple-layer insulated overhead water storage. UV-stabilized LLDPE, food-grade, anti-bacterial. 500L–5000L capacity.</div>
 <div class="product-card-footer">
 <div class="product-card-price">₹4,800<small>/500L</small></div>
@@ -4295,7 +4487,7 @@ footer {
 <div class="product-badge badge-popular">Popular</div>
 <div class="product-card-img"><img width="400" height="180" alt="Ashirvad Underground Tank – Water Tanks supplier Chennai" loading="lazy" onerror="this.onerror=null;this.style.objectFit='contain';this.style.padding='20px';this.style.background='#1a3350';" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846584/ashirvadtank_sf7gjo.png"/><div class="product-card-img-overlay"></div><div class="product-card-cat-tag">Water Tanks</div></div>
 <div class="product-card-body">
-<div class="product-card-brand-strip"><img width="400" height="180" alt="Ashirvad" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://logo.clearbit.com/ashirvad.com"/><span class="brand-logo-badge brand-ashirvad" style="display:none">Ashirvad</span></div><div class="product-card-name">Ashirvad Sump Tank</div>
+<div class="product-card-brand-strip"><img width="400" height="180" alt="Ashirvad" class="product-brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.removeProperty('display')" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845930/plumbing_product_gs75e5.png"/><span class="brand-logo-badge brand-ashirvad" style="display:none">Ashirvad</span></div><div class="product-card-name">Ashirvad Sump Tank</div>
 <div class="product-card-desc">Heavy-duty HDPE underground sump tank for sump water storage. Crack-proof, UV-protected, 1000L–10000L range.</div>
 <div class="product-card-footer">
 <div class="product-card-price">₹12,500<small>/2000L</small></div>
@@ -4663,8 +4855,8 @@ footer {
 <div class="brand-logos">
 <img width="400" height="180" alt="Dalmia Cement" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Dalmia_Bharat_logo.svg/200px-Dalmia_Bharat_logo.svg.png"/><span class="brand-pill" style="display:none">Dalmia</span>
 <img width="400" height="180" alt="Ultratech Cement" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/UltraTech_Cement_Logo.svg/200px-UltraTech_Cement_Logo.svg.png"/><span class="brand-pill" style="display:none">Ultratech</span>
-<img width="400" height="180" alt="Zuari Cement" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/zuaricement.com"/><span class="brand-pill" style="display:none">Zuari</span>
-<img width="400" height="180" alt="Chettinad Cement" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/chettinadcement.com"/><span class="brand-pill" style="display:none">Chettinad</span>
+<img width="400" height="180" alt="Zuari Cement" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846457/Zuari_bcanrp.jpg"/><span class="brand-pill" style="display:none">Zuari</span>
+<img width="400" height="180" alt="Chettinad Cement" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846580/chettinad-dealers-in-tirupur_yiaxik.jpg"/><span class="brand-pill" style="display:none">Chettinad</span>
 <img width="400" height="180" alt="Ramco Cement" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Ramco_Cements_Logo.svg/200px-Ramco_Cements_Logo.svg.png"/><span class="brand-pill" style="display:none">Ramco</span>
 </div>
 </div>
@@ -4676,9 +4868,9 @@ footer {
 <div class="brand-cat-count">3 brands</div>
 </div>
 <div class="brand-logos">
-<img width="400" height="180" alt="ARS Steel" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/arssteel.com"/><span class="brand-pill" style="display:none">ARS Steel</span>
-<img width="400" height="180" alt="Durga TMT" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/durgatmt.com"/><span class="brand-pill" style="display:none">Durga TMT</span>
-<img width="400" height="180" alt="Arun TMT" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/aruntmt.com"/><span class="brand-pill" style="display:none">Arun TMT</span>
+<img width="400" height="180" alt="ARS Steel" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846475/ARSprod_m0uyzy.png"/><span class="brand-pill" style="display:none">ARS Steel</span>
+<img width="400" height="180" alt="Durga TMT" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846574/Durga_fqxjzo.jpg"/><span class="brand-pill" style="display:none">Durga TMT</span>
+<img width="400" height="180" alt="Arun TMT" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846475/Agniprod_pjgixi.jpg"/><span class="brand-pill" style="display:none">Arun TMT</span>
 </div>
 </div>
 <!-- Sand -->
@@ -4702,7 +4894,7 @@ footer {
 <div class="brand-cat-count">4 products</div>
 </div>
 <div class="brand-logos">
-<img width="400" height="180" alt="MYK" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/myklaticrete.com"/><span class="brand-pill" style="display:none">MYK</span>
+<img width="400" height="180" alt="MYK" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846579/MYK_itrjot.jpg"/><span class="brand-pill" style="display:none">MYK</span>
 <span class="brand-pill">MYK Grout</span>
 <span class="brand-pill">MYK Spacer</span>
 <span class="brand-pill">MYK Beddings</span>
@@ -4727,10 +4919,10 @@ footer {
 <div class="brand-cat-count">4 brands</div>
 </div>
 <div class="brand-logos">
-<img width="400" height="180" alt="Star Pipes" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/starpipes.in"/><span class="brand-pill" style="display:none">Star</span>
-<img width="400" height="180" alt="Ashirvad" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/ashirvad.com"/><span class="brand-pill" style="display:none">Ashirvad</span>
-<img width="400" height="180" alt="Finolex" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/finolexpipes.com"/><span class="brand-pill" style="display:none">Finolex</span>
-<img width="400" height="180" alt="Indian Tube Pipes" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/indiantubepipes.com"/><span class="brand-pill" style="display:none">Indian Tube Pipes</span>
+<img width="400" height="180" alt="Star Pipes" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846000/Starprod_f4xilc.jpg"/><span class="brand-pill" style="display:none">Star</span>
+<img width="400" height="180" alt="Ashirvad" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845930/plumbing_product_gs75e5.png"/><span class="brand-pill" style="display:none">Ashirvad</span>
+<img width="400" height="180" alt="Finolex" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845907/Finolexyellow_mykrta.jpg"/><span class="brand-pill" style="display:none">Finolex</span>
+<img width="400" height="180" alt="Indian Tube Pipes" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846001/indiantube_kj9nfw.jpg"/><span class="brand-pill" style="display:none">Indian Tube Pipes</span>
 </div>
 </div>
 <!-- Chemicals -->
@@ -4741,8 +4933,8 @@ footer {
 <div class="brand-cat-count">3 brands</div>
 </div>
 <div class="brand-logos">
-<img width="400" height="180" alt="Dr Fixit" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/drfixit.com"/><span class="brand-pill" style="display:none">Dr Fixit</span>
-<img width="400" height="180" alt="Fosguard" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/fosroc.com"/><span class="brand-pill" style="display:none">Fosguard</span>
+<img width="400" height="180" alt="Dr Fixit" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845980/DR_Fixit_rlxv8u.jpg"/><span class="brand-pill" style="display:none">Dr Fixit</span>
+<img width="400" height="180" alt="Fosguard" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845994/Fosguard_nlagum.jpg"/><span class="brand-pill" style="display:none">Fosguard</span>
 <img width="400" height="180" alt="Asian Paints" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Asian_Paints_Logo.svg/200px-Asian_Paints_Logo.svg.png"/><span class="brand-pill" style="display:none">Asian</span>
 </div>
 </div>
@@ -4767,9 +4959,9 @@ footer {
 <div class="brand-cat-count">3 brands</div>
 </div>
 <div class="brand-logos">
-<img width="400" height="180" alt="Parryware" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/parryware.in"/><span class="brand-pill" style="display:none">Parryware</span>
-<img width="400" height="180" alt="Waterman" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/watermanindia.com"/><span class="brand-pill" style="display:none">Waterman</span>
-<img width="400" height="180" alt="Westar" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/westar.in"/><span class="brand-pill" style="display:none">Westar</span>
+<img width="400" height="180" alt="Parryware" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845874/Taps_and_Faucets_ymhdhq.jpg"/><span class="brand-pill" style="display:none">Parryware</span>
+<img width="400" height="180" alt="Waterman" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845874/Taps_and_Faucets_ymhdhq.jpg"/><span class="brand-pill" style="display:none">Waterman</span>
+<img width="400" height="180" alt="Westar" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845874/Taps_and_Faucets_ymhdhq.jpg"/><span class="brand-pill" style="display:none">Westar</span>
 </div>
 </div>
 <!-- Water Tanks -->
@@ -4780,8 +4972,8 @@ footer {
 <div class="brand-cat-count">2 brands</div>
 </div>
 <div class="brand-logos">
-<img width="400" height="180" alt="Sintex" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/sintex.in"/><span class="brand-pill" style="display:none">Sintex</span>
-<img width="400" height="180" alt="Ashirvad" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/ashirvad.com"/><span class="brand-pill" style="display:none">Ashirvad</span>
+<img width="400" height="180" alt="Sintex" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846576/Sintextank_jnovge.webp"/><span class="brand-pill" style="display:none">Sintex</span>
+<img width="400" height="180" alt="Ashirvad" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845930/plumbing_product_gs75e5.png"/><span class="brand-pill" style="display:none">Ashirvad</span>
 </div>
 </div>
 <!-- Wires & Cables -->
@@ -4792,9 +4984,9 @@ footer {
 <div class="brand-cat-count">3 brands</div>
 </div>
 <div class="brand-logos">
-<img width="400" height="180" alt="Finolex" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/finolexpipes.com"/><span class="brand-pill" style="display:none">Finolex</span>
-<img width="400" height="180" alt="Orbit" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/orbitelectrical.com"/><span class="brand-pill" style="display:none">Orbit</span>
-<img width="400" height="180" alt="RR Cables" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/rrkabel.com"/><span class="brand-pill" style="display:none">RR Cables</span>
+<img width="400" height="180" alt="Finolex" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845907/Finolexyellow_mykrta.jpg"/><span class="brand-pill" style="display:none">Finolex</span>
+<img width="400" height="180" alt="Orbit" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845872/Switches_and_sockets_p2lqqm.jpg"/><span class="brand-pill" style="display:none">Orbit</span>
+<img width="400" height="180" alt="RR Cables" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845961/RRKabel_qkm3z1.jpg"/><span class="brand-pill" style="display:none">RR Cables</span>
 </div>
 </div>
 <!-- Switches & Sockets -->
@@ -4805,10 +4997,10 @@ footer {
 <div class="brand-cat-count">4 brands</div>
 </div>
 <div class="brand-logos">
-<img width="400" height="180" alt="Anchor Roma" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/anchorbrand.com"/><span class="brand-pill" style="display:none">Anchor Roma</span>
-<img width="400" height="180" alt="GM Modular" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/gmmodular.com"/><span class="brand-pill" style="display:none">GM Modular</span>
+<img width="400" height="180" alt="Anchor Roma" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845945/Anchor1_mjwcte.jpg"/><span class="brand-pill" style="display:none">Anchor Roma</span>
+<img width="400" height="180" alt="GM Modular" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845948/GMproduct_ebbgnv.png"/><span class="brand-pill" style="display:none">GM Modular</span>
 <img width="400" height="180" alt="Legrand" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Legrand_logo.svg/200px-Legrand_logo.svg.png"/><span class="brand-pill" style="display:none">Legrand</span>
-<img width="400" height="180" alt="Orbit Switches" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://logo.clearbit.com/orbitelectrical.com"/><span class="brand-pill" style="display:none">Orbit Switches</span>
+<img width="400" height="180" alt="Orbit Switches" class="brand-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845872/Switches_and_sockets_p2lqqm.jpg"/><span class="brand-pill" style="display:none">Orbit Switches</span>
 </div>
 </div>
 <!-- Brushes & Rollers -->
