@@ -2390,23 +2390,23 @@ footer {
 </div>
 <div class="hero-cat-grid">
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846577/Dalmia_vk14ks.jpg" alt="All Construction Materials" class="hero-cat-img" loading="lazy"/></span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775856081/all_construction_materials_t3wyqt.jpg" alt="All Construction Materials" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">All Construction Materials</div>
 </div>
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846580/chettinad-dealers-in-tirupur_yiaxik.jpg" alt="Cement &amp; Concrete" class="hero-cat-img" loading="lazy"/></span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775856079/cement_concrete_rpkvph.jpg" alt="Cement &amp; Concrete" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">Cement &amp; Concrete</div>
 </div>
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846574/SteelTMT_product_dmljma.png" alt="Steel &amp; TMT Bars" class="hero-cat-img" loading="lazy"/></span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775856085/steel_TMT_rhlgqi.png" alt="Steel &amp; TMT Bars" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">Steel &amp; TMT Bars</div>
 </div>
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Asian_paint_wyylv7.jpg" alt="Paints &amp; Coatings" class="hero-cat-img" loading="lazy"/></span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775856080/paints_coatings_oepcb6.jpg" alt="Paints &amp; Coatings" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">Paints &amp; Coatings</div>
 </div>
 <div class="hero-cat" onclick="showPage('products')">
-<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Finolex_ieybwf.jpg" alt="Pipes &amp; Fittings" class="hero-cat-img" loading="lazy"/></span>
+<span class="hero-cat-icon"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/v1775856080/Pipes_fittings_jjhlyw.jpg" alt="Pipes &amp; Fittings" class="hero-cat-img" loading="lazy"/></span>
 <div class="hero-cat-label">Pipes &amp; Fittings</div>
 </div>
 </div>
@@ -2793,6 +2793,58 @@ footer {
 <!-- ================================================================
        CLIENTS SECTION — PREMIUM CORPORATE DESIGN
        ================================================================ -->
+<!-- [ADDED] TASK 3: Premium staggered fade-in + upward animation for clients section -->
+<style>
+@keyframes clientFadeUp {
+  0%   { opacity: 0; transform: translateY(32px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.clients-grid-premium .client-card-premium {
+  opacity: 0;
+  transform: translateY(32px);
+}
+.clients-grid-premium .client-card-premium.clients-animated {
+  animation: clientFadeUp 0.72s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(1) { animation-delay: 0.00s; }
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(2) { animation-delay: 0.13s; }
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(3) { animation-delay: 0.26s; }
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(4) { animation-delay: 0.39s; }
+.clients-grid-premium .client-card-premium.clients-animated:nth-child(5) { animation-delay: 0.52s; }
+</style>
+<script>
+(function(){
+  function initClientsAnim(){
+    var grid = document.querySelector('.clients-grid-premium');
+    if(!grid) return;
+    var cards = grid.querySelectorAll('.client-card-premium');
+    if(!('IntersectionObserver' in window)){
+      cards.forEach(function(c){ c.style.opacity='1'; c.style.transform='none'; }); return;
+    }
+    var triggered = false;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting && !triggered){
+          triggered = true;
+          cards.forEach(function(c){
+            c.style.opacity = '';
+            c.style.transform = '';
+            c.classList.remove('in-view');
+            c.classList.add('clients-animated');
+          });
+          obs.disconnect();
+        }
+      });
+    },{ threshold: 0.12 });
+    obs.observe(grid);
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initClientsAnim);
+  } else {
+    initClientsAnim();
+  }
+})();
+</script>
 <section class="clients-section">
 <div class="container">
 <div class="clients-header">
