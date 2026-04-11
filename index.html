@@ -2893,17 +2893,65 @@ footer {
   0%,100% { transform: translateY(0); }
   50% { transform: translateY(6px); }
 }
-/* Fallback poster for mobile (no autoplay sometimes) */
+/* ============================================================
+   MOBILE HERO FIX — @media (max-width: 768px)
+   Fixes "Kuber Agencies" being hidden/cropped on mobile.
+   Desktop is completely untouched.
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* 1. Use dvh (dynamic viewport height) on mobile so iOS Safari's
+        browser chrome doesn't eat into the hero height.
+        Falls back to 100vh on browsers that don't support dvh. */
+  #ka-video-section {
+    min-height: 100vh;
+    min-height: 100dvh;
+    /* Align content to the top so the image top (where "Kuber Agencies"
+       appears) is anchored — prevents vertical centering from pushing it up */
+    align-items: flex-start;
+  }
+
+  /* 2. The video/poster: keep cover but lock the image to the top
+        so the brand name at the top of the image is never cropped. */
+  #ka-hero-video {
+    object-position: center top;
+  }
+
+  /* 3. Shift the overlay gradient so the top is more transparent —
+        ensures text inside the image at the top is readable and visible. */
+  #ka-video-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(7,17,31,0.25) 0%,
+      rgba(7,17,31,0.20) 25%,
+      rgba(7,17,31,0.45) 65%,
+      rgba(7,17,31,0.85) 100%
+    );
+  }
+
+  /* 4. Push content down enough to clear the fixed nav (72px) with
+        comfortable breathing room — keeps "Build With Confidence"
+        text in view and not overlapping the nav bar. */
+  #ka-video-content {
+    padding: 96px 20px 60px;
+    align-self: flex-start;
+    width: 100%;
+  }
+}
+
+/* ---- Smaller phones (max 600px) ---- */
 @media (max-width: 600px) {
-  #ka-video-content { padding: 110px 20px 70px; }
+  #ka-video-content { padding: 88px 18px 56px; }
   .ka-vid-stat { padding: 0 14px; }
   .ka-vid-stat-num { font-size: 26px; }
 }
+
+/* ---- Very small phones (max 420px) ---- */
 @media (max-width: 420px) {
-  #ka-video-content { padding: 90px 16px 60px; }
-  #ka-video-content h2 { font-size: clamp(32px, 9vw, 54px); line-height: 1.0; }
-  #ka-video-content .ka-vid-eyebrow { font-size: 10px; padding: 6px 14px; letter-spacing: 1.2px; }
-  #ka-video-content p { font-size: 14px; margin-bottom: 24px; }
+  #ka-video-content { padding: 82px 14px 48px; }
+  #ka-video-content h2 { font-size: clamp(30px, 9vw, 48px); line-height: 1.05; }
+  #ka-video-content .ka-vid-eyebrow { font-size: 10px; padding: 5px 12px; letter-spacing: 1px; }
+  #ka-video-content p { font-size: 14px; margin-bottom: 22px; }
   .ka-vid-stat { padding: 0 10px; }
   .ka-vid-stat-num { font-size: 22px; }
   .ka-vid-stat-label { font-size: 9px; }
