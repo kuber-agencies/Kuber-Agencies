@@ -2729,25 +2729,7 @@ footer {
 </head>
 <body>
 
-<!-- ============================================================
-  KUBER AGENCIES — VIDEO EXPERIENCE LAYER
-  Strategy: Canvas + MediaRecorder API (Option A)
-  
-  HOW IT WORKS:
-  1. A hidden <iframe> loads this same page in a contained viewport
-  2. html2canvas snapshots the iframe DOM at ~15fps into an offscreen <canvas>
-  3. canvas.captureStream(15) feeds a MediaStream into MediaRecorder (WebM/VP9)
-  4. Recorded Blob chunks accumulate in memory; on stop → Blob URL → <video> src
-  5. A scripted cinematic scroll timeline drives the iframe's scrolling
-  6. Download button triggers URL.createObjectURL → <a download> click
-  
-  FALLBACK (browsers without MediaRecorder / cross-origin restrictions):
-  The video player shows a "Live Preview" mode using a CSS-animated
-  canvas-drawn presentation built entirely with Canvas 2D API —
-  no iframes, no cross-origin issues, fully self-contained.
-  ============================================================ -->
-
-<!-- === VIDEO PLAYER SECTION (injected above original content) === -->
+<!-- === VIDEO PLAYER SECTION === -->
 <div id="ka-video-section" style="
   background: linear-gradient(135deg, #07111f 0%, #0d1e35 50%, #132840 100%);
   padding: 40px 20px 50px;
@@ -2766,7 +2748,7 @@ footer {
       border-radius:100px;padding:6px 18px;margin-bottom:16px;
     ">
       <span style="width:8px;height:8px;border-radius:50%;background:#f06d1e;animation:ka-blink 1.2s infinite;display:inline-block;"></span>
-      <span style="font-size:12px;font-weight:700;color:#f06d1e;letter-spacing:1.5px;text-transform:uppercase;">Video Preview</span>
+      <span style="font-size:12px;font-weight:700;color:#f06d1e;letter-spacing:1.5px;text-transform:uppercase;">Brand Video</span>
     </div>
     <h2 style="
       font-family:'Barlow Condensed',sans-serif;
@@ -2774,103 +2756,112 @@ footer {
       color:#fff;margin:0 0 8px;letter-spacing:-0.5px;line-height:1.1;
     ">Kuber Agencies — Brand Showcase</h2>
     <p style="color:rgba(255,255,255,0.55);font-size:14px;font-weight:400;margin:0;">
-      Watch our full website tour · 35 seconds · Cinematic scroll experience
+      Chennai's trusted construction materials supplier since 2000
     </p>
   </div>
 
   <!-- Video player wrapper -->
   <div style="
-    max-width: 900px;margin: 0 auto;position:relative;z-index:2;
-    border-radius: 16px;overflow:hidden;
-    box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(240,109,30,0.2);
+    max-width:900px;margin:0 auto;position:relative;z-index:2;
+    border-radius:16px;overflow:hidden;
+    box-shadow:0 24px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(240,109,30,0.2);
   ">
-    <!-- The <video> element — MediaRecorder output will be set as src -->
+    <!-- Speaker toggle (floats top-right over video) -->
+    <button id="ka-speaker-btn" onclick="kaToggleSound()" title="Toggle Sound" style="
+      position:absolute;top:12px;right:12px;z-index:10;
+      width:42px;height:42px;border-radius:50%;
+      background:rgba(7,17,31,0.78);
+      border:1.5px solid rgba(240,109,30,0.55);
+      color:#fff;font-size:18px;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+      transition:background 0.2s;
+    " onmouseover="this.style.background='rgba(240,109,30,0.72)'"
+       onmouseout="this.style.background='rgba(7,17,31,0.78)'">🔇</button>
+
+    <!-- "Tap to enable sound" hint overlay — auto-hides after first interaction -->
+    <div id="ka-sound-hint" onclick="kaToggleSound()" style="
+      position:absolute;bottom:56px;left:50%;transform:translateX(-50%);
+      background:rgba(7,17,31,0.88);border:1px solid rgba(240,109,30,0.45);
+      color:#fff;border-radius:100px;padding:8px 20px;
+      font-size:12.5px;font-weight:600;letter-spacing:0.4px;
+      cursor:pointer;display:flex;align-items:center;gap:8px;
+      backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+      z-index:10;animation:ka-fadein 0.5s ease 1.5s both;
+      transition:opacity 0.4s;white-space:nowrap;
+      font-family:'Barlow',sans-serif;
+    ">
+      <span>🔇</span> Tap to enable sound
+    </div>
+
+    <!--
+      REPLACE the src below with your actual video file URL.
+      Recommended: upload to Cloudinary or your hosting and paste the direct MP4 link.
+      Example: src="https://res.cloudinary.com/YOUR_CLOUD/video/upload/kuber-promo.mp4"
+    -->
     <video
       id="ka-showcase-video"
       autoplay
       muted
       loop
-      controls
       playsinline
-      poster=""
       style="width:100%;display:block;background:#07111f;aspect-ratio:16/9;min-height:200px;"
     >
+      <source src="https://res.cloudinary.com/dmn23tsgu/video/upload/kuber-agencies-promo.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
-
-    <!-- Recording overlay shown while generating -->
-    <div id="ka-recording-overlay" style="
-      position:absolute;inset:0;
-      background:linear-gradient(135deg,#07111f,#0d1e35);
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-      z-index:10;
-    ">
-      <!-- Canvas-based live preview (shown while recording / as fallback) -->
-      <canvas id="ka-preview-canvas" style="
-        width:100%;max-width:900px;aspect-ratio:16/9;display:block;
-      "></canvas>
-
-      <!-- Status bar -->
-      <div id="ka-status-bar" style="
-        position:absolute;bottom:0;left:0;right:0;
-        background:rgba(7,17,31,0.9);
-        padding:10px 20px;
-        display:flex;align-items:center;justify-content:space-between;
-        border-top:1px solid rgba(240,109,30,0.2);
-      ">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div id="ka-rec-dot" style="width:10px;height:10px;border-radius:50%;background:#f06d1e;animation:ka-blink 0.8s infinite;"></div>
-          <span id="ka-status-text" style="color:rgba(255,255,255,0.8);font-size:13px;font-weight:600;">Generating video preview…</span>
-        </div>
-        <div id="ka-progress-wrap" style="display:flex;align-items:center;gap:10px;">
-          <div style="width:140px;height:4px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;">
-            <div id="ka-encode-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#f06d1e,#ff8c42);border-radius:4px;transition:width 0.3s;"></div>
-          </div>
-          <span id="ka-pct-text" style="color:#f06d1e;font-size:12px;font-weight:700;min-width:35px;">0%</span>
-        </div>
-      </div>
-    </div>
   </div>
+
+  <!--
+    AI VOICEOVER AUDIO
+    REPLACE the src below with your pre-generated MP3 file URL.
+    Example: src="https://res.cloudinary.com/YOUR_CLOUD/video/upload/kuber-voiceover.mp3"
+  -->
+  <audio id="ka-voiceover-audio" loop style="display:none;">
+    <source src="https://res.cloudinary.com/dmn23tsgu/video/upload/kuber-agencies-voiceover.mp3" type="audio/mpeg">
+  </audio>
 
   <!-- Action buttons -->
   <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px;position:relative;z-index:2;">
-    <button id="ka-download-btn" onclick="kaDownloadVideo()" style="
-      background:linear-gradient(135deg,#f06d1e,#ff8c42);
-      color:#fff;border:none;border-radius:8px;
-      padding:13px 28px;font-size:14px;font-weight:700;
+
+    <!-- Sound toggle button -->
+    <button id="ka-sound-toggle-btn" onclick="kaToggleSound()" style="
+      background:rgba(255,255,255,0.08);color:#fff;
+      border:2px solid rgba(255,255,255,0.22);border-radius:8px;
+      padding:13px 24px;font-size:14px;font-weight:600;
       cursor:pointer;letter-spacing:0.5px;
-      box-shadow:0 4px 20px rgba(240,109,30,0.4);
-      display:flex;align-items:center;gap:8px;
+      display:flex;align-items:center;gap:9px;
       transition:all 0.2s;font-family:inherit;
-    " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(240,109,30,0.5)'"
-       onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 20px rgba(240,109,30,0.4)'">
+    " onmouseover="this.style.borderColor='rgba(240,109,30,0.65)';this.style.color='#f06d1e'"
+       onmouseout="this.style.borderColor='rgba(255,255,255,0.22)';this.style.color='#fff'">
+      <span id="ka-sound-icon">🔇</span>
+      <span id="ka-sound-label">Enable Sound</span>
+    </button>
+
+    <!--
+      DOWNLOAD VIDEO button — direct file download (no recording).
+      REPLACE href below with the same video URL used above.
+    -->
+    <a
+      id="ka-download-btn"
+      href="https://res.cloudinary.com/dmn23tsgu/video/upload/kuber-agencies-promo.mp4"
+      download="kuber-agencies-showcase.mp4"
+      style="
+        background:linear-gradient(135deg,#f06d1e,#ff8c42);
+        color:#fff;border:none;border-radius:8px;
+        padding:13px 28px;font-size:14px;font-weight:700;
+        cursor:pointer;letter-spacing:0.5px;
+        box-shadow:0 4px 20px rgba(240,109,30,0.4);
+        display:flex;align-items:center;gap:8px;
+        text-decoration:none;font-family:inherit;
+        transition:all 0.2s;
+      "
+      onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(240,109,30,0.5)'"
+      onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 20px rgba(240,109,30,0.4)'"
+    >
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       Download Video
-    </button>
-    <button id="ka-replay-btn" onclick="kaReplayVideo()" style="
-      background:transparent;color:#fff;
-      border:2px solid rgba(255,255,255,0.25);border-radius:8px;
-      padding:13px 24px;font-size:14px;font-weight:600;
-      cursor:pointer;letter-spacing:0.5px;
-      display:flex;align-items:center;gap:8px;
-      transition:all 0.2s;font-family:inherit;
-    " onmouseover="this.style.borderColor='rgba(240,109,30,0.6)';this.style.color='#f06d1e'"
-       onmouseout="this.style.borderColor='rgba(255,255,255,0.25)';this.style.color='#fff'">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.1"/></svg>
-      Replay
-    </button>
-    <button onclick="kaRegenerateVideo()" style="
-      background:transparent;color:rgba(255,255,255,0.5);
-      border:2px solid rgba(255,255,255,0.12);border-radius:8px;
-      padding:13px 24px;font-size:14px;font-weight:600;
-      cursor:pointer;letter-spacing:0.5px;
-      display:flex;align-items:center;gap:8px;
-      transition:all 0.2s;font-family:inherit;
-    " onmouseover="this.style.borderColor='rgba(255,255,255,0.3)';this.style.color='rgba(255,255,255,0.8)'"
-       onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.color='rgba(255,255,255,0.5)'">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-      Regenerate
-    </button>
+    </a>
   </div>
 
   <!-- Divider -->
@@ -2892,853 +2883,113 @@ footer {
 
 <style>
 /* Video section animations */
-@keyframes ka-blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+@keyframes ka-blink  { 0%,100%{opacity:1} 50%{opacity:0.3} }
 @keyframes ka-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
-@keyframes ka-spin { to{transform:rotate(360deg)} }
 @keyframes ka-fadein { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
-
-/* Responsive video section */
-@media (max-width: 600px) {
-  #ka-video-section { padding: 28px 14px 36px; }
-}
+/* Responsive */
+@media (max-width:600px) { #ka-video-section { padding:28px 14px 36px; } }
 </style>
 
 <script>
-/**
- * KUBER AGENCIES — VIDEO GENERATION ENGINE
- * ==========================================
- * Architecture: Canvas 2D API Cinematic Renderer
- * 
- * Approach: Instead of capturing the DOM (which fails cross-origin),
- * we render a full cinematic presentation directly on a Canvas using
- * the Canvas 2D API — drawing branded slides, typography, logos,
- * animated counters, and section transitions entirely in JavaScript.
- * This produces a clean, guaranteed WebM video via MediaRecorder.
- * 
- * Pipeline:
- *   Canvas 2D draw() → captureStream(30fps) → MediaRecorder(WebM/VP9)
- *   → Blob chunks[] → Blob URL → <video src> + download anchor
- * 
- * Timeline (35 seconds total):
- *   0–4s   : Intro / Brand reveal
- *   4–9s   : Hero stats animation
- *   9–14s  : Products showcase
- *   14–19s : Authorized Dealer / 50+ Brands
- *   19–24s : Trusted by Leading Builders
- *   24–29s : Contact section
- *   29–35s : Finale / call to action
- */
-
-(function() {
+(function () {
   'use strict';
 
-  /* ── Config ─────────────────────────────────────────── */
-  var FPS         = 30;
-  var DURATION    = 35000; // 35 seconds
-  var W           = 1280;
-  var H           = 720;
-
-  /* ── State ───────────────────────────────────────────── */
-  var canvas      = document.getElementById('ka-preview-canvas');
-  var ctx         = canvas.getContext('2d');
-  var mediaRec    = null;
-  var chunks      = [];
-  var blobUrl     = null;
-  var startTime   = null;
-  var rafId       = null;
-  var isComplete  = false;
-  var isRecording = false;
-
-  /* ── Set canvas internal resolution ────────────────── */
-  canvas.width  = W;
-  canvas.height = H;
-
-  /* ── Brand palette ───────────────────────────────────── */
-  var C = {
-    navy:    '#07111f',
-    navyMid: '#0d1e35',
-    navyL:   '#132840',
-    navyP:   '#1a3350',
-    orange:  '#f06d1e',
-    orangeL: '#ff8c42',
-    white:   '#ffffff',
-    offW:    '#f4f6fb',
-    gray:    '#7a8ea8',
-    grayL:   '#e4eaf4',
-  };
-
-  /* ── Background particles canvas ──────────────────── */
+  /* ── Animated background particles ────────────────────── */
   (function initParticles() {
     var pc = document.getElementById('ka-bg-particles');
+    if (!pc) return;
     var pw = pc.offsetWidth || 900, ph = pc.offsetHeight || 400;
     pc.width = pw; pc.height = ph;
     var pctx = pc.getContext('2d');
     var pts = [];
-    for (var i=0;i<60;i++) {
-      pts.push({ x:Math.random()*pw, y:Math.random()*ph,
-        vx:(Math.random()-0.5)*0.4, vy:(Math.random()-0.5)*0.4,
-        r:Math.random()*2+0.5, o:Math.random()*0.6+0.1 });
+    for (var i = 0; i < 60; i++) {
+      pts.push({
+        x: Math.random() * pw, y: Math.random() * ph,
+        vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+        r: Math.random() * 2 + 0.5, o: Math.random() * 0.6 + 0.1
+      });
     }
-    function animPts() {
-      pctx.clearRect(0,0,pw,ph);
-      pts.forEach(function(p) {
-        p.x+=p.vx; p.y+=p.vy;
-        if(p.x<0)p.x=pw; if(p.x>pw)p.x=0;
-        if(p.y<0)p.y=ph; if(p.y>ph)p.y=0;
+    (function animPts() {
+      pctx.clearRect(0, 0, pw, ph);
+      pts.forEach(function (p) {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = pw; if (p.x > pw) p.x = 0;
+        if (p.y < 0) p.y = ph; if (p.y > ph) p.y = 0;
         pctx.beginPath();
-        pctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        pctx.fillStyle='rgba(240,109,30,'+p.o+')';
+        pctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        pctx.fillStyle = 'rgba(240,109,30,' + p.o + ')';
         pctx.fill();
       });
       requestAnimationFrame(animPts);
-    }
-    animPts();
-  })();
+    }());
+  }());
 
-  /* ── Utility helpers ─────────────────────────────────── */
-  function lerp(a, b, t) { return a + (b - a) * Math.max(0, Math.min(1, t)); }
-  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-  function easeInOut(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
-  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+  /* ── Sound state ───────────────────────────────────────── */
+  var soundEnabled = false;
 
-  /* Linear interpolation of section opacity for fade transitions */
-  function sectionAlpha(elapsed, tStart, fadeIn, hold, fadeOut) {
-    var t = elapsed - tStart;
-    if (t < 0) return 0;
-    if (t < fadeIn) return easeOut(t / fadeIn);
-    if (t < fadeIn + hold) return 1;
-    if (t < fadeIn + hold + fadeOut) return 1 - easeOut((t - fadeIn - hold) / fadeOut);
-    return 0;
-  }
+  /* ── Boot: autoplay muted; enable sound on first interaction ── */
+  (function boot() {
+    var vid   = document.getElementById('ka-showcase-video');
+    var audio = document.getElementById('ka-voiceover-audio');
+    if (!vid) return;
 
-  /* ── Canvas drawing primitives ───────────────────────── */
+    vid.muted = true;
+    vid.play().catch(function () {});
 
-  function fillBg(color) {
-    ctx.fillStyle = color || C.navy;
-    ctx.fillRect(0, 0, W, H);
-  }
-
-  function drawGradBg(t) {
-    /* Animated gradient background — shifts hue over time */
-    var shift = Math.sin(t * 0.0003) * 12;
-    var grd = ctx.createLinearGradient(shift, 0, W + shift, H);
-    grd.addColorStop(0,   '#07111f');
-    grd.addColorStop(0.5, '#0d1e35');
-    grd.addColorStop(1,   '#132840');
-    ctx.fillStyle = grd;
-    ctx.fillRect(0, 0, W, H);
-  }
-
-  function drawGrid(alpha) {
-    /* Subtle grid lines */
-    ctx.save();
-    ctx.globalAlpha = alpha * 0.08;
-    ctx.strokeStyle = '#f06d1e';
-    ctx.lineWidth = 0.5;
-    for (var x = 0; x < W; x += 80) {
-      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
-    }
-    for (var y = 0; y < H; y += 80) {
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
-    }
-    ctx.restore();
-  }
-
-  function drawOrangeBar(y, w, alpha) {
-    ctx.save();
-    ctx.globalAlpha = alpha;
-    var grd = ctx.createLinearGradient(0, 0, w, 0);
-    grd.addColorStop(0, C.orange);
-    grd.addColorStop(1, C.orangeL);
-    ctx.fillStyle = grd;
-    ctx.fillRect(0, y, w, 4);
-    ctx.restore();
-  }
-
-  function text(txt, x, y, opts) {
-    opts = opts || {};
-    ctx.save();
-    ctx.globalAlpha   = opts.alpha !== undefined ? opts.alpha : 1;
-    ctx.fillStyle     = opts.color || C.white;
-    ctx.font          = (opts.weight || '700') + ' ' + (opts.size || 32) + 'px "Barlow Condensed", "Barlow", sans-serif';
-    ctx.textAlign     = opts.align || 'left';
-    ctx.textBaseline  = opts.baseline || 'alphabetic';
-    if (opts.shadow) {
-      ctx.shadowColor   = opts.shadow;
-      ctx.shadowBlur    = opts.shadowBlur || 20;
-    }
-    ctx.fillText(txt, x, y);
-    ctx.restore();
-  }
-
-  function roundRect(x, y, w, h, r, fill, stroke, strokeW, alpha) {
-    ctx.save();
-    ctx.globalAlpha = alpha !== undefined ? alpha : 1;
-    ctx.beginPath();
-    ctx.moveTo(x + r, y);
-    ctx.lineTo(x + w - r, y);
-    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-    ctx.lineTo(x + w, y + h - r);
-    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-    ctx.lineTo(x + r, y + h);
-    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-    ctx.lineTo(x, y + r);
-    ctx.quadraticCurveTo(x, y, x + r, y);
-    ctx.closePath();
-    if (fill)   { ctx.fillStyle   = fill;           ctx.fill(); }
-    if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = strokeW||2; ctx.stroke(); }
-    ctx.restore();
-  }
-
-  function drawGlowText(txt, x, y, size, color, glowColor, alpha) {
-    ctx.save();
-    ctx.globalAlpha = alpha !== undefined ? alpha : 1;
-    ctx.shadowColor = glowColor || C.orange;
-    ctx.shadowBlur  = 28;
-    ctx.fillStyle   = color || C.white;
-    ctx.font        = '900 ' + size + 'px "Barlow Condensed", sans-serif';
-    ctx.textAlign   = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(txt, x, y);
-    ctx.restore();
-  }
-
-  function drawLogo(cx, cy, alpha) {
-    ctx.save();
-    ctx.globalAlpha = alpha;
-    /* Orange house icon */
-    ctx.fillStyle = C.orange;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy - 22);
-    ctx.lineTo(cx + 20, cy - 6);
-    ctx.lineTo(cx + 20, cy + 18);
-    ctx.lineTo(cx - 20, cy + 18);
-    ctx.lineTo(cx - 20, cy - 6);
-    ctx.closePath();
-    ctx.fill();
-    /* Door */
-    ctx.fillStyle = C.navyMid;
-    ctx.fillRect(cx - 7, cy + 2, 14, 16);
-    ctx.restore();
-  }
-
-  function drawOrangePill(label, x, y, alpha) {
-    ctx.save();
-    ctx.globalAlpha = alpha;
-    var pw = ctx.measureText(label).width + 28;
-    roundRect(x - pw/2, y - 14, pw, 28, 14,
-      null, C.orange, 1.5, 1);
-    text(label, x, y + 5, { size: 13, weight: '700', color: C.orange,
-      align: 'center', baseline: 'middle', alpha: 1 });
-    ctx.restore();
-  }
-
-  function animCounter(val, elapsed, startT, dur) {
-    var t = clamp((elapsed - startT) / dur, 0, 1);
-    return Math.round(easeOut(t) * val);
-  }
-
-  /* ── Section renderers ───────────────────────────────── */
-
-  /* 1. INTRO — 0–4000ms */
-  function drawIntro(elapsed) {
-    var a   = sectionAlpha(elapsed, 0, 800, 2500, 700);
-    if (a <= 0) return;
-
-    drawGradBg(elapsed);
-    drawGrid(a);
-
-    /* Big brand name reveal */
-    var slide = easeOut(clamp((elapsed) / 1000, 0, 1)) * 40;
-    ctx.save();
-    ctx.globalAlpha = a;
-    ctx.translate(0, -slide * (1 - clamp(elapsed/1200, 0,1)));
-    drawLogo(W/2, H/2 - 80, 1);
-    drawGlowText('KUBER AGENCIES', W/2, H/2 - 20, 72, C.white, C.orange, 1);
-    text('PREMIUM CONSTRUCTION MATERIALS · CHENNAI · EST. 2000',
-      W/2, H/2 + 38, { size: 16, weight: '600', color: 'rgba(255,255,255,0.55)', align: 'center' });
-    drawOrangeBar(H/2 + 58, W * clamp(elapsed/2000, 0, 1), 1);
-    ctx.restore();
-
-    /* Bottom tag */
-    text('AUTHORIZED DEALER FOR 50+ BRANDS',
-      W/2, H - 60, { size: 14, weight: '800', color: C.orange, align: 'center', alpha: a * clamp((elapsed-1500)/800, 0, 1) });
-  }
-
-  /* 2. HERO STATS — 3500–8500ms */
-  function drawHeroStats(elapsed) {
-    var a = sectionAlpha(elapsed, 3500, 700, 4000, 700);
-    if (a <= 0) return;
-
-    drawGradBg(elapsed);
-    drawGrid(a * 0.6);
-
-    var s = elapsed - 3500;
-
-    /* Title */
-    text('WHY BUILDERS CHOOSE US', W/2, 120, { size: 22, weight: '800', color: C.orange, align: 'center', alpha: a });
-    drawGlowText('TRUSTED SINCE 2000', W/2, 175, 58, C.white, C.orange, a);
-    drawOrangeBar(200, W * clamp(s/1000, 0, 1), a);
-
-    /* 4 stats cards */
-    var stats = [
-      { val: 25,  unit: '+', label: 'YEARS', sub: 'In Business' },
-      { val: 50,  unit: '+', label: 'BRANDS', sub: 'Authorized Dealer' },
-      { val: 500, unit: '+', label: 'PROJECTS', sub: 'Delivered' },
-      { val: 1,   unit: 'K+', label: 'CLIENTS', sub: 'Trusted Builders' },
-    ];
-    var cardW = 230, cardH = 160, gap = 24;
-    var totalW = stats.length * cardW + (stats.length-1) * gap;
-    var startX = (W - totalW) / 2;
-    var cardY  = 260;
-
-    stats.forEach(function(st, i) {
-      var delay  = 400 + i * 200;
-      var cardA  = a * clamp((s - delay) / 500, 0, 1);
-      var slideY = (1 - easeOut(clamp((s-delay)/400, 0, 1))) * 30;
-      var x      = startX + i * (cardW + gap);
-      ctx.save();
-      ctx.translate(0, slideY);
-      roundRect(x, cardY, cardW, cardH, 12, C.navyMid, C.orange, 1.5, cardA * 0.9);
-      /* Orange top accent */
-      roundRect(x, cardY, cardW, 4, 2,
-        'linear-gradient(90deg,'+C.orange+','+C.orangeL+')', null, 0, cardA);
-      var grd2 = ctx.createLinearGradient(x,cardY,x,cardY+4);
-      grd2.addColorStop(0, C.orange); grd2.addColorStop(1, C.orangeL);
-      ctx.fillStyle = grd2; ctx.globalAlpha = cardA;
-      ctx.fillRect(x, cardY, cardW, 4);
-      ctx.restore();
-
-      var num = (st.val === 1)
-        ? animCounter(1000, elapsed, 3500 + delay, 1200)
-        : animCounter(st.val, elapsed, 3500 + delay, 1200);
-      var numStr = (st.val === 1)
-        ? (num >= 1000 ? '1' : num.toString())
-        : num.toString();
-      var unitStr = st.unit;
-
-      ctx.save();
-      ctx.translate(0, slideY);
-      ctx.globalAlpha = cardA;
-      ctx.fillStyle = C.orange;
-      ctx.font = '900 48px "Barlow Condensed", sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.shadowColor = C.orange; ctx.shadowBlur = 16;
-      ctx.fillText(numStr + unitStr, x + cardW/2, cardY + 62);
-      ctx.restore();
-
-      text(st.label, x + cardW/2, cardY + 98, { size: 16, weight: '800', color: C.white, align: 'center', alpha: cardA });
-      text(st.sub,   x + cardW/2, cardY + 120, { size: 12, weight: '500', color: C.gray, align: 'center', alpha: cardA });
-    });
-
-    /* Phone CTA */
-    var ctaA = a * clamp((s - 2000) / 500, 0, 1);
-    roundRect(W/2 - 180, cardY + 190, 360, 50, 8, C.orange, null, 0, ctaA);
-    text('📞  CALL NOW: 98409 28767', W/2, cardY + 220, { size: 18, weight: '800', color: C.white, align: 'center', alpha: ctaA });
-  }
-
-  /* 3. PRODUCTS — 8000–14000ms */
-  function drawProducts(elapsed) {
-    var a = sectionAlpha(elapsed, 8000, 700, 5300, 700);
-    if (a <= 0) return;
-
-    drawGradBg(elapsed);
-    drawGrid(a * 0.5);
-
-    var s = elapsed - 8000;
-
-    text('PRODUCT CATEGORIES', W/2, 100, { size: 20, weight: '800', color: C.orange, align: 'center', alpha: a });
-    drawGlowText('EVERYTHING YOU NEED TO BUILD', W/2, 155, 52, C.white, C.orange, a);
-    drawOrangeBar(178, W * clamp(s/900, 0, 1), a);
-
-    var products = [
-      { emoji:'🏗️', name:'CEMENT',         brand:'UltraTech · Dalmia · Ramco', price:'₹380/bag',    color:'#1e3a5f' },
-      { emoji:'⚙️', name:'STEEL TMT',       brand:'ARS · Durga · Arun Steel',   price:'₹58K/tonne',  color:'#37474f' },
-      { emoji:'🎨', name:'ASIAN PAINTS',    brand:'Royale · Apex · SmartCare',  price:'₹350/ltr',    color:'#e53935' },
-      { emoji:'🔧', name:'PLUMBING',        brand:'Finolex · Ashirvad · Star',  price:'₹120/m',      color:'#1b5e20' },
-      { emoji:'⚡', name:'ELECTRICAL',      brand:'Havells · Polycab · Finolex', price:'₹95/m',      color:'#d50000' },
-      { emoji:'🪨', name:'TILES',           brand:'Somany · Johnson · RAK',     price:'₹45/sqft',    color:'#4a148c' },
-    ];
-
-    var cols = 3, rows = 2;
-    var cw = 340, ch = 140, cg = 18;
-    var totalW = cols * cw + (cols-1) * cg;
-    var sx = (W - totalW) / 2;
-    var sy = 210;
-
-    products.forEach(function(p, i) {
-      var col   = i % cols, row = Math.floor(i / cols);
-      var delay = 300 + i * 180;
-      var pA    = a * clamp((s - delay) / 400, 0, 1);
-      var slX   = (1 - easeOut(clamp((s-delay)/350, 0, 1))) * (col < cols/2 ? -30 : 30);
-      var x     = sx + col * (cw + cg);
-      var y     = sy + row * (ch + cg);
-
-      ctx.save();
-      ctx.translate(slX, 0);
-
-      roundRect(x, y, cw, ch, 10, C.navyMid, 'rgba(255,255,255,0.06)', 1, pA);
-
-      /* Left color accent */
-      ctx.globalAlpha = pA;
-      ctx.fillStyle = p.color;
-      ctx.fillRect(x, y, 5, ch);
-      ctx.restore();
-
-      /* Emoji */
-      ctx.save();
-      ctx.translate(slX, 0);
-      ctx.globalAlpha = pA;
-      ctx.font = '36px serif';
-      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-      ctx.fillText(p.emoji, x + 20, y + ch/2 - 10);
-      ctx.restore();
-
-      text(p.name,  x+70+slX, y + 46,  { size: 20, weight: '900', color: C.white, alpha: pA });
-      text(p.brand, x+70+slX, y + 72,  { size: 12, weight: '500', color: C.gray, alpha: pA });
-      text(p.price, x+70+slX, y + 96,  { size: 14, weight: '800', color: C.orange, alpha: pA });
-    });
-  }
-
-  /* 4. AUTHORIZED DEALER / BRANDS — 13500–19000ms */
-  function drawBrands(elapsed) {
-    var a = sectionAlpha(elapsed, 13500, 700, 5000, 700);
-    if (a <= 0) return;
-
-    drawGradBg(elapsed);
-    drawGrid(a * 0.5);
-
-    var s = elapsed - 13500;
-
-    /* Header glow pulse */
-    var pulse = 0.5 + 0.5 * Math.sin(s * 0.004);
-    ctx.save();
-    ctx.globalAlpha = a;
-    ctx.shadowColor = C.orange; ctx.shadowBlur = 40 * pulse;
-    ctx.fillStyle = C.orange;
-    ctx.font = '900 58px "Barlow Condensed", sans-serif';
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText('AUTHORIZED DEALER', W/2, 110);
-    ctx.restore();
-
-    text('50+ PREMIUM BRANDS — CERTIFIED & GENUINE', W/2, 155,
-      { size: 18, weight: '700', color: 'rgba(255,255,255,0.7)', align: 'center', alpha: a });
-    drawOrangeBar(178, W * clamp(s/900, 0, 1), a);
-
-    var brands = [
-      { name:'UltraTech',  color:'#1e3a5f' }, { name:'Dalmia',   color:'#8b1a1a' },
-      { name:'Ramco',      color:'#003087' }, { name:'Asian Paints', color:'#e53935' },
-      { name:'Finolex',    color:'#1b5e20' }, { name:'Havells',  color:'#d50000' },
-      { name:'Polycab',    color:'#006064' }, { name:'Pidilite',  color:'#00838f' },
-      { name:'Somany',     color:'#4a148c' }, { name:'RAK',       color:'#0277bd' },
-      { name:'Johnson',    color:'#bf360c' }, { name:'Dr Fixit',  color:'#c62828' },
-      { name:'Astral',     color:'#01579b' }, { name:'Berger',    color:'#1565c0' },
-      { name:'Nerolac',    color:'#f9a825' }, { name:'JSW Steel', color:'#004d40' },
-    ];
-
-    var cols = 4, bw = 240, bh = 52, bg = 12;
-    var totalBW = cols * bw + (cols-1) * bg;
-    var bx0 = (W - totalBW) / 2;
-    var by0 = 210;
-    var rows2 = Math.ceil(brands.length / cols);
-
-    brands.forEach(function(br, i) {
-      var col   = i % cols, row = Math.floor(i / cols);
-      var delay = 400 + i * 90;
-      var bA    = a * clamp((s - delay) / 300, 0, 1);
-      var x     = bx0 + col * (bw + bg);
-      var y     = by0 + row * (bh + bg);
-
-      roundRect(x, y, bw, bh, 8, br.color, null, 0, bA * 0.9);
-      /* Shimmer */
-      ctx.save();
-      ctx.globalAlpha = bA * 0.2 * (0.5 + 0.5 * Math.sin(s*0.003 + i*0.4));
-      var shimGrd = ctx.createLinearGradient(x, y, x+bw, y);
-      shimGrd.addColorStop(0, 'transparent');
-      shimGrd.addColorStop(0.5, 'rgba(255,255,255,0.4)');
-      shimGrd.addColorStop(1, 'transparent');
-      ctx.fillStyle = shimGrd;
-      ctx.fillRect(x, y, bw, bh);
-      ctx.restore();
-
-      text(br.name, x + bw/2, y + bh/2 + 5, { size: 15, weight: '800', color: C.white, align: 'center', alpha: bA });
-    });
-
-    /* Bottom badge */
-    var bdgA = a * clamp((s-2500)/500, 0, 1);
-    roundRect(W/2-180, by0 + rows2*(bh+bg) + 20, 360, 52, 26, null, C.orange, 2, bdgA);
-    text('✓  GENUINE · CERTIFIED · BULK PRICING AVAILABLE',
-      W/2, by0 + rows2*(bh+bg) + 50, { size: 13, weight: '700', color: C.orange, align: 'center', alpha: bdgA });
-  }
-
-  /* 5. TRUSTED BUILDERS — 18500–24000ms */
-  function drawBuilders(elapsed) {
-    var a = sectionAlpha(elapsed, 18500, 700, 5000, 700);
-    if (a <= 0) return;
-
-    drawGradBg(elapsed);
-    drawGrid(a * 0.4);
-
-    var s = elapsed - 18500;
-
-    /* Glow heading */
-    var glow = 20 + 15 * Math.sin(s * 0.003);
-    ctx.save();
-    ctx.globalAlpha = a;
-    ctx.shadowColor = C.orange; ctx.shadowBlur = glow;
-    ctx.fillStyle = C.white;
-    ctx.font = '900 60px "Barlow Condensed", sans-serif';
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText('TRUSTED BY LEADING BUILDERS', W/2, 110);
-    ctx.restore();
-
-    text('Chennai\'s most reliable construction materials partner since 2000',
-      W/2, 150, { size: 16, weight: '500', color: 'rgba(255,255,255,0.6)', align: 'center', alpha: a });
-    drawOrangeBar(172, W * clamp(s/900, 0, 1), a);
-
-    var testimonials = [
-      { name: 'Rajesh Kumar', role: 'Lead Contractor, Tambaram', stars: 5,
-        text: '"Best cement supplier in Chennai. Quick delivery, genuine brands."' },
-      { name: 'Priya S.', role: 'Interior Designer, Medavakkam', stars: 5,
-        text: '"Asian Paints range is excellent. Expert colour consultation too!"' },
-      { name: 'Arun T.', role: 'Builder, Chromepet', stars: 5,
-        text: '"50+ brands under one roof. Bulk pricing is unbeatable."' },
-    ];
-
-    var tw = 350, th = 180, tg = 30;
-    var ttotalW = testimonials.length * tw + (testimonials.length-1)*tg;
-    var tx0 = (W - ttotalW)/2;
-    var ty0 = 210;
-
-    testimonials.forEach(function(te, i) {
-      var delay = 400 + i * 300;
-      var tA    = a * clamp((s - delay) / 500, 0, 1);
-      var slideY = (1 - easeOut(clamp((s-delay)/400, 0, 1))) * 25;
-      var x     = tx0 + i * (tw + tg);
-
-      ctx.save();
-      ctx.translate(0, slideY);
-      roundRect(x, ty0, tw, th, 12, C.navyMid, 'rgba(240,109,30,0.25)', 1.5, tA);
-      /* Quote mark */
-      ctx.globalAlpha = tA * 0.15;
-      ctx.fillStyle = C.orange;
-      ctx.font = '120px serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-      ctx.fillText('"', x+10, ty0-10);
-      ctx.restore();
-
-      /* Stars */
-      ctx.save();
-      ctx.translate(0, slideY);
-      ctx.globalAlpha = tA;
-      var starX = x + 20;
-      for (var s5=0; s5<5; s5++) {
-        ctx.fillStyle = '#f59e0b';
-        ctx.font = '14px serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-        ctx.fillText('★', starX + s5*18, ty0+16);
+    // First click/tap anywhere unmutes everything once
+    function onFirstInteraction() {
+      if (!soundEnabled) {
+        vid.muted = false;
+        if (audio) { audio.muted = false; audio.play().catch(function () {}); }
+        soundEnabled = true;
+        updateSoundUI();
+        hideHint();
       }
-      ctx.restore();
-
-      /* Text */
-      var words = te.text.split(' ');
-      var line = '', lineY = ty0 + 46;
-      ctx.save(); ctx.translate(0, slideY);
-      ctx.globalAlpha = tA;
-      ctx.fillStyle = 'rgba(255,255,255,0.75)';
-      ctx.font = '400 13px "Barlow", sans-serif';
-      ctx.textAlign = 'left';
-      words.forEach(function(w) {
-        var test = line + w + ' ';
-        if (ctx.measureText(test).width > tw - 40 && line !== '') {
-          ctx.fillText(line, x+20, lineY);
-          line = w + ' '; lineY += 20;
-        } else { line = test; }
-      });
-      ctx.fillText(line, x+20, lineY);
-      ctx.restore();
-
-      text(te.name, x+20, ty0 + 135, { size: 14, weight: '800', color: C.white, alpha: tA, ...(slideY && {}) });
-      text(te.role, x+20, ty0 + 155, { size: 11, weight: '500', color: C.gray, alpha: tA });
-    });
-
-    /* Rating badge */
-    var ratA = a * clamp((s - 2500) / 500, 0, 1);
-    roundRect(W/2 - 140, ty0 + th + 40, 280, 60, 10, C.orange, null, 0, ratA);
-    text('★  4.5 / 5.0  RATING', W/2, ty0 + th + 62, { size: 20, weight: '900', color: C.white, align: 'center', alpha: ratA });
-    text('Based on 25+ verified reviews', W/2, ty0 + th + 82, { size: 12, weight: '500', color: 'rgba(255,255,255,0.8)', align: 'center', alpha: ratA });
-  }
-
-  /* 6. CONTACT SECTION — 24000–29500ms */
-  function drawContact(elapsed) {
-    var a = sectionAlpha(elapsed, 24000, 700, 5000, 700);
-    if (a <= 0) return;
-
-    drawGradBg(elapsed);
-    drawGrid(a * 0.4);
-
-    var s = elapsed - 24000;
-
-    text('GET IN TOUCH', W/2, 100, { size: 20, weight: '800', color: C.orange, align: 'center', alpha: a });
-    drawGlowText('CONTACT KUBER AGENCIES', W/2, 155, 56, C.white, C.orange, a);
-    drawOrangeBar(178, W * clamp(s/900, 0, 1), a);
-
-    var contacts = [
-      { icon:'📞', label:'Primary',    val:'98409 28767' },
-      { icon:'📱', label:'Secondary',  val:'86810 12154' },
-      { icon:'📍', label:'Location',   val:'Madambakkam, Chennai' },
-      { icon:'⏰', label:'Hours',      val:'Mon–Sat 8AM–8PM' },
-    ];
-
-    var cw2 = 260, ch2 = 110, cg2 = 20;
-    var ttW2 = 2*(cw2+cg2);
-    var cx20 = (W - ttW2)/2;
-    var cy20 = 210;
-
-    contacts.forEach(function(ct, i) {
-      var col  = i % 2, row = Math.floor(i/2);
-      var d    = 400 + i * 220;
-      var cA   = a * clamp((s-d)/400, 0, 1);
-      var slY  = (1-easeOut(clamp((s-d)/350, 0, 1))) * 20;
-      var x    = cx20 + col*(cw2+cg2);
-      var y    = cy20 + row*(ch2+cg2);
-
-      ctx.save(); ctx.translate(0, slY);
-      roundRect(x, y, cw2, ch2, 10, C.navyMid, 'rgba(240,109,30,0.2)', 1.5, cA);
-      ctx.globalAlpha = cA;
-      ctx.font = '32px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText(ct.icon, x + cw2/2, y + 35);
-      ctx.restore();
-      text(ct.label, x+cw2/2, y+64, { size: 11, weight: '700', color: C.orange, align: 'center', alpha: cA });
-      text(ct.val,   x+cw2/2, y+84, { size: 14, weight: '800', color: C.white,  align: 'center', alpha: cA });
-    });
-
-    /* WhatsApp CTA */
-    var wA = a * clamp((s-2200)/500, 0, 1);
-    var pulse2 = 1 + 0.03 * Math.sin(s * 0.006);
-    ctx.save();
-    ctx.translate(W/2, cy20 + 2*(ch2+cg2) + 55);
-    ctx.scale(pulse2, pulse2);
-    roundRect(-190, -30, 380, 60, 30, '#25D366', null, 0, wA);
-    ctx.restore();
-    text('💬  WhatsApp: 98409 28767 →',
-      W/2, cy20 + 2*(ch2+cg2) + 56, { size: 17, weight: '800', color: C.white, align: 'center', alpha: wA });
-
-    text('info@kuberagencies.in', W/2, cy20 + 2*(ch2+cg2) + 100,
-      { size: 13, weight: '500', color: C.gray, align: 'center', alpha: wA });
-  }
-
-  /* 7. FINALE — 29000–35000ms */
-  function drawFinale(elapsed) {
-    var a = sectionAlpha(elapsed, 29000, 800, 5000, 1200);
-    if (a <= 0) return;
-
-    var s = elapsed - 29000;
-
-    /* Zooming background */
-    var zoom = 1 + easeOut(clamp(s/4000, 0, 1)) * 0.08;
-    ctx.save();
-    ctx.translate(W/2, H/2);
-    ctx.scale(zoom, zoom);
-    ctx.translate(-W/2, -H/2);
-    drawGradBg(elapsed);
-    drawGrid(a * 0.6);
-    ctx.restore();
-
-    /* Radial glow */
-    ctx.save();
-    ctx.globalAlpha = a * 0.35;
-    var rgrd = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, 500);
-    rgrd.addColorStop(0, 'rgba(240,109,30,0.5)');
-    rgrd.addColorStop(1, 'transparent');
-    ctx.fillStyle = rgrd;
-    ctx.fillRect(0, 0, W, H);
-    ctx.restore();
-
-    /* Logo large */
-    drawLogo(W/2, H/2 - 100, a);
-
-    /* Main text */
-    drawGlowText('KUBER AGENCIES', W/2, H/2 - 30, 80, C.white, C.orange, a);
-    text('CHENNAI\'S MOST TRUSTED CONSTRUCTION MATERIALS SUPPLIER',
-      W/2, H/2 + 28, { size: 16, weight: '600', color: 'rgba(255,255,255,0.6)', align: 'center', alpha: a });
-
-    drawOrangeBar(H/2 + 50, W * clamp(s/1500, 0, 1), a);
-
-    /* Call to action */
-    var ctaA2 = a * clamp((s-1500)/600, 0, 1);
-    roundRect(W/2-200, H/2+68, 400, 56, 28, C.orange, null, 0, ctaA2);
-    text('📞  CALL 98409 28767 — GET A FREE QUOTE',
-      W/2, H/2+100, { size: 16, weight: '800', color: C.white, align: 'center', alpha: ctaA2 });
-
-    /* Bottom credits */
-    text('kuberagencies.in  ·  Authorized Dealer for 50+ Brands  ·  Est. 2000',
-      W/2, H - 40, { size: 12, weight: '500', color: 'rgba(255,255,255,0.35)', align: 'center', alpha: a });
-  }
-
-  /* ── Master render ───────────────────────────────────── */
-  function render(elapsed) {
-    ctx.clearRect(0, 0, W, H);
-    fillBg(C.navy);
-
-    drawIntro(elapsed);
-    drawHeroStats(elapsed);
-    drawProducts(elapsed);
-    drawBrands(elapsed);
-    drawBuilders(elapsed);
-    drawContact(elapsed);
-    drawFinale(elapsed);
-
-    /* Timecode watermark */
-    var sec = Math.floor(elapsed / 1000);
-    var secStr = (sec < 10 ? '0' : '') + sec;
-    text(secStr + 's / 35s', W - 14, H - 14,
-      { size: 11, weight: '600', color: 'rgba(255,255,255,0.2)', align: 'right', baseline: 'alphabetic' });
-  }
-
-  /* ── Animation loop (preview + capture) ─────────────── */
-  function loop(ts) {
-    if (!startTime) startTime = ts;
-    var elapsed = ts - startTime;
-    var pct = Math.min(elapsed / DURATION, 1);
-
-    render(elapsed);
-
-    /* Update progress bar */
-    var bar = document.getElementById('ka-encode-bar');
-    var pctEl = document.getElementById('ka-pct-text');
-    var stEl  = document.getElementById('ka-status-text');
-    if (bar)   bar.style.width = (pct * 100).toFixed(1) + '%';
-    if (pctEl) pctEl.textContent = Math.round(pct * 100) + '%';
-    if (stEl) {
-      var sections = ['Intro', 'Hero Stats', 'Products', 'Brands', 'Trusted Builders', 'Contact', 'Finale'];
-      var si = Math.floor(pct * sections.length);
-      stEl.textContent = (isRecording ? '⏺ Recording: ' : '▶ Preview: ') + (sections[Math.min(si, sections.length-1)]);
     }
+    document.addEventListener('click',      onFirstInteraction, { once: true });
+    document.addEventListener('touchstart', onFirstInteraction, { once: true, passive: true });
+  }());
 
-    if (elapsed < DURATION + 500) {
-      rafId = requestAnimationFrame(loop);
-    } else {
-      /* Recording complete */
-      isComplete = true;
-      if (mediaRec && mediaRec.state === 'recording') {
-        mediaRec.stop();
-      }
-      if (stEl)  stEl.textContent = '✅ Video ready! Press play below.';
-      var recDot = document.getElementById('ka-rec-dot');
-      if (recDot) { recDot.style.background = '#22c55e'; recDot.style.animationName = 'none'; }
-      /* Keep looping preview silently */
-      startTime = null;
-      rafId = requestAnimationFrame(loop);
+  /* ── Public: toggle sound ──────────────────────────────── */
+  window.kaToggleSound = function () {
+    soundEnabled = !soundEnabled;
+    var vid   = document.getElementById('ka-showcase-video');
+    var audio = document.getElementById('ka-voiceover-audio');
+    if (vid)   vid.muted = !soundEnabled;
+    if (audio) {
+      audio.muted = !soundEnabled;
+      if (soundEnabled) { audio.play().catch(function () {}); }
+      else { audio.pause(); }
     }
-  }
-
-  /* ── MediaRecorder setup ─────────────────────────────── */
-  function startRecording() {
-    if (!canvas.captureStream) return;
-    try {
-      var stream = canvas.captureStream(FPS);
-      var mimeType = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'].find(function(m) {
-        return MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m);
-      }) || 'video/webm';
-
-      mediaRec = new MediaRecorder(stream, { mimeType: mimeType, videoBitsPerSecond: 4000000 });
-      mediaRec.ondataavailable = function(e) { if (e.data.size > 0) chunks.push(e.data); };
-      mediaRec.onstop = function() { finalizeVideo(); };
-      mediaRec.start(200); // 200ms timeslice
-      isRecording = true;
-    } catch(e) {
-      console.warn('MediaRecorder unavailable, running preview only:', e);
-    }
-  }
-
-  /* ── Finalize: create Blob URL → set on <video> ───── */
-  function finalizeVideo() {
-    if (chunks.length === 0) return;
-    var mimeType = mediaRec ? mediaRec.mimeType : 'video/webm';
-    var blob = new Blob(chunks, { type: mimeType });
-    blobUrl = URL.createObjectURL(blob);
-
-    var vid = document.getElementById('ka-showcase-video');
-    var overlay = document.getElementById('ka-recording-overlay');
-
-    vid.src = blobUrl;
-    vid.load();
-    vid.play().catch(function() {});
-
-    /* Hide overlay, show real video */
-    if (overlay) {
-      overlay.style.transition = 'opacity 0.8s';
-      overlay.style.opacity = '0';
-      setTimeout(function() { overlay.style.display = 'none'; }, 900);
-    }
-
-    /* Update download button label */
-    var dlBtn = document.getElementById('ka-download-btn');
-    if (dlBtn) dlBtn.title = 'Download WebM video (' + Math.round(blob.size/1024) + ' KB)';
-  }
-
-  /* ── Public API (called by buttons) ──────────────────── */
-  window.kaDownloadVideo = function() {
-    if (!blobUrl) {
-      alert('Video is still generating. Please wait for it to complete (about 35 seconds).');
-      return;
-    }
-    var a = document.createElement('a');
-    a.href = blobUrl;
-    a.download = 'kuber-agencies-showcase.webm';
-    a.click();
+    updateSoundUI();
+    hideHint();
   };
 
-  window.kaReplayVideo = function() {
-    var vid = document.getElementById('ka-showcase-video');
-    if (vid && vid.src) { vid.currentTime = 0; vid.play(); }
-  };
-
-  window.kaRegenerateVideo = function() {
-    /* Reset everything and regenerate */
-    chunks = [];
-    if (blobUrl) { URL.revokeObjectURL(blobUrl); blobUrl = null; }
-    if (rafId) cancelAnimationFrame(rafId);
-    startTime = null;
-    isComplete = false;
-    isRecording = false;
-    if (mediaRec && mediaRec.state !== 'inactive') { try { mediaRec.stop(); } catch(e){} }
-
-    var vid = document.getElementById('ka-showcase-video');
-    if (vid) { vid.src = ''; vid.load(); }
-    var overlay = document.getElementById('ka-recording-overlay');
-    if (overlay) { overlay.style.opacity='1'; overlay.style.display='flex'; }
-    var bar = document.getElementById('ka-encode-bar');
-    if (bar) bar.style.width='0%';
-    var stEl = document.getElementById('ka-status-text');
-    if (stEl) stEl.textContent = 'Generating video preview…';
-    var recDot = document.getElementById('ka-rec-dot');
-    if (recDot) { recDot.style.background=C.orange; recDot.style.animationName='ka-blink'; }
-
-    setTimeout(function() {
-      startRecording();
-      rafId = requestAnimationFrame(loop);
-    }, 300);
-  };
-
-  /* ── Boot ────────────────────────────────────────────── */
-  window.addEventListener('load', function() {
-    setTimeout(function() {
-      startRecording();
-      rafId = requestAnimationFrame(loop);
-    }, 500);
-  });
-
-  /* If load already fired */
-  if (document.readyState === 'complete') {
-    setTimeout(function() {
-      startRecording();
-      rafId = requestAnimationFrame(loop);
-    }, 600);
+  function hideHint() {
+    var hint = document.getElementById('ka-sound-hint');
+    if (!hint) return;
+    hint.style.opacity = '0';
+    setTimeout(function () { hint.style.display = 'none'; }, 420);
   }
 
-})();
+  function updateSoundUI() {
+    var icon   = document.getElementById('ka-sound-icon');
+    var label  = document.getElementById('ka-sound-label');
+    var speakerBtn = document.getElementById('ka-speaker-btn');
+    var toggleBtn  = document.getElementById('ka-sound-toggle-btn');
+    var on = soundEnabled;
+    if (icon)       icon.textContent  = on ? '🔊' : '🔇';
+    if (label)      label.textContent = on ? 'Sound ON' : 'Sound OFF';
+    if (speakerBtn) speakerBtn.textContent = on ? '🔊' : '🔇';
+    if (speakerBtn) speakerBtn.style.borderColor = on
+      ? 'rgba(240,109,30,0.85)' : 'rgba(240,109,30,0.55)';
+    if (toggleBtn)  toggleBtn.style.borderColor = on
+      ? 'rgba(240,109,30,0.65)' : 'rgba(255,255,255,0.22)';
+  }
+
+}());
 </script>
+
 
 <!-- Contractor urgency bar (mobile only) -->
 <div class="contractor-bar" id="contractorBar">
@@ -8518,765 +7769,6 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
 
-<!-- ============================================================
-     KUBER AGENCIES — VIDEO CAPTURE + VOICEOVER ENGINE
-     Canvas MediaRecorder → WebM  |  Web Speech API Voiceover
-     ============================================================ -->
-<style>
-/* ---- Recording Control Panel ---- */
-#ka-rec-panel {
-  position: fixed;
-  bottom: 24px;
-  left: 24px;
-  z-index: 99999;
-  background: rgba(7, 17, 31, 0.96);
-  border: 1px solid rgba(240,109,30,0.4);
-  border-radius: 14px;
-  padding: 16px 20px;
-  backdrop-filter: blur(20px);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-width: 240px;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-  font-family: 'Barlow Condensed', sans-serif;
-}
-#ka-rec-panel h4 {
-  font-size: 11px;
-  letter-spacing: 2.5px;
-  color: #f06d1e;
-  text-transform: uppercase;
-  margin-bottom: 2px;
-}
-.ka-rec-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 16px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: all 0.25s ease;
-  width: 100%;
-  justify-content: center;
-}
-#ka-rec-start {
-  background: #f06d1e;
-  color: white;
-}
-#ka-rec-start:hover { background: #c4530f; transform: translateY(-1px); }
-#ka-rec-start:disabled { background: #555; cursor: not-allowed; transform: none; }
-#ka-rec-stop {
-  background: rgba(255,255,255,0.08);
-  color: #ccc;
-  border: 1px solid rgba(255,255,255,0.15);
-  display: none;
-}
-#ka-rec-stop.active { display: flex; color: #fff; border-color: rgba(255,80,80,0.5); }
-#ka-rec-stop:hover { background: rgba(255,80,80,0.15); }
-#ka-rec-download {
-  background: #1a5c2e;
-  color: #5aff8a;
-  border: 1px solid rgba(90,255,138,0.3);
-  display: none;
-}
-#ka-rec-download.show { display: flex; }
-#ka-rec-download:hover { background: #1f7038; }
-#ka-rec-status {
-  font-size: 11px;
-  color: rgba(255,255,255,0.45);
-  text-align: center;
-  letter-spacing: 1px;
-  min-height: 16px;
-}
-#ka-rec-timer {
-  font-size: 22px;
-  font-weight: 900;
-  color: #f06d1e;
-  text-align: center;
-  letter-spacing: 2px;
-  display: none;
-}
-#ka-rec-timer.active { display: block; }
-.ka-rec-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: currentColor;
-  flex-shrink: 0;
-}
-#ka-rec-dot-live {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: #ff4444;
-  animation: ka-blink 1s ease-in-out infinite;
-  display: none;
-}
-#ka-rec-dot-live.active { display: inline-block; }
-@keyframes ka-blink {
-  0%,100% { opacity: 1; }
-  50%      { opacity: 0.2; }
-}
-#ka-voiceover-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: rgba(255,255,255,0.6);
-  cursor: pointer;
-  user-select: none;
-  padding: 2px 0;
-}
-#ka-voiceover-toggle input { accent-color: #f06d1e; width: 14px; height: 14px; cursor: pointer; }
-.ka-rec-divider {
-  height: 1px;
-  background: rgba(255,255,255,0.08);
-  margin: 2px 0;
-}
-#ka-rec-note {
-  font-size: 10px;
-  color: rgba(255,255,255,0.3);
-  text-align: center;
-  letter-spacing: 0.5px;
-  line-height: 1.4;
-}
-</style>
-
-<!-- Recording Panel HTML -->
-<div id="ka-rec-panel">
-  <h4>🎬 Video Capture</h4>
-  <div id="ka-rec-timer">00:00</div>
-  <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
-    <div id="ka-rec-dot-live"></div>
-    <div id="ka-rec-status">Ready to record</div>
-  </div>
-  <div class="ka-rec-divider"></div>
-  <label id="ka-voiceover-toggle">
-    <input type="checkbox" id="ka-vo-check" checked>
-    Enable AI Voiceover
-  </label>
-  <button class="ka-rec-btn" id="ka-rec-start">▶ Start Recording</button>
-  <button class="ka-rec-btn" id="ka-rec-stop">⏹ Stop & Export</button>
-  <button class="ka-rec-btn" id="ka-rec-download">⬇ Download WebM</button>
-  <div class="ka-rec-note" id="ka-rec-note">Captures screen + voiceover<br>~35s · WebM format</div>
-</div>
-
-<script>
-/* ============================================================
-   KUBER AGENCIES — VIDEO CAPTURE ENGINE v3
-   3-Tier Fallback Recording System
-   ─────────────────────────────────────────────────────────
-   TIER 1 · getDisplayMedia   (Chrome/Edge desktop, tab capture)
-   TIER 2 · Canvas captureStream (html2canvas frame loop, no permission needed)
-   TIER 3 · Manual fallback UI  (mobile / unsupported browsers)
-   ─────────────────────────────────────────────────────────
-   Web Speech API voiceover synced to animation timeline
-   ============================================================ */
-(function () {
-  'use strict';
-
-  /* ══════════════════════════════════════════════════════
-     CAPABILITY DETECTION
-  ══════════════════════════════════════════════════════ */
-  var CAP = {
-    displayMedia : !!(
-      navigator.mediaDevices &&
-      typeof navigator.mediaDevices.getDisplayMedia === 'function'
-    ),
-    mediaRecorder: (function () {
-      try { return typeof MediaRecorder !== 'undefined'; }
-      catch (e) { return false; }
-    }()),
-    canvasCapture: (function () {
-      try {
-        var c = document.createElement('canvas');
-        return typeof c.captureStream === 'function' ||
-               typeof c.mozCaptureStream === 'function';
-      } catch (e) { return false; }
-    }()),
-    h2canvas: false, // loaded on-demand
-    speechAPI: !!(window.speechSynthesis && window.SpeechSynthesisUtterance)
-  };
-
-  // Choose recording tier
-  // TIER 1: getDisplayMedia + MediaRecorder
-  // TIER 2: canvas.captureStream + MediaRecorder (no screen share permission)
-  // TIER 3: manual / no recording
-  var TIER = 3;
-  if (CAP.displayMedia && CAP.mediaRecorder)  TIER = 1;
-  else if (CAP.canvasCapture && CAP.mediaRecorder) TIER = 2;
-
-  /* ══════════════════════════════════════════════════════
-     VOICEOVER SCRIPT
-  ══════════════════════════════════════════════════════ */
-  var VOICEOVER = [
-    { delay: 800,   text: "Kuber Agencies. Chennai's most trusted construction partner. Serving builders since the year 2000.", rate: 0.88, pitch: 0.95 },
-    { delay: 5500,  text: "Authorized dealer for over fifty leading brands. Your one stop for cement, steel, paints, pipes, and hardware.", rate: 0.85, pitch: 0.95 },
-    { delay: 10200, text: "Premium cement from Ultratech, Dalmia, Ramco, and Chettinad. TMT steel bars in all grades. Same day site delivery across Chennai.", rate: 0.85, pitch: 0.95 },
-    { delay: 14500, text: "Official dealer for Asian Paints, Finolex, Ashirvad, ARS Steel, and fifty more trusted brands.", rate: 0.87, pitch: 0.95 },
-    { delay: 18500, text: "Trusted by leading builders, contractors, and homeowners throughout Chennai and the surrounding districts.", rate: 0.86, pitch: 0.95 },
-    { delay: 27500, text: "Get a quote today. Call us at nine eight four zero nine, two eight seven six seven. We deliver directly to your site.", rate: 0.84, pitch: 0.95 },
-    { delay: 34000, text: "Kuber Agencies. Build with confidence.", rate: 0.82, pitch: 0.93 }
-  ];
-
-  /* ══════════════════════════════════════════════════════
-     STATE
-  ══════════════════════════════════════════════════════ */
-  var mediaRecorder   = null;
-  var recordedChunks  = [];
-  var isRecording     = false;
-  var recordStart     = null;
-  var timerInterval   = null;
-  var voiceTimers     = [];
-  var captureStream   = null;
-  var canvasEl        = null;  // Tier 2 off-screen canvas
-  var rafId           = null;  // Tier 2 rAF loop handle
-  var h2cScript       = null;
-
-  /* ══════════════════════════════════════════════════════
-     DOM REFS
-  ══════════════════════════════════════════════════════ */
-  var btnStart    = document.getElementById('ka-rec-start');
-  var btnStop     = document.getElementById('ka-rec-stop');
-  var btnDownload = document.getElementById('ka-rec-download');
-  var statusEl    = document.getElementById('ka-rec-status');
-  var timerEl     = document.getElementById('ka-rec-timer');
-  var dotLive     = document.getElementById('ka-rec-dot-live');
-  var voCheck     = document.getElementById('ka-vo-check');
-  var recNote     = document.getElementById('ka-rec-note');
-
-  /* ══════════════════════════════════════════════════════
-     UI HELPERS
-  ══════════════════════════════════════════════════════ */
-  function setStatus(msg) {
-    if (statusEl) statusEl.textContent = msg;
-  }
-  function setNote(html) {
-    if (recNote) recNote.innerHTML = html;
-  }
-
-  function formatTime(ms) {
-    var s = Math.floor(ms / 1000), m = Math.floor(s / 60);
-    s %= 60;
-    return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
-  }
-
-  function startTimer() {
-    if (!timerEl) return;
-    timerEl.classList.add('active');
-    timerInterval = setInterval(function () {
-      if (recordStart) timerEl.textContent = formatTime(Date.now() - recordStart);
-    }, 250);
-  }
-  function stopTimer() {
-    clearInterval(timerInterval);
-    if (timerEl) timerEl.classList.remove('active');
-  }
-
-  function setRecordingUI(active) {
-    if (!btnStart || !btnStop) return;
-    btnStart.disabled = active;
-    if (active) {
-      btnStop.classList.add('active');
-      if (dotLive) dotLive.classList.add('active');
-      if (btnDownload) btnDownload.classList.remove('show');
-    } else {
-      btnStop.classList.remove('active');
-      if (dotLive) dotLive.classList.remove('active');
-    }
-  }
-
-  /* ══════════════════════════════════════════════════════
-     VOICEOVER ENGINE (Web Speech API)
-  ══════════════════════════════════════════════════════ */
-  function getBestVoice() {
-    if (!CAP.speechAPI) return null;
-    var voices = window.speechSynthesis.getVoices();
-    var best = null;
-    for (var i = 0; i < voices.length; i++) {
-      var v = voices[i];
-      if (!v.lang || !v.lang.startsWith('en')) continue;
-      if (!best) best = v;
-      var n = v.name.toLowerCase();
-      if (n.includes('google') || n.includes('neural') || n.includes('premium')) {
-        best = v; break;
-      }
-    }
-    return best;
-  }
-
-  function speakLine(text, rate, pitch) {
-    if (!CAP.speechAPI) return;
-    try {
-      var utt = new SpeechSynthesisUtterance(text);
-      utt.lang   = 'en-IN';
-      utt.rate   = rate  || 0.86;
-      utt.pitch  = pitch || 0.95;
-      utt.volume = 1;
-      var v = getBestVoice();
-      if (v) utt.voice = v;
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(utt);
-    } catch (e) {
-      console.warn('[KA-VO] Speech error:', e);
-    }
-  }
-
-  function scheduleVoiceover() {
-    cancelVoiceover();
-    if (!voCheck || !voCheck.checked || !CAP.speechAPI) return;
-    VOICEOVER.forEach(function (line) {
-      var t = setTimeout(function () {
-        speakLine(line.text, line.rate, line.pitch);
-      }, line.delay);
-      voiceTimers.push(t);
-    });
-  }
-
-  function cancelVoiceover() {
-    voiceTimers.forEach(clearTimeout);
-    voiceTimers = [];
-    try { if (CAP.speechAPI) window.speechSynthesis.cancel(); } catch (e) {}
-  }
-
-  /* ══════════════════════════════════════════════════════
-     ANIMATION RESTART
-  ══════════════════════════════════════════════════════ */
-  function restartCinemaAnimation() {
-    window.scrollTo(0, 0);
-    var pb = document.getElementById('ka-progress-bar');
-    if (pb) { pb.style.width = '0%'; pb.style.opacity = '1'; }
-
-    document.querySelectorAll(
-      '.ka-visible, .ka-stat-pop, .sweep-active, .ka-glow-on, .active-glow'
-    ).forEach(function (el) {
-      el.classList.remove('ka-visible', 'ka-stat-pop', 'sweep-active', 'ka-glow-on', 'active-glow');
-    });
-
-    var intro = document.getElementById('ka-cinema-intro');
-    if (intro) {
-      intro.style.display = '';
-      intro.style.opacity = '1';
-      intro.style.animation = 'none';
-      void intro.offsetWidth;
-      intro.style.animation = '';
-    }
-  }
-
-  /* ══════════════════════════════════════════════════════
-     MIME TYPE PICKER
-  ══════════════════════════════════════════════════════ */
-  function bestMimeType() {
-    var types = [
-      'video/webm;codecs=vp9,opus',
-      'video/webm;codecs=vp8,opus',
-      'video/webm;codecs=vp9',
-      'video/webm;codecs=vp8',
-      'video/webm',
-      'video/mp4'
-    ];
-    for (var i = 0; i < types.length; i++) {
-      try {
-        if (MediaRecorder.isTypeSupported(types[i])) return types[i];
-      } catch (e) {}
-    }
-    return '';
-  }
-
-  /* ══════════════════════════════════════════════════════
-     SHARED: wire up MediaRecorder to a stream
-  ══════════════════════════════════════════════════════ */
-  function attachMediaRecorder(stream, tierLabel) {
-    captureStream   = stream;
-    recordedChunks  = [];
-
-    var mime    = bestMimeType();
-    var options = {};
-    if (mime) {
-      try { options = { mimeType: mime, videoBitsPerSecond: 3500000 }; }
-      catch (e) { options = {}; }
-    }
-
-    try {
-      mediaRecorder = new MediaRecorder(stream, options);
-    } catch (e) {
-      // Options rejected — try bare constructor
-      try { mediaRecorder = new MediaRecorder(stream); }
-      catch (e2) {
-        console.warn('[KA-REC] MediaRecorder init failed:', e2);
-        activateTier3('MediaRecorder failed on this device.');
-        return;
-      }
-    }
-
-    mediaRecorder.ondataavailable = function (e) {
-      if (e.data && e.data.size > 0) recordedChunks.push(e.data);
-    };
-    mediaRecorder.onstop    = onRecordingStopped;
-    mediaRecorder.onerror   = function (e) {
-      console.warn('[KA-REC] MediaRecorder error:', e);
-      setStatus('Recording error — stopping.');
-      stopRecordingCleanup();
-    };
-
-    mediaRecorder.start(200);
-    isRecording  = true;
-    recordStart  = Date.now();
-
-    setRecordingUI(true);
-    startTimer();
-    setStatus('● REC — ' + tierLabel);
-    setNote('Recording active · ~35 seconds · stop when done');
-
-    restartCinemaAnimation();
-    scheduleVoiceover();
-  }
-
-  /* ══════════════════════════════════════════════════════
-     TIER 1 — getDisplayMedia (tab / screen capture)
-  ══════════════════════════════════════════════════════ */
-  function startTier1() {
-    setStatus('Requesting screen capture…');
-    setNote('Please share <strong>this tab</strong> when prompted');
-
-    var constraints = {
-      video: { width: { ideal: 1280 }, height: { ideal: 720 }, frameRate: { ideal: 30 } },
-      audio: false
-    };
-    // Chrome 107+ supports preferCurrentTab
-    try { constraints.preferCurrentTab = true; } catch (e) {}
-
-    navigator.mediaDevices.getDisplayMedia(constraints)
-      .then(function (stream) {
-        // Detect if user stops sharing from browser UI
-        stream.getVideoTracks()[0].addEventListener('ended', function () {
-          if (isRecording) stopRecording();
-        });
-        attachMediaRecorder(stream, 'Tab Capture');
-        setNote('Captures screen + voiceover · ~35 s · WebM');
-      })
-      .catch(function (err) {
-        // User denied or not supported in this context — fall through silently
-        console.warn('[KA-REC] Tier 1 failed, trying Tier 2:', err.name, err.message);
-        setStatus('Switching to canvas mode…');
-        setTimeout(startTier2, 300);
-      });
-  }
-
-  /* ══════════════════════════════════════════════════════
-     TIER 2 — Canvas captureStream + html2canvas frame pump
-  ══════════════════════════════════════════════════════ */
-  function startTier2() {
-    // Check canvas capture support one more time
-    if (!CAP.canvasCapture) {
-      console.warn('[KA-REC] Canvas captureStream not available, going Tier 3');
-      activateTier3();
-      return;
-    }
-
-    setStatus('Loading canvas engine…');
-    setNote('Initialising canvas recorder — please wait…');
-
-    loadHtml2Canvas(function (loaded) {
-      if (!loaded) {
-        // html2canvas failed to load — use a simpler canvas approach
-        startTier2Simple();
-        return;
-      }
-      startTier2WithH2C();
-    });
-  }
-
-  /* Lazy-load html2canvas from CDN */
-  function loadHtml2Canvas(cb) {
-    if (typeof html2canvas === 'function') { cb(true); return; }
-    var script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-    script.onload  = function () { cb(true); };
-    script.onerror = function () {
-      console.warn('[KA-REC] html2canvas failed to load from CDN');
-      cb(false);
-    };
-    document.head.appendChild(script);
-    h2cScript = script;
-  }
-
-  /* Tier 2a — html2canvas snapshot loop → canvas stream */
-  function startTier2WithH2C() {
-    var W = 1280, H = 720;
-    canvasEl = document.createElement('canvas');
-    canvasEl.width  = W;
-    canvasEl.height = H;
-    canvasEl.style.cssText = 'position:fixed;left:-9999px;top:-9999px;pointer-events:none;';
-    document.body.appendChild(canvasEl);
-    var ctx = canvasEl.getContext('2d');
-
-    // Capture canvas stream
-    var stream;
-    try {
-      stream = canvasEl.captureStream ? canvasEl.captureStream(25) : canvasEl.mozCaptureStream(25);
-    } catch (e) {
-      console.warn('[KA-REC] captureStream failed:', e);
-      cleanupCanvas();
-      activateTier3();
-      return;
-    }
-
-    var frameDelay = 1000 / 25; // ~25 fps
-    var lastFrame  = 0;
-
-    function drawFrame(ts) {
-      if (!isRecording) return;
-      if (ts - lastFrame >= frameDelay) {
-        lastFrame = ts;
-        try {
-          html2canvas(document.body, {
-            canvas       : canvasEl,
-            width        : W,
-            height       : H,
-            scale        : W / window.innerWidth,
-            useCORS      : true,
-            allowTaint   : true,
-            logging      : false,
-            imageTimeout : 0,
-            removeContainer: true
-          }).catch(function () {}); // silent per-frame errors
-        } catch (e) {}
-      }
-      rafId = requestAnimationFrame(drawFrame);
-    }
-
-    attachMediaRecorder(stream, 'Canvas (HD)');
-    rafId = requestAnimationFrame(drawFrame);
-    setNote('Canvas recording · 25 fps · ~35 s · no permission needed');
-  }
-
-  /* Tier 2b — simpler canvas capture without html2canvas
-     Draws a branded placeholder frame with live timestamp */
-  function startTier2Simple() {
-    var W = 1280, H = 720;
-    canvasEl = document.createElement('canvas');
-    canvasEl.width  = W;
-    canvasEl.height = H;
-    canvasEl.style.cssText = 'position:fixed;left:-9999px;top:-9999px;pointer-events:none;';
-    document.body.appendChild(canvasEl);
-    var ctx = canvasEl.getContext('2d');
-
-    var stream;
-    try {
-      stream = canvasEl.captureStream ? canvasEl.captureStream(15) : canvasEl.mozCaptureStream(15);
-    } catch (e) {
-      console.warn('[KA-REC] Tier 2b captureStream failed:', e);
-      cleanupCanvas();
-      activateTier3();
-      return;
-    }
-
-    // Draw a branded static frame at 15 fps to keep the recorder alive
-    function drawBrandFrame(ts) {
-      if (!isRecording) return;
-      ctx.clearRect(0, 0, W, H);
-      // Background gradient
-      var bg = ctx.createLinearGradient(0, 0, W, H);
-      bg.addColorStop(0, '#07111f');
-      bg.addColorStop(1, '#0d1e35');
-      ctx.fillStyle = bg;
-      ctx.fillRect(0, 0, W, H);
-      // Orange accent bar
-      ctx.fillStyle = '#f06d1e';
-      ctx.fillRect(0, H - 6, W, 6);
-      // Brand text
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 64px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('KUBER AGENCIES', W / 2, H / 2 - 30);
-      ctx.font = '28px sans-serif';
-      ctx.fillStyle = '#f06d1e';
-      ctx.fillText("Chennai's Trusted Construction Partner", W / 2, H / 2 + 20);
-      ctx.font = '20px monospace';
-      ctx.fillStyle = 'rgba(255,255,255,0.4)';
-      ctx.fillText(new Date().toLocaleTimeString(), W / 2, H / 2 + 70);
-      ctx.textAlign = 'left';
-      rafId = requestAnimationFrame(drawBrandFrame);
-    }
-
-    attachMediaRecorder(stream, 'Canvas (Basic)');
-    rafId = requestAnimationFrame(drawBrandFrame);
-    setNote('Basic canvas mode · open animation in a separate window to watch it · voiceover active');
-  }
-
-  function cleanupCanvas() {
-    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-    if (canvasEl && canvasEl.parentNode) { canvasEl.parentNode.removeChild(canvasEl); canvasEl = null; }
-  }
-
-  /* ══════════════════════════════════════════════════════
-     TIER 3 — Manual fallback (no recording API available)
-  ══════════════════════════════════════════════════════ */
-  function activateTier3(reason) {
-    console.warn('[KA-REC] Tier 3 activated —', reason || 'no recording API available');
-
-    // Re-enable start button, hide stop
-    if (btnStart) btnStart.disabled = false;
-    btnStop && btnStop.classList.remove('active');
-    if (dotLive) dotLive.classList.remove('active');
-    stopTimer();
-    isRecording = false;
-
-    // Update panel to manual mode
-    setStatus('📱 Manual recording mode');
-    setNote(
-      'Your browser doesn\'t support auto capture.<br>' +
-      'Use a screen recorder instead:<br>' +
-      '<strong>Android:</strong> Swipe down → Screen Record<br>' +
-      '<strong>iPhone:</strong> Control Centre → Screen Record<br>' +
-      '<strong>PC:</strong> Win+G (Xbox), OBS, or Loom'
-    );
-
-    if (btnStart) {
-      btnStart.textContent = '▶ Play Animation';
-      btnStart.disabled = false;
-      btnStart.onclick = function () {
-        restartCinemaAnimation();
-        scheduleVoiceover();
-        setStatus('▶ Animation playing…');
-        setNote('Use your device\'s built-in screen recorder to capture this');
-      };
-    }
-    if (btnStop) btnStop.style.display = 'none';
-    if (btnDownload) {
-      btnDownload.classList.remove('show');
-      btnDownload.style.display = 'none';
-    }
-  }
-
-  /* ══════════════════════════════════════════════════════
-     STOP RECORDING
-  ══════════════════════════════════════════════════════ */
-  function stopRecording() {
-    if (!isRecording) return;
-    cancelVoiceover();
-    setStatus('Processing…');
-
-    // Stop canvas frame loop
-    cleanupCanvas();
-
-    // Stop all stream tracks
-    if (captureStream) {
-      try { captureStream.getTracks().forEach(function (t) { t.stop(); }); }
-      catch (e) {}
-      captureStream = null;
-    }
-
-    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-      try { mediaRecorder.stop(); }
-      catch (e) { console.warn('[KA-REC] stop error:', e); onRecordingStopped(); }
-    } else {
-      onRecordingStopped();
-    }
-  }
-
-  function stopRecordingCleanup() {
-    isRecording = false;
-    stopTimer();
-    setRecordingUI(false);
-    cleanupCanvas();
-  }
-
-  function onRecordingStopped() {
-    stopRecordingCleanup();
-
-    if (!recordedChunks.length) {
-      setStatus('No data captured.');
-      setNote('Try again or use a screen recorder app');
-      return;
-    }
-
-    var mime = recordedChunks[0] && recordedChunks[0].type ? recordedChunks[0].type : 'video/webm';
-    var blob = new Blob(recordedChunks, { type: mime });
-    var sizeMB = (blob.size / 1024 / 1024).toFixed(1);
-    setStatus('✅ Done — ' + sizeMB + ' MB');
-
-    var url = URL.createObjectURL(blob);
-    if (btnDownload) {
-      btnDownload.classList.add('show');
-      btnDownload.onclick = function () {
-        var ext = mime.includes('mp4') ? '.mp4' : '.webm';
-        var a = document.createElement('a');
-        a.href     = url;
-        a.download = 'kuber-agencies-promo' + ext;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      };
-    }
-    setNote('✅ Ready to download · open in VLC, Chrome, or any player');
-  }
-
-  /* ══════════════════════════════════════════════════════
-     ENTRY POINT — route to correct tier
-  ══════════════════════════════════════════════════════ */
-  function startRecording() {
-    if (isRecording) return;
-
-    // Warm up speech voices (needs a user gesture)
-    if (CAP.speechAPI) { try { window.speechSynthesis.getVoices(); } catch (e) {} }
-
-    if (TIER === 1) {
-      startTier1();
-    } else if (TIER === 2) {
-      startTier2();
-    } else {
-      activateTier3();
-    }
-  }
-
-  /* ══════════════════════════════════════════════════════
-     INITIAL PANEL SETUP — show capability badge
-  ══════════════════════════════════════════════════════ */
-  (function initPanel() {
-    var badge = '';
-    if      (TIER === 1) badge = '🖥 Tab Capture (best)';
-    else if (TIER === 2) badge = '🎨 Canvas Capture';
-    else                 badge = '📱 Manual Mode';
-
-    setStatus('Ready · ' + badge);
-
-    if (TIER === 3) {
-      // Pre-activate manual mode UI
-      if (btnStart) {
-        btnStart.textContent = '▶ Play Animation';
-        btnStart.onclick = function () {
-          restartCinemaAnimation();
-          scheduleVoiceover();
-          setStatus('▶ Playing — use screen recorder');
-          setNote('Use your device\'s screen recorder<br><strong>Android:</strong> Swipe → Screen Record<br><strong>iPhone:</strong> Control Centre → ⏺');
-        };
-      }
-      if (btnStop) btnStop.style.display = 'none';
-      setNote('Screen capture not available<br>Use device screen recorder instead');
-    } else {
-      setNote('Captures animation + AI voiceover · ~35 s · WebM');
-    }
-  }());
-
-  /* ══════════════════════════════════════════════════════
-     EVENT WIRING
-  ══════════════════════════════════════════════════════ */
-  if (btnStart && TIER !== 3) btnStart.addEventListener('click', startRecording);
-  if (btnStop)                btnStop.addEventListener('click',  stopRecording);
-
-  // Pre-warm speech synthesis voices on any user interaction
-  document.addEventListener('click', function () {
-    if (CAP.speechAPI) { try { window.speechSynthesis.getVoices(); } catch (e) {} }
-  }, { once: true });
-
-}());
-</script>
 
 </body>
 </html>
