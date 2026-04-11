@@ -2740,7 +2740,8 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #07111f;
+  background: #07111f url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775852937/Kuber_Agencies_zfijme.jpg') no-repeat center center;
+  background-size: cover;
   font-family: 'Barlow', 'Barlow Condensed', sans-serif;
 }
 #ka-hero-video {
@@ -2749,10 +2750,12 @@ footer {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center center;
   z-index: 0;
   /* Video never pauses — it's positioned absolute and always in DOM */
   will-change: transform;
+  min-width: 100%;
+  min-height: 100%;
 }
 /* Dark gradient overlay for readability */
 #ka-video-overlay {
@@ -4762,6 +4765,15 @@ footer {
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
   border:1px solid rgba(240,109,30,0.3);
+  overflow:hidden;
+  padding:0;
+}
+.cat-section-emoji img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:var(--radius);
+  display:block;
 }
 .cat-section-title-wrap { flex:1; }
 .cat-section-title {
@@ -5209,7 +5221,7 @@ footer {
            ============================================================ -->
 <div class="cat-section" data-cat="cement" id="section-cement">
 <div class="cat-section-header" onclick="toggleSection('cement')">
-<div class="cat-section-emoji">🧱</div>
+<div class="cat-section-emoji"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto,w_56,h_56,c_fill/v1775846577/Dalmia_vk14ks.jpg" alt="Cement" loading="lazy"/></div>
 <div class="cat-section-title-wrap">
 <div class="cat-section-title">Cement</div>
 <div class="cat-section-meta">5 brands · Dalmia, Ultratech, Zuari, Chettinad, Ramco · OPC &amp; PPC grades</div>
@@ -5343,7 +5355,7 @@ footer {
            ============================================================ -->
 <div class="cat-section" data-cat="steel" id="section-steel">
 <div class="cat-section-header" onclick="toggleSection('steel')">
-<div class="cat-section-emoji">🔩</div>
+<div class="cat-section-emoji"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto,w_56,h_56,c_fill/v1775846574/SteelTMT_product_dmljma.png" alt="Steel" loading="lazy"/></div>
 <div class="cat-section-title-wrap">
 <div class="cat-section-title">Steel</div>
 <div class="cat-section-meta">3 brands · ARS, Durga, Arun · TMT Fe500, Fe415 · All diameters</div>
@@ -5431,7 +5443,7 @@ footer {
            ============================================================ -->
 <div class="cat-section" data-cat="sand" id="section-sand">
 <div class="cat-section-header" onclick="toggleSection('sand')">
-<div class="cat-section-emoji">🏖️</div>
+<div class="cat-section-emoji"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto,w_56,h_56,c_fill/v1775846054/Msand_rrk81j.jpg" alt="Sand" loading="lazy"/></div>
 <div class="cat-section-title-wrap">
 <div class="cat-section-title">Sand</div>
 <div class="cat-section-meta">3 varieties · M Sand, P Sand, River Sand · IS:383 compliant</div>
@@ -5519,7 +5531,7 @@ footer {
            ============================================================ -->
 <div class="cat-section" data-cat="adhesives" id="section-adhesives">
 <div class="cat-section-header" onclick="toggleSection('adhesives')">
-<div class="cat-section-emoji">🔗</div>
+<div class="cat-section-emoji"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto,w_56,h_56,c_fill/v1775846579/MYK_itrjot.jpg" alt="Adhesives" loading="lazy"/></div>
 <div class="cat-section-title-wrap">
 <div class="cat-section-title">Adhesives</div>
 <div class="cat-section-meta">MYK range · Tile Adhesive, Grout, Spacer &amp; Bedding Mortars</div>
@@ -5630,7 +5642,7 @@ footer {
            ============================================================ -->
 <div class="cat-section" data-cat="paints" id="section-paints">
 <div class="cat-section-header" onclick="toggleSection('paints')">
-<div class="cat-section-emoji">🎨</div>
+<div class="cat-section-emoji"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto,w_56,h_56,c_fill/v1775845905/Royale_paint_yj5hsp.png" alt="Paints" loading="lazy"/></div>
 <div class="cat-section-title-wrap">
 <div class="cat-section-title">Paints</div>
 <div class="cat-section-meta">Asian Paints · Interior, Exterior, Primer &amp; Specialty Coatings</div>
@@ -5741,7 +5753,7 @@ footer {
            ============================================================ -->
 <div class="cat-section" data-cat="plumbing" id="section-plumbing">
 <div class="cat-section-header" onclick="toggleSection('plumbing')">
-<div class="cat-section-emoji">🔧</div>
+<div class="cat-section-emoji"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto,w_56,h_56,c_fill/v1775845906/Finolex_ieybwf.jpg" alt="Plumbing" loading="lazy"/></div>
 <div class="cat-section-title-wrap">
 <div class="cat-section-title">Plumbing</div>
 <div class="cat-section-meta">4 brands · Star, Ashirvad, Finolex, Indian Tube Pipes · CPVC, PVC, UPVC</div>
@@ -5852,7 +5864,7 @@ footer {
            ============================================================ -->
 <div class="cat-section" data-cat="chemicals" id="section-chemicals">
 <div class="cat-section-header" onclick="toggleSection('chemicals')">
-<div class="cat-section-emoji">🧪</div>
+<div class="cat-section-emoji"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto,w_56,h_56,c_fill/v1775845980/DR_Fixit_rlxv8u.jpg" alt="Chemicals" loading="lazy"/></div>
 <div class="cat-section-title-wrap">
 <div class="cat-section-title">Chemicals</div>
 <div class="cat-section-meta">3 brands · Dr Fixit, Fosguard, Asian · Waterproofing &amp; Admixtures</div>
@@ -5940,7 +5952,7 @@ footer {
            ============================================================ -->
 <div class="cat-section" data-cat="bricks" id="section-bricks">
 <div class="cat-section-header" onclick="toggleSection('bricks')">
-<div class="cat-section-emoji">🏚️</div>
+<div class="cat-section-emoji"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto,w_56,h_56,c_fill/v1775845961/Wirecut_gw1hgx.jpg" alt="Bricks" loading="lazy"/></div>
 <div class="cat-section-title-wrap">
 <div class="cat-section-title">Bricks</div>
 <div class="cat-section-meta">3 varieties · Wirecut, Box &amp; Sadha Bricks · For all masonry work</div>
@@ -6028,7 +6040,7 @@ footer {
            ============================================================ -->
 <div class="cat-section" data-cat="taps" id="section-taps">
 <div class="cat-section-header" onclick="toggleSection('taps')">
-<div class="cat-section-emoji">🚿</div>
+<div class="cat-section-emoji"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto,w_56,h_56,c_fill/v1775845874/Taps_and_Faucets_ymhdhq.jpg" alt="Taps & Faucets" loading="lazy"/></div>
 <div class="cat-section-title-wrap">
 <div class="cat-section-title">Taps &amp; Faucets</div>
 <div class="cat-section-meta">3 brands · Parryware, Waterman, Westar · CP &amp; concealed fittings</div>
@@ -6116,7 +6128,7 @@ footer {
            ============================================================ -->
 <div class="cat-section" data-cat="tanks" id="section-tanks">
 <div class="cat-section-header" onclick="toggleSection('tanks')">
-<div class="cat-section-emoji">💧</div>
+<div class="cat-section-emoji"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto,w_56,h_56,c_fill/v1775846576/Sintextank_jnovge.webp" alt="Water Tanks" loading="lazy"/></div>
 <div class="cat-section-title-wrap">
 <div class="cat-section-title">Water Tanks</div>
 <div class="cat-section-meta">2 brands · Sintex, Ashirvad · Overhead &amp; Underground tanks</div>
@@ -6181,7 +6193,7 @@ footer {
            ============================================================ -->
 <div class="cat-section" data-cat="wires" id="section-wires">
 <div class="cat-section-header" onclick="toggleSection('wires')">
-<div class="cat-section-emoji">⚡</div>
+<div class="cat-section-emoji"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto,w_56,h_56,c_fill/v1775845907/Finolexyellow_mykrta.jpg" alt="Wires & Cables" loading="lazy"/></div>
 <div class="cat-section-title-wrap">
 <div class="cat-section-title">Wires &amp; Cables</div>
 <div class="cat-section-meta">3 brands · Finolex, Orbit, RR Cables · FR, FRLS &amp; Armoured</div>
@@ -6269,7 +6281,7 @@ footer {
            ============================================================ -->
 <div class="cat-section" data-cat="switches" id="section-switches">
 <div class="cat-section-header" onclick="toggleSection('switches')">
-<div class="cat-section-emoji">🔌</div>
+<div class="cat-section-emoji"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto,w_56,h_56,c_fill/v1775845945/Anchor1_mjwcte.jpg" alt="Switches" loading="lazy"/></div>
 <div class="cat-section-title-wrap">
 <div class="cat-section-title">Switches &amp; Sockets</div>
 <div class="cat-section-meta">4 brands · Anchor Roma, GM, Legrand, Orbit Switches · Modular &amp; Premium</div>
@@ -6380,7 +6392,7 @@ footer {
            ============================================================ -->
 <div class="cat-section" data-cat="brushes" id="section-brushes">
 <div class="cat-section-header" onclick="toggleSection('brushes')">
-<div class="cat-section-emoji">🖌️</div>
+<div class="cat-section-emoji"><img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto,w_56,h_56,c_fill/v1775845870/Rollers_and_brushes_tt0afr.jpg" alt="Brushes & Rollers" loading="lazy"/></div>
 <div class="cat-section-title-wrap">
 <div class="cat-section-title">Brushes &amp; Rollers</div>
 <div class="cat-section-meta">Viky brand · Paint Brushes &amp; Rollers · All sizes available</div>
@@ -6860,6 +6872,12 @@ function showPage(name) {
   });
   var navEl = document.getElementById('nav-' + name);
   if (navEl) navEl.classList.add('active');
+
+  /* Show/hide video hero — only visible on home page */
+  var videoSection = document.getElementById('ka-video-section');
+  if (videoSection) {
+    videoSection.style.display = (name === 'home') ? '' : 'none';
+  }
 
   /* Scroll to top smoothly */
   window.scrollTo({ top: 0, behavior: 'smooth' });
