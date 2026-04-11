@@ -2750,33 +2750,23 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* FIX: background-size changed from cover → contain so the full Kuber Agencies
-     image (including logo/brand name) is never cropped. Navy fill covers sides. */
-  background: #07111f url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775852937/Kuber_Agencies_zfijme.jpg') no-repeat center center;
-  background-size: contain;
-  background-position: center center;
+  /* Navy background only — NO background-image here.
+     The image is rendered solely by the <video poster> below,
+     preventing the duplication / double-layer issue. */
+  background: #07111f;
   font-family: 'Barlow', 'Barlow Condensed', sans-serif;
-}
-/* On mobile the image is too small with contain — scale it to fill width */
-@media (max-width: 768px) {
-  #ka-video-section {
-    background-size: 100% auto;
-    background-position: top center;
-  }
 }
 #ka-hero-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  /* FIX: object-fit changed from cover → contain so video is not cropped either */
-  object-fit: contain;
-  object-position: center center;
+  /* cover fills the container; top center keeps "Kuber Agencies"
+     text (at the top of the image) always fully visible */
+  object-fit: cover;
+  object-position: center top;
   z-index: 0;
-  /* Video never pauses — it's positioned absolute and always in DOM */
   will-change: transform;
-  min-width: 100%;
-  min-height: 100%;
 }
 /* Dark gradient overlay for readability */
 #ka-video-overlay {
