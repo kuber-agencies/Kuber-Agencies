@@ -2766,34 +2766,6 @@ footer {
     border-radius:16px;overflow:hidden;
     box-shadow:0 24px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(240,109,30,0.2);
   ">
-    <!-- Speaker toggle (floats top-right over video) -->
-    <button id="ka-speaker-btn" onclick="kaToggleSound()" title="Toggle Sound" style="
-      position:absolute;top:12px;right:12px;z-index:10;
-      width:42px;height:42px;border-radius:50%;
-      background:rgba(7,17,31,0.78);
-      border:1.5px solid rgba(240,109,30,0.55);
-      color:#fff;font-size:18px;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;
-      backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-      transition:background 0.2s;
-    " onmouseover="this.style.background='rgba(240,109,30,0.72)'"
-       onmouseout="this.style.background='rgba(7,17,31,0.78)'">🔇</button>
-
-    <!-- "Tap to enable sound" hint overlay — auto-hides after first interaction -->
-    <div id="ka-sound-hint" onclick="kaToggleSound()" style="
-      position:absolute;bottom:56px;left:50%;transform:translateX(-50%);
-      background:rgba(7,17,31,0.88);border:1px solid rgba(240,109,30,0.45);
-      color:#fff;border-radius:100px;padding:8px 20px;
-      font-size:12.5px;font-weight:600;letter-spacing:0.4px;
-      cursor:pointer;display:flex;align-items:center;gap:8px;
-      backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-      z-index:10;animation:ka-fadein 0.5s ease 1.5s both;
-      transition:opacity 0.4s;white-space:nowrap;
-      font-family:'Barlow',sans-serif;
-    ">
-      <span>🔇</span> Tap to enable sound
-    </div>
-
     <!--
       REPLACE the src below with your actual video file URL.
       Recommended: upload to Cloudinary or your hosting and paste the direct MP4 link.
@@ -2817,52 +2789,7 @@ footer {
     REPLACE the src below with your pre-generated MP3 file URL.
     Example: src="https://res.cloudinary.com/YOUR_CLOUD/video/upload/kuber-voiceover.mp3"
   -->
-  <audio id="ka-voiceover-audio" loop style="display:none;">
-    <source src="https://res.cloudinary.com/dmn23tsgu/video/upload/kuber-agencies-voiceover.mp3" type="audio/mpeg">
-  </audio>
 
-  <!-- Action buttons -->
-  <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px;position:relative;z-index:2;">
-
-    <!-- Sound toggle button -->
-    <button id="ka-sound-toggle-btn" onclick="kaToggleSound()" style="
-      background:rgba(255,255,255,0.08);color:#fff;
-      border:2px solid rgba(255,255,255,0.22);border-radius:8px;
-      padding:13px 24px;font-size:14px;font-weight:600;
-      cursor:pointer;letter-spacing:0.5px;
-      display:flex;align-items:center;gap:9px;
-      transition:all 0.2s;font-family:inherit;
-    " onmouseover="this.style.borderColor='rgba(240,109,30,0.65)';this.style.color='#f06d1e'"
-       onmouseout="this.style.borderColor='rgba(255,255,255,0.22)';this.style.color='#fff'">
-      <span id="ka-sound-icon">🔇</span>
-      <span id="ka-sound-label">Enable Sound</span>
-    </button>
-
-    <!--
-      DOWNLOAD VIDEO button — direct file download (no recording).
-      REPLACE href below with the same video URL used above.
-    -->
-    <a
-      id="ka-download-btn"
-      href="https://res.cloudinary.com/dmn23tsgu/video/upload/kuber-agencies-promo.mp4"
-      download="kuber-agencies-showcase.mp4"
-      style="
-        background:linear-gradient(135deg,#f06d1e,#ff8c42);
-        color:#fff;border:none;border-radius:8px;
-        padding:13px 28px;font-size:14px;font-weight:700;
-        cursor:pointer;letter-spacing:0.5px;
-        box-shadow:0 4px 20px rgba(240,109,30,0.4);
-        display:flex;align-items:center;gap:8px;
-        text-decoration:none;font-family:inherit;
-        transition:all 0.2s;
-      "
-      onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(240,109,30,0.5)'"
-      onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 20px rgba(240,109,30,0.4)'"
-    >
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Download Video
-    </a>
-  </div>
 
   <!-- Divider -->
   <div style="
@@ -2924,68 +2851,13 @@ footer {
     }());
   }());
 
-  /* ── Sound state ───────────────────────────────────────── */
-  var soundEnabled = false;
-
-  /* ── Boot: autoplay muted; enable sound on first interaction ── */
+  /* ── Boot: autoplay muted, silent ─────────────────────── */
   (function boot() {
-    var vid   = document.getElementById('ka-showcase-video');
-    var audio = document.getElementById('ka-voiceover-audio');
+    var vid = document.getElementById('ka-showcase-video');
     if (!vid) return;
-
     vid.muted = true;
     vid.play().catch(function () {});
-
-    // First click/tap anywhere unmutes everything once
-    function onFirstInteraction() {
-      if (!soundEnabled) {
-        vid.muted = false;
-        if (audio) { audio.muted = false; audio.play().catch(function () {}); }
-        soundEnabled = true;
-        updateSoundUI();
-        hideHint();
-      }
-    }
-    document.addEventListener('click',      onFirstInteraction, { once: true });
-    document.addEventListener('touchstart', onFirstInteraction, { once: true, passive: true });
   }());
-
-  /* ── Public: toggle sound ──────────────────────────────── */
-  window.kaToggleSound = function () {
-    soundEnabled = !soundEnabled;
-    var vid   = document.getElementById('ka-showcase-video');
-    var audio = document.getElementById('ka-voiceover-audio');
-    if (vid)   vid.muted = !soundEnabled;
-    if (audio) {
-      audio.muted = !soundEnabled;
-      if (soundEnabled) { audio.play().catch(function () {}); }
-      else { audio.pause(); }
-    }
-    updateSoundUI();
-    hideHint();
-  };
-
-  function hideHint() {
-    var hint = document.getElementById('ka-sound-hint');
-    if (!hint) return;
-    hint.style.opacity = '0';
-    setTimeout(function () { hint.style.display = 'none'; }, 420);
-  }
-
-  function updateSoundUI() {
-    var icon   = document.getElementById('ka-sound-icon');
-    var label  = document.getElementById('ka-sound-label');
-    var speakerBtn = document.getElementById('ka-speaker-btn');
-    var toggleBtn  = document.getElementById('ka-sound-toggle-btn');
-    var on = soundEnabled;
-    if (icon)       icon.textContent  = on ? '🔊' : '🔇';
-    if (label)      label.textContent = on ? 'Sound ON' : 'Sound OFF';
-    if (speakerBtn) speakerBtn.textContent = on ? '🔊' : '🔇';
-    if (speakerBtn) speakerBtn.style.borderColor = on
-      ? 'rgba(240,109,30,0.85)' : 'rgba(240,109,30,0.55)';
-    if (toggleBtn)  toggleBtn.style.borderColor = on
-      ? 'rgba(240,109,30,0.65)' : 'rgba(255,255,255,0.22)';
-  }
 
 }());
 </script>
@@ -3037,9 +2909,169 @@ footer {
 <div class="hero-accent-line"></div>
 <div class="hero-inner">
 <div class="hero-content">
-<div class="hero-shop-img-wrap" style="max-width:480px;border-radius:16px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.45),0 0 0 1.5px rgba(240,109,30,0.18);margin-bottom:28px;">
-<img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775852937/Kuber_Agencies_zfijme.jpg" alt="Kuber Agencies Store – Construction Materials Supplier Madambakkam Chennai" class="hero-shop-img" loading="eager" fetchpriority="high" width="600" height="340" style="border-radius:16px;display:block;width:100%;height:auto;max-height:220px;object-fit:cover;object-position:center;"/>
+<!-- HERO PROMO REEL — canvas slideshow, silent, autoplay, no controls -->
+<div class="ka-promo-reel-wrap" style="max-width:480px;border-radius:16px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.45),0 0 0 1.5px rgba(240,109,30,0.18);margin-bottom:28px;position:relative;background:#07111f;">
+  <canvas id="kaPromoCanvas" style="display:block;width:100%;height:220px;border-radius:16px;" aria-label="Kuber Agencies – Premium Construction Materials Supplier Chennai" role="img"></canvas>
+  <!-- Branded overlay badge -->
+  <div style="position:absolute;bottom:10px;right:12px;background:rgba(240,109,30,0.92);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:4px;pointer-events:none;">Authorized Dealer · 50+ Brands</div>
 </div>
+<style>
+#kaPromoCanvas{aspect-ratio:480/220;}
+</style>
+<script>
+(function(){
+  /* ---- Promo Reel: Canvas Ken-Burns Slideshow ---- */
+  var SLIDES = [
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775852937/Kuber_Agencies_zfijme.jpg',    label: 'Kuber Agencies · Est. 2000' },
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846577/Dalmia_vk14ks.jpg',                          label: 'Cement — OPC & PPC Grades' },
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846574/SteelTMT_product_dmljma.png',                label: 'Steel TMT Bars — Fe500D' },
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Asian_paint_wyylv7.jpg',                     label: 'Asian Paints — Interior & Exterior' },
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Finolex_ieybwf.jpg',                        label: 'Finolex Pipes & Fittings' },
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/v1775859541/paint_and_coatings_us1vv4.jpg',             label: 'Paints & Coatings' },
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/v1775859541/pipes_and_fittings_rrkehq.png',             label: 'Pipes & Plumbing' },
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/v1775859541/cement_concrete_woc6s7.jpg',                label: 'Cement & Concrete' },
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775852937/Kuber_Agencies_zfijme.jpg',   label: 'Chennai\'s Trusted Supplier · 500+ Projects' }
+  ];
+
+  var SLIDE_DURATION = 3200;  /* ms each slide stays */
+  var FADE_DURATION  = 700;   /* ms cross-fade */
+  var ZOOM_FACTOR    = 1.10;  /* Ken Burns end zoom */
+
+  var canvas = document.getElementById('kaPromoCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+
+  /* Pixel-perfect sizing */
+  function resize() {
+    var rect = canvas.getBoundingClientRect();
+    canvas.width  = Math.round(rect.width  * (window.devicePixelRatio || 1));
+    canvas.height = Math.round(rect.height * (window.devicePixelRatio || 1));
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  /* Pre-load all images */
+  var imgs = [];
+  var loaded = 0;
+  SLIDES.forEach(function(s, i) {
+    var img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload  = function() { imgs[i] = img; loaded++; if (loaded === 1) startReel(); };
+    img.onerror = function() { imgs[i] = null; loaded++; };
+    img.src = s.url;
+  });
+
+  /* Cover-fit helper */
+  function coverFit(img, cw, ch) {
+    var iw = img.naturalWidth  || img.width;
+    var ih = img.naturalHeight || img.height;
+    if (!iw || !ih) return { sx:0, sy:0, sw:iw, sh:ih };
+    var scale = Math.max(cw / iw, ch / ih);
+    var sw = cw / scale, sh = ch / scale;
+    var sx = (iw - sw) / 2, sy = (ih - sh) / 2;
+    return { sx: sx, sy: sy, sw: sw, sh: sh };
+  }
+
+  /* Draw one frame */
+  function drawFrame(imgA, imgB, progress, slideProgress) {
+    var cw = canvas.width, ch = canvas.height;
+    ctx.clearRect(0, 0, cw, ch);
+
+    /* Ken Burns on current slide */
+    if (imgA) {
+      var zoom = 1 + (ZOOM_FACTOR - 1) * slideProgress;
+      var fit  = coverFit(imgA, cw * zoom, ch * zoom);
+      var ox   = (cw * zoom - cw) / 2;
+      var oy   = (ch * zoom - ch) / 2;
+      ctx.globalAlpha = 1;
+      ctx.drawImage(imgA, fit.sx, fit.sy, fit.sw, fit.sh, -ox, -oy, cw * zoom, ch * zoom);
+    }
+
+    /* Fade in next slide */
+    if (imgB && progress > 0) {
+      var alpha = Math.min(progress, 1);
+      ctx.globalAlpha = alpha;
+      var fit2 = coverFit(imgB, cw, ch);
+      ctx.drawImage(imgB, fit2.sx, fit2.sy, fit2.sw, fit2.sh, 0, 0, cw, ch);
+      ctx.globalAlpha = 1;
+    }
+
+    /* Dark bottom gradient for label legibility */
+    var grad = ctx.createLinearGradient(0, ch * 0.55, 0, ch);
+    grad.addColorStop(0, 'rgba(7,17,31,0)');
+    grad.addColorStop(1, 'rgba(7,17,31,0.72)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, cw, ch);
+
+    /* Slide label */
+    var labelIdx = currentIdx;
+    var label = SLIDES[labelIdx] ? SLIDES[labelIdx].label : '';
+    var dpr   = window.devicePixelRatio || 1;
+    var fsize = Math.round(12 * dpr);
+    ctx.globalAlpha = Math.min(1, 1 - progress * 2);
+    ctx.font = 'bold ' + fsize + 'px Barlow Condensed, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.82)';
+    ctx.letterSpacing = '1px';
+    ctx.fillText(label, 12 * dpr, ch - 14 * dpr);
+    ctx.globalAlpha = 1;
+  }
+
+  /* Animation state */
+  var currentIdx = 0;
+  var rafId      = null;
+  var startTs    = null;
+  var phase      = 'hold'; /* 'hold' | 'fade' */
+  var phaseStart = null;
+
+  function tick(ts) {
+    if (!startTs) startTs = ts;
+    if (!phaseStart) phaseStart = ts;
+
+    var elapsed = ts - phaseStart;
+
+    if (phase === 'hold') {
+      /* Show current slide with Ken Burns */
+      var slideProgress = Math.min(elapsed / SLIDE_DURATION, 1);
+      var curImg = imgs[currentIdx];
+      drawFrame(curImg, null, 0, slideProgress);
+      if (elapsed >= SLIDE_DURATION) {
+        phase = 'fade';
+        phaseStart = ts;
+      }
+    } else {
+      /* Cross-fade to next */
+      var fadeProgress = elapsed / FADE_DURATION;
+      var nextIdx = (currentIdx + 1) % SLIDES.length;
+      var curImg  = imgs[currentIdx];
+      var nxtImg  = imgs[nextIdx];
+      drawFrame(curImg, nxtImg, fadeProgress, 1);
+      if (elapsed >= FADE_DURATION) {
+        currentIdx = nextIdx;
+        phase = 'hold';
+        phaseStart = ts;
+      }
+    }
+
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function startReel() {
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(tick);
+  }
+
+  /* Pause when tab hidden for performance */
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    } else {
+      phaseStart = null;
+      startReel();
+    }
+  });
+
+})();
+</script>
 <div class="hero-eyebrow">
 <span class="hero-eyebrow-dot"></span>
           Chennai's Trusted Builder Supply  ·  Est. 2000
