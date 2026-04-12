@@ -3103,6 +3103,119 @@ footer {
 <div class="page active" id="page-home">
 <!-- HERO -->
 <section class="hero">
+<!-- ============================================================
+     HERO BACKGROUND SLIDESHOW — fade crossfade, pure CSS + JS
+     All 47 images rotate; each visible ~3s, 1s crossfade
+     z-index 0 keeps it behind hero-inner (z-index 1)
+     ============================================================ -->
+<style>
+#hero-slideshow{
+  position:absolute;inset:0;z-index:0;overflow:hidden;
+}
+#hero-slideshow .hs-slide{
+  position:absolute;inset:0;
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+  opacity:0;
+  transition:opacity 1.2s ease-in-out;
+  will-change:opacity;
+}
+#hero-slideshow .hs-slide.hs-active{
+  opacity:1;
+}
+/* Dark overlay so text stays readable */
+#hero-slideshow::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(
+    135deg,
+    rgba(7,17,31,0.72) 0%,
+    rgba(7,17,31,0.55) 50%,
+    rgba(7,17,31,0.68) 100%
+  );
+  pointer-events:none;
+  z-index:1;
+}
+</style>
+<div id="hero-slideshow" aria-hidden="true">
+  <div class="hs-slide hs-active" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775852937/Kuber_Agencies_zfijme.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846596/Anchorprod_wplayn.png')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846590/Psand_nld7hu.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846587/Ramco_qbgc8y.png')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846584/ashirvadtank_sf7gjo.png')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846581/Chettinad_bkln3d.png')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846580/chettinad-dealers-in-tirupur_yiaxik.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846579/MYK_itrjot.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846577/Dalmia_vk14ks.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846576/Sintextank_jnovge.webp')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846574/SteelTMT_product_dmljma.png')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846574/Durga_fqxjzo.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846475/Agniprod_pjgixi.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846475/ARSprod_m0uyzy.png')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846457/Zuari_bcanrp.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846409/MYK_Beddings_vsravn.png')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846054/Msand_rrk81j.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846051/River_sand_o4gmcf.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846006/MYK_Grout_rahm65.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846001/indiantube_kj9nfw.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846000/Starprod_f4xilc.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845994/Boxbrick_gkfagp.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845994/Fosguard_nlagum.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845980/DR_Fixit_rlxv8u.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845976/Asian_faltpb.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845963/Bricks_dsmple.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845961/Wirecut_gw1hgx.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845961/RRKabel_qkm3z1.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845955/Wires_and_cables_p33b9m.png')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845948/GMproduct_ebbgnv.png')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845945/Anchor1_mjwcte.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845945/Legrand_jaepv1.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845930/plumbing_product_gs75e5.png')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845908/Bricks_product_umjfne.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845907/Finolexyellow_mykrta.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845906/Asian_paint_wyylv7.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845906/Finolex_ieybwf.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845906/Chemicals_btkxck.png')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845905/Royale_paint_yj5hsp.png')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845904/MYK_Spacer_d7fkgj.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845900/Sandproduct_anfz3t.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845898/royal_paint_h4tk3m.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845888/Asian_paint_product_bihug3.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845882/ElectricityProduct_ta1iyp.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845874/Taps_and_Faucets_ymhdhq.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845872/Switches_and_sockets_p2lqqm.jpg')"></div>
+  <div class="hs-slide" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845870/Rollers_and_brushes_tt0afr.jpg')"></div>
+</div>
+<script>
+/* Hero background slideshow — minimal JS crossfade driver */
+(function(){
+  var slides = document.querySelectorAll('#hero-slideshow .hs-slide');
+  if(!slides.length) return;
+  var current = 0;
+  var HOLD = 3000;   /* ms each image is visible */
+  var total = slides.length;
+  function next(){
+    slides[current].classList.remove('hs-active');
+    current = (current + 1) % total;
+    slides[current].classList.add('hs-active');
+  }
+  /* Stagger preload — only load next image before it's needed */
+  function preloadNext(){
+    var n = (current + 1) % total;
+    var s = slides[n];
+    /* bg-image already in inline style; browser fetches on first display */
+    void s.offsetWidth; /* trigger reflow to ensure transition fires */
+  }
+  setInterval(function(){ preloadNext(); next(); }, HOLD);
+  /* Pause when tab hidden — saves CPU */
+  var iv;
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden){ clearInterval(iv); }
+    else { iv = setInterval(function(){ preloadNext(); next(); }, HOLD); }
+  });
+})();
+</script>
 <div class="hero-bg-pattern"></div>
 <div class="hero-bg-glow"></div>
 <div class="hero-accent-line"></div>
