@@ -2935,8 +2935,11 @@ footer {
   #ka-video-section {
     min-height: 100vh;
     min-height: 100dvh;
-    background-size: cover;
-    background-position: center center !important;
+    /* contain ensures the full shop image — including the "Kuber Agencies"
+       signage — is never cropped on portrait mobile screens.
+       The navy background-color fills any remaining space. */
+    background-size: contain;
+    background-position: center top !important;
     background-repeat: no-repeat;
     align-items: center;
   }
@@ -2955,6 +2958,12 @@ footer {
     padding: 100px 20px 60px;
     width: 100%;
     max-width: 100%;
+  }
+
+  /* When video plays on mobile, also use contain so signage isn't cropped */
+  #ka-hero-video {
+    object-fit: contain;
+    object-position: center top;
   }
 
   .ka-vid-stat { padding: 0 14px; }
