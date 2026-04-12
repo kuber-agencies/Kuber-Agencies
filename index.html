@@ -664,23 +664,16 @@ section{padding:88px 0;}
 /* ===================== HERO ===================== */
 .hero{
   min-height:100vh;
-  background:var(--navy);
-  display:flex;align-items:center;
+  background:none;
+  display:flex;align-items:center;flex-direction:column;justify-content:center;
   position:relative;overflow:hidden;
   padding-top:var(--nav-h);
 }
 .hero-bg-pattern{
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.028) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,0.028) 1px,transparent 1px);
-  background-size:72px 72px;
+  display:none;
 }
 .hero-bg-glow{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 55% 70% at 65% 45%,rgba(240,109,30,0.13) 0%,transparent 65%),
-    radial-gradient(ellipse 40% 50% at 5% 90%,rgba(19,40,64,0.9) 0%,transparent 60%);
+  display:none;
 }
 .hero-accent-line{
   position:absolute;left:0;top:0;bottom:0;width:5px;
@@ -693,6 +686,7 @@ section{padding:88px 0;}
   display:grid;grid-template-columns:1.1fr 0.9fr;
   gap:60px;align-items:center;
   position:relative;z-index:1;width:100%;
+  flex-shrink:0;
 }
 .hero-eyebrow{
   display:inline-flex;align-items:center;gap:10px;
@@ -3124,19 +3118,6 @@ footer {
 #hero-slideshow .hs-slide.hs-active{
   opacity:1;
 }
-/* Dark overlay so text stays readable */
-#hero-slideshow::after{
-  content:'';
-  position:absolute;inset:0;
-  background:linear-gradient(
-    135deg,
-    rgba(7,17,31,0.72) 0%,
-    rgba(7,17,31,0.55) 50%,
-    rgba(7,17,31,0.68) 100%
-  );
-  pointer-events:none;
-  z-index:1;
-}
 </style>
 <div id="hero-slideshow" aria-hidden="true">
   <div class="hs-slide hs-active" style="background-image:url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775852937/Kuber_Agencies_zfijme.jpg')"></div>
@@ -3219,38 +3200,59 @@ footer {
 <div class="hero-bg-pattern"></div>
 <div class="hero-bg-glow"></div>
 <div class="hero-accent-line"></div>
-<!-- TOP-LEFT CORNER IMAGE -->
+
+<!-- HERO TOP FADE IMAGE SLIDER -->
 <style>
-#hero-corner-img {
-  position: absolute;
-  top: calc(var(--nav-h) + 15px);
-  left: 15px;
-  z-index: 2;
-  max-width: 220px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  border-radius: 10px;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.45);
-  border: 1.5px solid rgba(255,255,255,0.12);
-  pointer-events: none;
-  display: block;
+.hero-top-slider {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  z-index: 1;
+  flex-shrink: 0;
 }
 @media (max-width: 767px) {
-  #hero-corner-img {
-    top: calc(var(--nav-h) + 10px);
-    left: 10px;
-    max-width: 140px;
-  }
+  .hero-top-slider { height: 180px; }
+}
+.hero-top-slider img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+  pointer-events: none;
+}
+.hero-top-slider img.hts-active {
+  opacity: 1;
 }
 </style>
-<img
-  id="hero-corner-img"
-  src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775852937/Kuber_Agencies_zfijme.jpg"
-  alt="Kuber Agencies store – Chennai's trusted construction materials supplier"
-  loading="eager"
-  aria-hidden="true"
-/>
+<div class="hero-top-slider" aria-hidden="true">
+  <img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775852937/Kuber_Agencies_zfijme.jpg" alt="" class="hts-active" loading="eager"/>
+  <img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846577/Dalmia_vk14ks.jpg" alt="" loading="lazy"/>
+  <img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846574/SteelTMT_product_dmljma.png" alt="" loading="lazy"/>
+  <img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845906/Asian_paint_wyylv7.jpg" alt="" loading="lazy"/>
+  <img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845906/Finolex_ieybwf.jpg" alt="" loading="lazy"/>
+  <img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846596/Anchorprod_wplayn.png" alt="" loading="lazy"/>
+  <img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846590/Psand_nld7hu.jpg" alt="" loading="lazy"/>
+  <img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846587/Ramco_qbgc8y.png" alt="" loading="lazy"/>
+  <img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775845976/Asian_faltpb.jpg" alt="" loading="lazy"/>
+  <img src="https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775846475/ARSprod_m0uyzy.png" alt="" loading="lazy"/>
+</div>
+<script>
+(function(){
+  var imgs = document.querySelectorAll('.hero-top-slider img');
+  if(!imgs.length) return;
+  var cur = 0;
+  setInterval(function(){
+    imgs[cur].classList.remove('hts-active');
+    cur = (cur + 1) % imgs.length;
+    imgs[cur].classList.add('hts-active');
+  }, 3000);
+})();
+</script>
 <div class="hero-inner">
 <div class="hero-content">
 <div class="hero-eyebrow">
