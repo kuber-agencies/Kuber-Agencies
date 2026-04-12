@@ -2741,164 +2741,52 @@ footer {
 
 <!-- === VIDEO HERO SECTION === -->
 <style>
-/* ---- Video Hero — full-viewport video background ---- */
+/* ---- Video Hero ---- */
 #ka-video-section {
   position: relative;
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* Dark fallback while video loads */
+  /* Navy background only — NO background-image here.
+     The image is rendered solely by the <video poster> below,
+     preventing the duplication / double-layer issue. */
   background: #07111f;
   font-family: 'Barlow', 'Barlow Condensed', sans-serif;
 }
-
-/* Video — full background cover */
 #ka-hero-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  /* cover fills the container; top center keeps "Kuber Agencies"
+     text (at the top of the image) always fully visible */
   object-fit: cover;
-  object-position: center center;
+  object-position: center top;
   z-index: 0;
+  will-change: transform;
 }
-
-/* Dark gradient overlay — ensures text readability over video */
+/* Dark gradient overlay for readability */
 #ka-video-overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
   background:
     linear-gradient(to bottom,
-      rgba(7,17,31,0.42) 0%,
-      rgba(7,17,31,0.22) 35%,
-      rgba(7,17,31,0.52) 68%,
-      rgba(7,17,31,0.85) 100%);
+      rgba(7,17,31,0.55) 0%,
+      rgba(7,17,31,0.30) 40%,
+      rgba(7,17,31,0.50) 70%,
+      rgba(7,17,31,0.80) 100%);
 }
-
-/* ============================================================
-   SHIMMER / GLOW OVERLAY — premium brightness effect
-   Sits above the video overlay, below content (z-index 2)
-   ============================================================ */
-#ka-video-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  /* Radial centre glow — orange warmth */
-  background:
-    radial-gradient(ellipse 75% 55% at 50% 38%, rgba(240,109,30,0.10) 0%, transparent 68%),
-    radial-gradient(ellipse 40% 30% at 50% 38%, rgba(255,160,80,0.06) 0%, transparent 55%);
-  /* Slow breathe animation */
-  animation: ka-shimmer-pulse 6s ease-in-out infinite;
-}
-@keyframes ka-shimmer-pulse {
-  0%,100% { opacity: 0.7; }
-  50%      { opacity: 1.0; }
-}
-
-/* Glitter particle layer — pseudo on overlay */
-#ka-video-overlay::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  /* Repeating radial dots simulating subtle glitter */
-  background-image:
-    radial-gradient(circle 1px at 20% 30%, rgba(255,220,160,0.25) 0%, transparent 100%),
-    radial-gradient(circle 1px at 55% 18%, rgba(255,200,120,0.20) 0%, transparent 100%),
-    radial-gradient(circle 1px at 78% 42%, rgba(255,230,180,0.22) 0%, transparent 100%),
-    radial-gradient(circle 1px at 35% 65%, rgba(255,210,140,0.18) 0%, transparent 100%),
-    radial-gradient(circle 1px at 88% 72%, rgba(255,220,160,0.20) 0%, transparent 100%),
-    radial-gradient(circle 1px at 12% 80%, rgba(255,200,130,0.15) 0%, transparent 100%),
-    radial-gradient(circle 1.5px at 65% 55%, rgba(255,230,170,0.18) 0%, transparent 100%),
-    radial-gradient(circle 1px at 42% 88%, rgba(255,215,150,0.15) 0%, transparent 100%);
-  background-size: 100% 100%;
-  animation: ka-glitter-drift 8s ease-in-out infinite alternate;
-}
-@keyframes ka-glitter-drift {
-  0%   { opacity: 0.4; transform: translateY(0px) scale(1); }
-  50%  { opacity: 0.9; transform: translateY(-4px) scale(1.01); }
-  100% { opacity: 0.5; transform: translateY(2px) scale(1); }
-}
-
-/* ============================================================
-   GLOW TEXT — "Kuber Agencies"
-   ============================================================ */
-#ka-glow-brand {
-  position: relative;
-  z-index: 3;
-  text-align: center;
-  width: 100%;
-  padding: 0 16px;
-  margin-bottom: 36px;
-}
-#ka-glow-brand-text {
-  display: block;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: clamp(48px, 11vw, 110px);
-  line-height: 1;
-  letter-spacing: -1px;
-  /* Gradient fill: orange → warm white → orange */
-  background: linear-gradient(
-    90deg,
-    #f06d1e 0%,
-    #ff9a56 22%,
-    #ffffff 45%,
-    #ffe4cc 58%,
-    #ff8c42 78%,
-    #f06d1e 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  background-size: 220% 100%;
-  /* Shine sweep animation */
-  animation: ka-brand-shine 4s ease-in-out infinite;
-  /* Soft outer glow via filter */
-  filter: drop-shadow(0 0 18px rgba(240,109,30,0.55))
-          drop-shadow(0 0 42px rgba(240,109,30,0.25))
-          drop-shadow(0 2px 8px rgba(0,0,0,0.5));
-  /* Subtle scale pulse */
-  will-change: background-position, filter;
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
-
-/* Shine sweep: moves gradient across the text */
-@keyframes ka-brand-shine {
-  0%   { background-position: 0%   50%; filter: drop-shadow(0 0 14px rgba(240,109,30,0.45)) drop-shadow(0 0 36px rgba(240,109,30,0.20)) drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
-  40%  { background-position: 100% 50%; filter: drop-shadow(0 0 28px rgba(240,109,30,0.75)) drop-shadow(0 0 60px rgba(240,109,30,0.38)) drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
-  60%  { background-position: 100% 50%; filter: drop-shadow(0 0 28px rgba(240,109,30,0.75)) drop-shadow(0 0 60px rgba(240,109,30,0.38)) drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
-  100% { background-position: 0%   50%; filter: drop-shadow(0 0 14px rgba(240,109,30,0.45)) drop-shadow(0 0 36px rgba(240,109,30,0.20)) drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
-}
-
-/* Thin tagline under glow text */
-#ka-glow-tagline {
-  display: block;
-  font-family: 'Barlow', sans-serif;
-  font-size: clamp(12px, 1.8vw, 16px);
-  font-weight: 600;
-  color: rgba(255,255,255,0.38);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-top: 14px;
-}
-
-/* ---- Centered content on top ---- */
+/* Centered content on top of video */
 #ka-video-content {
   position: relative;
-  z-index: 3;
+  z-index: 2;
   text-align: center;
   padding: 120px 24px 80px;
   max-width: 820px;
-  width: 100%;
 }
 #ka-video-content .ka-vid-eyebrow {
   display: inline-flex;
@@ -2976,7 +2864,7 @@ footer {
   bottom: 32px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 4;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3003,48 +2891,74 @@ footer {
 @keyframes ka-scroll-fade { to { opacity: 1; } }
 @keyframes ka-bounce {
   0%,100% { transform: translateY(0); }
-  50%      { transform: translateY(6px); }
+  50% { transform: translateY(6px); }
 }
-
 /* ============================================================
-   TABLET (768px – 1024px)
+   MOBILE HERO FIX — @media (max-width: 768px)
+   Fixes "Kuber Agencies" being hidden/cropped on mobile.
+   Desktop is completely untouched.
    ============================================================ */
-@media (min-width: 768px) and (max-width: 1024px) {
-  #ka-video-content { padding: 110px 32px 80px; }
-}
+@media (max-width: 768px) {
 
-/* ============================================================
-   MOBILE (< 768px)
-   ============================================================ */
-@media (max-width: 767px) {
+  /* 1. Use dvh (dynamic viewport height) on mobile so iOS Safari's
+        browser chrome doesn't eat into the hero height.
+        Falls back to 100vh on browsers that don't support dvh. */
   #ka-video-section {
     min-height: 100vh;
     min-height: 100dvh;
-    align-items: center;
+    /* Align content to the top so the image top (where "Kuber Agencies"
+       appears) is anchored — prevents vertical centering from pushing it up */
+    align-items: flex-start;
   }
+
+  /* 2. The video/poster: keep cover but lock the image to the top
+        so the brand name at the top of the image is never cropped. */
+  #ka-hero-video {
+    object-position: center top;
+  }
+
+  /* 3. Shift the overlay gradient so the top is more transparent —
+        ensures text inside the image at the top is readable and visible. */
+  #ka-video-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(7,17,31,0.25) 0%,
+      rgba(7,17,31,0.20) 25%,
+      rgba(7,17,31,0.45) 65%,
+      rgba(7,17,31,0.85) 100%
+    );
+  }
+
+  /* 4. Push content down enough to clear the fixed nav (72px) with
+        comfortable breathing room — keeps "Build With Confidence"
+        text in view and not overlapping the nav bar. */
   #ka-video-content {
-    padding: 100px 20px 60px;
+    padding: 96px 20px 60px;
+    align-self: flex-start;
     width: 100%;
-    max-width: 100%;
   }
+}
+
+/* ---- Smaller phones (max 600px) ---- */
+@media (max-width: 600px) {
+  #ka-video-content { padding: 88px 18px 56px; }
   .ka-vid-stat { padding: 0 14px; }
   .ka-vid-stat-num { font-size: 26px; }
 }
 
-/* ---- Very small phones (≤ 420px) ---- */
+/* ---- Very small phones (max 420px) ---- */
 @media (max-width: 420px) {
-  #ka-video-content { padding: 20px 14px 48px; }
+  #ka-video-content { padding: 82px 14px 48px; }
   #ka-video-content h2 { font-size: clamp(30px, 9vw, 48px); line-height: 1.05; }
   #ka-video-content .ka-vid-eyebrow { font-size: 10px; padding: 5px 12px; letter-spacing: 1px; }
   #ka-video-content p { font-size: 14px; margin-bottom: 22px; }
   .ka-vid-stat { padding: 0 10px; }
   .ka-vid-stat-num { font-size: 22px; }
   .ka-vid-stat-label { font-size: 9px; }
-  #ka-glow-brand-text { font-size: clamp(40px, 13vw, 72px); letter-spacing: -0.5px; }
 }
 </style>
 <div id="ka-video-section">
-  <!-- Background video — autoplay, muted, loop, playsinline -->
+  <!-- Background video — autoplay, muted, loop. Stays playing on scroll because it's fixed in DOM. -->
   <video
     id="ka-hero-video"
     autoplay
@@ -3057,12 +2971,8 @@ footer {
     <source src="https://res.cloudinary.com/dmn23tsgu/video/upload/kuber-agencies-promo.mp4" type="video/mp4">
   </video>
 
-  <!-- Dark gradient + shimmer overlay -->
+  <!-- Dark gradient overlay -->
   <div id="ka-video-overlay"></div>
-  <div id="ka-glow-brand" aria-hidden="true">
-    <span id="ka-glow-brand-text">Kuber Agencies</span>
-    <span id="ka-glow-tagline">Est. 2000 · Chennai's Trusted Supplier</span>
-  </div>
 
   <!-- Centered hero content -->
   <div id="ka-video-content">
@@ -3107,20 +3017,6 @@ footer {
     </div>
   </div>
 </div>
-<script>
-/* Ensure video plays — trigger on interaction if autoplay blocked */
-(function(){
-  var v = document.getElementById('ka-hero-video');
-  if (!v) return;
-  /* Attempt play (handles autoplay policy) */
-  var p = v.play();
-  if (p && typeof p.catch === 'function') {
-    p.catch(function() {
-      /* autoplay blocked — video stays as poster; no console error */
-    });
-  }
-})();
-</script>
 
 
 
@@ -3171,6 +3067,169 @@ footer {
 <div class="hero-accent-line"></div>
 <div class="hero-inner">
 <div class="hero-content">
+<!-- HERO PROMO REEL — canvas slideshow, silent, autoplay, no controls -->
+<div class="ka-promo-reel-wrap" style="max-width:480px;border-radius:16px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.45),0 0 0 1.5px rgba(240,109,30,0.18);margin-bottom:28px;position:relative;background:#07111f;">
+  <canvas id="kaPromoCanvas" style="display:block;width:100%;height:220px;border-radius:16px;" aria-label="Kuber Agencies – Premium Construction Materials Supplier Chennai" role="img"></canvas>
+  <!-- Branded overlay badge -->
+  <div style="position:absolute;bottom:10px;right:12px;background:rgba(240,109,30,0.92);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:4px;pointer-events:none;">Authorized Dealer · 50+ Brands</div>
+</div>
+<style>
+#kaPromoCanvas{aspect-ratio:480/220;}
+</style>
+<script>
+(function(){
+  /* ---- Promo Reel: Canvas Ken-Burns Slideshow ---- */
+  var SLIDES = [
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775852937/Kuber_Agencies_zfijme.jpg',    label: 'Kuber Agencies · Est. 2000' },
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846577/Dalmia_vk14ks.jpg',                          label: 'Cement — OPC & PPC Grades' },
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/v1775846574/SteelTMT_product_dmljma.png',                label: 'Steel TMT Bars — Fe500D' },
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Asian_paint_wyylv7.jpg',                     label: 'Asian Paints — Interior & Exterior' },
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/v1775845906/Finolex_ieybwf.jpg',                        label: 'Finolex Pipes & Fittings' },
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/v1775859541/paint_and_coatings_us1vv4.jpg',             label: 'Paints & Coatings' },
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/v1775859541/pipes_and_fittings_rrkehq.png',             label: 'Pipes & Plumbing' },
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/v1775859541/cement_concrete_woc6s7.jpg',                label: 'Cement & Concrete' },
+    { url: 'https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775852937/Kuber_Agencies_zfijme.jpg',   label: 'Chennai\'s Trusted Supplier · 500+ Projects' }
+  ];
+
+  var SLIDE_DURATION = 3200;  /* ms each slide stays */
+  var FADE_DURATION  = 700;   /* ms cross-fade */
+  var ZOOM_FACTOR    = 1.10;  /* Ken Burns end zoom */
+
+  var canvas = document.getElementById('kaPromoCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+
+  /* Pixel-perfect sizing */
+  function resize() {
+    var rect = canvas.getBoundingClientRect();
+    canvas.width  = Math.round(rect.width  * (window.devicePixelRatio || 1));
+    canvas.height = Math.round(rect.height * (window.devicePixelRatio || 1));
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  /* Pre-load all images */
+  var imgs = [];
+  var loaded = 0;
+  SLIDES.forEach(function(s, i) {
+    var img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload  = function() { imgs[i] = img; loaded++; if (loaded === 1) startReel(); };
+    img.onerror = function() { imgs[i] = null; loaded++; };
+    img.src = s.url;
+  });
+
+  /* Cover-fit helper */
+  function coverFit(img, cw, ch) {
+    var iw = img.naturalWidth  || img.width;
+    var ih = img.naturalHeight || img.height;
+    if (!iw || !ih) return { sx:0, sy:0, sw:iw, sh:ih };
+    var scale = Math.max(cw / iw, ch / ih);
+    var sw = cw / scale, sh = ch / scale;
+    var sx = (iw - sw) / 2, sy = (ih - sh) / 2;
+    return { sx: sx, sy: sy, sw: sw, sh: sh };
+  }
+
+  /* Draw one frame */
+  function drawFrame(imgA, imgB, progress, slideProgress) {
+    var cw = canvas.width, ch = canvas.height;
+    ctx.clearRect(0, 0, cw, ch);
+
+    /* Ken Burns on current slide */
+    if (imgA) {
+      var zoom = 1 + (ZOOM_FACTOR - 1) * slideProgress;
+      var fit  = coverFit(imgA, cw * zoom, ch * zoom);
+      var ox   = (cw * zoom - cw) / 2;
+      var oy   = (ch * zoom - ch) / 2;
+      ctx.globalAlpha = 1;
+      ctx.drawImage(imgA, fit.sx, fit.sy, fit.sw, fit.sh, -ox, -oy, cw * zoom, ch * zoom);
+    }
+
+    /* Fade in next slide */
+    if (imgB && progress > 0) {
+      var alpha = Math.min(progress, 1);
+      ctx.globalAlpha = alpha;
+      var fit2 = coverFit(imgB, cw, ch);
+      ctx.drawImage(imgB, fit2.sx, fit2.sy, fit2.sw, fit2.sh, 0, 0, cw, ch);
+      ctx.globalAlpha = 1;
+    }
+
+    /* Dark bottom gradient for label legibility */
+    var grad = ctx.createLinearGradient(0, ch * 0.55, 0, ch);
+    grad.addColorStop(0, 'rgba(7,17,31,0)');
+    grad.addColorStop(1, 'rgba(7,17,31,0.72)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, cw, ch);
+
+    /* Slide label */
+    var labelIdx = currentIdx;
+    var label = SLIDES[labelIdx] ? SLIDES[labelIdx].label : '';
+    var dpr   = window.devicePixelRatio || 1;
+    var fsize = Math.round(12 * dpr);
+    ctx.globalAlpha = Math.min(1, 1 - progress * 2);
+    ctx.font = 'bold ' + fsize + 'px Barlow Condensed, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.82)';
+    ctx.letterSpacing = '1px';
+    ctx.fillText(label, 12 * dpr, ch - 14 * dpr);
+    ctx.globalAlpha = 1;
+  }
+
+  /* Animation state */
+  var currentIdx = 0;
+  var rafId      = null;
+  var startTs    = null;
+  var phase      = 'hold'; /* 'hold' | 'fade' */
+  var phaseStart = null;
+
+  function tick(ts) {
+    if (!startTs) startTs = ts;
+    if (!phaseStart) phaseStart = ts;
+
+    var elapsed = ts - phaseStart;
+
+    if (phase === 'hold') {
+      /* Show current slide with Ken Burns */
+      var slideProgress = Math.min(elapsed / SLIDE_DURATION, 1);
+      var curImg = imgs[currentIdx];
+      drawFrame(curImg, null, 0, slideProgress);
+      if (elapsed >= SLIDE_DURATION) {
+        phase = 'fade';
+        phaseStart = ts;
+      }
+    } else {
+      /* Cross-fade to next */
+      var fadeProgress = elapsed / FADE_DURATION;
+      var nextIdx = (currentIdx + 1) % SLIDES.length;
+      var curImg  = imgs[currentIdx];
+      var nxtImg  = imgs[nextIdx];
+      drawFrame(curImg, nxtImg, fadeProgress, 1);
+      if (elapsed >= FADE_DURATION) {
+        currentIdx = nextIdx;
+        phase = 'hold';
+        phaseStart = ts;
+      }
+    }
+
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function startReel() {
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(tick);
+  }
+
+  /* Pause when tab hidden for performance */
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    } else {
+      phaseStart = null;
+      startReel();
+    }
+  });
+
+})();
+</script>
 <div class="hero-eyebrow">
 <span class="hero-eyebrow-dot"></span>
           Chennai's Trusted Builder Supply  ·  Est. 2000
