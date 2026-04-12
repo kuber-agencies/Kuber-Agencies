@@ -2750,34 +2750,38 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #07111f;
+  /* CSS background-image as the single source of truth for the
+     hero image — gives full background-size / background-position
+     control on every device without <video> object-fit conflicts. */
+  background-color: #07111f;
+  background-image: url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775852937/Kuber_Agencies_zfijme.jpg');
+  background-repeat: no-repeat;
+  /* cover + center keeps Kuber Agencies branding visible on wide screens */
+  background-size: cover;
+  background-position: center center;
   font-family: 'Barlow', 'Barlow Condensed', sans-serif;
 }
 
-/* ============================================================
-   HERO VIDEO / POSTER IMAGE — RESPONSIVE BACKGROUND
-   Strategy:
-   - Desktop & Tablet: object-fit:cover + object-position:center top
-     The image is wide enough that cover doesn't crop the top
-     where "KUBER AGENCIES" signage lives.
-   - Mobile (<768px): The section becomes a background-image
-     container instead. The <video> is hidden on mobile and the
-     poster is applied as a CSS background-image on the section
-     so we get full background-size/position control — this is
-     the only reliable way to use background-size:contain / cover
-     with custom positioning on a <video> poster on mobile.
-   ============================================================ */
+/* Hide the <video> element — the section background-image above
+   renders the poster perfectly on all devices without object-fit
+   cropping issues. The video source will still play when supported
+   because we swap back to the video via JS below if needed, but the
+   visual baseline is always the CSS background. */
 #ka-hero-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Top-center anchors the shop signage (top of image) on all
-     wide screens so it is never cropped vertically */
-  object-position: center top;
+  object-position: center center;
   z-index: 0;
-  will-change: transform;
+  opacity: 0; /* hidden by default; shown only when video plays */
+  transition: opacity 0.6s ease;
+  will-change: opacity;
+}
+/* When the video is actually playing, fade it in over the static bg */
+#ka-hero-video.ka-playing {
+  opacity: 1;
 }
 
 /* Dark gradient overlay for readability */
@@ -2787,9 +2791,9 @@ footer {
   z-index: 1;
   background:
     linear-gradient(to bottom,
-      rgba(7,17,31,0.45) 0%,
-      rgba(7,17,31,0.25) 35%,
-      rgba(7,17,31,0.50) 70%,
+      rgba(7,17,31,0.38) 0%,
+      rgba(7,17,31,0.18) 35%,
+      rgba(7,17,31,0.48) 68%,
       rgba(7,17,31,0.82) 100%);
 }
 
@@ -2909,23 +2913,11 @@ footer {
 
 /* ============================================================
    TABLET (768px – 1024px)
-   cover + top anchoring is still reliable at tablet widths.
-   Tighten object-position to favour top-left where the shop
-   signage typically appears.
    ============================================================ */
 @media (min-width: 768px) and (max-width: 1024px) {
-  #ka-hero-video {
-    object-fit: cover;
-    object-position: left top;
-  }
-  #ka-video-overlay {
-    background: linear-gradient(
-      to bottom,
-      rgba(7,17,31,0.40) 0%,
-      rgba(7,17,31,0.22) 35%,
-      rgba(7,17,31,0.50) 70%,
-      rgba(7,17,31,0.82) 100%
-    );
+  #ka-video-section {
+    background-position: center center;
+    background-size: cover;
   }
   #ka-video-content {
     padding: 110px 32px 80px;
@@ -2934,53 +2926,32 @@ footer {
 
 /* ============================================================
    MOBILE (< 768px)
-   On portrait mobile, object-fit:cover on a landscape image
-   crops the sides and can lose the shop signage entirely.
-
-   Solution: hide the <video> element, and render the poster as
-   a CSS background-image on the section itself — this gives us
-   full control over background-size and background-position
-   without any cropping.
-
-   background-size: contain  → entire image always visible, no crop
-   background-position: center top → shop name at top is anchored
-   background-repeat: no-repeat
-   The navy section background (#07111f) fills the letterbox
-   areas below the image seamlessly.
+   Portrait viewport is narrower than the landscape shop image.
+   background-size:contain ensures the FULL image — including
+   "Kuber Agencies" signage — is always visible with zero cropping.
+   Navy background-color fills any space below the image.
    ============================================================ */
 @media (max-width: 767px) {
   #ka-video-section {
     min-height: 100vh;
-    min-height: 100dvh; /* iOS Safari: excludes browser chrome */
-    align-items: flex-end; /* push text content to bottom half */
-    /* Render poster as CSS bg for full contain/position control */
-    background-image: url('https://res.cloudinary.com/dmn23tsgu/image/upload/q_auto,f_auto/v1775852937/Kuber_Agencies_zfijme.jpg');
+    min-height: 100dvh;
     background-size: contain;
     background-position: center top;
     background-repeat: no-repeat;
-    background-color: #07111f; /* navy fills area below image */
+    /* Content centred vertically in the lower half of the screen */
+    align-items: flex-end;
   }
 
-  /* Hide the video element — background-image on the section
-     replaces it cleanly on mobile */
-  #ka-hero-video {
-    display: none;
-  }
-
-  /* Overlay: transparent at top (image area) → dark at bottom
-     (text content area) — brand signage is fully unobscured */
   #ka-video-overlay {
     background: linear-gradient(
       to bottom,
       rgba(7,17,31,0.0)  0%,
-      rgba(7,17,31,0.0)  45%,
-      rgba(7,17,31,0.70) 70%,
+      rgba(7,17,31,0.0)  42%,
+      rgba(7,17,31,0.65) 68%,
       rgba(7,17,31,0.92) 100%
     );
   }
 
-  /* Content anchored to bottom of viewport so it doesn't
-     overlap the shop image at the top */
   #ka-video-content {
     padding: 24px 20px 56px;
     align-self: flex-end;
@@ -2992,7 +2963,7 @@ footer {
   .ka-vid-stat-num { font-size: 26px; }
 }
 
-/* ---- Very small phones (max 420px) ---- */
+/* ---- Very small phones (≤ 420px) ---- */
 @media (max-width: 420px) {
   #ka-video-content { padding: 20px 14px 48px; }
   #ka-video-content h2 { font-size: clamp(30px, 9vw, 48px); line-height: 1.05; }
@@ -3063,6 +3034,15 @@ footer {
     </div>
   </div>
 </div>
+<script>
+/* Fade the video in over the CSS background-image only once it
+   is actually playing — CSS bg remains the reliable visual baseline */
+(function(){
+  var v = document.getElementById('ka-hero-video');
+  if (!v) return;
+  v.addEventListener('playing', function(){ v.classList.add('ka-playing'); }, {once:true});
+})();
+</script>
 
 
 
