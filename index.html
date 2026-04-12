@@ -3102,6 +3102,172 @@ footer {
 <div class="hero-bg-glow"></div>
 <div class="hero-accent-line"></div>
 
+<!-- ── KUBER AGENCIES 3D GOLDEN TEXT ── -->
+<style>
+.ka-3d-wrap{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:44px 24px 20px;
+  position:relative;
+  z-index:2;
+  pointer-events:none;
+  user-select:none;
+  flex-shrink:0;
+}
+/* Ambient glow disc behind the text */
+.ka-3d-wrap::before{
+  content:'';
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:75%; height:70%;
+  background:radial-gradient(ellipse at center,
+    rgba(255,195,20,0.13) 0%,
+    rgba(200,145,0,0.06)  45%,
+    transparent           75%);
+  border-radius:50%;
+  filter:blur(24px);
+  animation:ka-aura 3s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+/* Main text */
+.ka-3d-text{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:clamp(1.9rem,6.2vw,4.6rem);
+  text-transform:uppercase;
+  letter-spacing:0.09em;
+  line-height:1;
+  position:relative;
+  display:inline-block;
+  /* Gold metallic gradient */
+  background:linear-gradient(
+    158deg,
+    #4a2800  0%,
+    #b8790a 10%,
+    #dca012 18%,
+    #ffd700 27%,
+    #fffaaa 38%,
+    #ffd700 48%,
+    #e0a200 57%,
+    #fff0a0 67%,
+    #ffd700 77%,
+    #b8790a 90%,
+    #4a2800 100%
+  );
+  background-size:240% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  /* 3-D extrusion: stacked drop-shadows simulate depth */
+  filter:
+    drop-shadow(0  1px 0 rgba(110,70,0,0.95))
+    drop-shadow(0  2px 0 rgba(90, 55,0,0.88))
+    drop-shadow(0  3px 0 rgba(70, 42,0,0.78))
+    drop-shadow(0  4px 0 rgba(50, 30,0,0.65))
+    drop-shadow(0  5px 0 rgba(30, 18,0,0.48))
+    drop-shadow(0 10px 22px rgba(170,120,0,0.42))
+    drop-shadow(0  0  38px rgba(255,210,0,0.20));
+  animation:
+    ka-shimmer 3.6s linear       infinite,
+    ka-float   4.8s ease-in-out  infinite,
+    ka-glow    3.0s ease-in-out  infinite alternate;
+  will-change:transform,filter;
+}
+/* Light-sweep overlay */
+.ka-3d-text::after{
+  content:attr(data-text);
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    112deg,
+    transparent  22%,
+    rgba(255,255,255,0)   38%,
+    rgba(255,255,255,0.8) 50%,
+    rgba(255,248,180,0.5) 55%,
+    rgba(255,255,255,0)   68%,
+    transparent  80%
+  );
+  background-size:240% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:ka-sweep 3.6s linear infinite;
+  pointer-events:none;
+}
+/* Thin gold rule beneath */
+.ka-3d-rule{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:10px;
+  opacity:0.65;
+}
+.ka-3d-rule span{
+  display:block;
+  width:clamp(40px,10vw,130px);
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,210,50,0.7),transparent);
+}
+.ka-3d-rule em{
+  font-style:normal;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(0.58rem,1.3vw,0.72rem);
+  font-weight:700;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(255,205,40,0.75);
+  white-space:nowrap;
+}
+@keyframes ka-shimmer{
+  0%  {background-position:240% center;}
+  100%{background-position:-240% center;}
+}
+@keyframes ka-sweep{
+  0%  {background-position:240% center;}
+  100%{background-position:-240% center;}
+}
+@keyframes ka-float{
+  0%,100%{transform:translateY(0px);}
+  48%    {transform:translateY(-6px);}
+}
+@keyframes ka-glow{
+  0%{filter:
+    drop-shadow(0 1px 0 rgba(110,70,0,.95))
+    drop-shadow(0 2px 0 rgba(90,55,0,.88))
+    drop-shadow(0 3px 0 rgba(70,42,0,.78))
+    drop-shadow(0 4px 0 rgba(50,30,0,.65))
+    drop-shadow(0 5px 0 rgba(30,18,0,.48))
+    drop-shadow(0 10px 22px rgba(170,120,0,.38))
+    drop-shadow(0 0 32px rgba(255,210,0,.18));}
+  100%{filter:
+    drop-shadow(0 1px 0 rgba(110,70,0,.95))
+    drop-shadow(0 2px 0 rgba(90,55,0,.88))
+    drop-shadow(0 3px 0 rgba(70,42,0,.78))
+    drop-shadow(0 4px 0 rgba(50,30,0,.65))
+    drop-shadow(0 5px 0 rgba(30,18,0,.48))
+    drop-shadow(0 12px 30px rgba(200,148,0,.68))
+    drop-shadow(0 0 55px rgba(255,215,0,.52));}
+}
+@keyframes ka-aura{
+  0%  {opacity:.5;transform:translate(-50%,-50%) scale(.94);}
+  100%{opacity:1; transform:translate(-50%,-50%) scale(1.07);}
+}
+@media(max-width:767px){
+  .ka-3d-wrap{padding:32px 16px 16px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .ka-3d-text,.ka-3d-text::after,.ka-3d-wrap::before{animation:none;}
+}
+</style>
+<div class="ka-3d-wrap" aria-hidden="true">
+  <span class="ka-3d-text" data-text="KUBER AGENCIES">KUBER AGENCIES</span>
+  <div class="ka-3d-rule"><span></span><em>Authorized Dealer · Est. 2000</em><span></span></div>
+</div>
+
 <!-- HERO TOP FADE IMAGE SLIDER -->
 <style>
 .hero-top-slider {
